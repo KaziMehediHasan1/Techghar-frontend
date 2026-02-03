@@ -52,7 +52,7 @@ const App = () => {
           </DialogContent>
         </form>
       </Dialog>
-      <h1 className="font-extrabold text-2xl text-green-600">Run korbo tmk</h1>
+      <h1 className="font-semibold text-2xl text-bluee font-poppins">MSI GS Series</h1>
     </div>
   );
 };
