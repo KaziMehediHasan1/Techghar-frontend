@@ -44,3 +44,10 @@ export interface ICartState {
   clearCart: () => void;
   getTotalPrice: () => number;
 }
+
+
+// wishlist related types -
+export interface IWishlistState {
+  wishlist: number[];
+  toggleWishlist: (id: number) => void;
+}
