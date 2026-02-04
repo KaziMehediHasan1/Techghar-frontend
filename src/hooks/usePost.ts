@@ -24,7 +24,7 @@ const usePost = <T, V>(route: string) => {
     },
     onError: (err) => {
       const errorMessage =
-        err.response?.data?.message || "Something went wrong!";
+      err.response?.data?.message || "Something went wrong!";
       toast.error(errorMessage);
       console.error("UsePost Hook Error:", err);
     },

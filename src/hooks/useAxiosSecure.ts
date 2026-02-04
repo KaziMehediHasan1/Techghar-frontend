@@ -1,10 +1,14 @@
 import axios from "axios";
 import { axiosInstance } from "@/hooks/useAxiosInstance";
 import { useEffect } from "react";
-import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/features/auth/auth.store";
+import { useNavigate } from "react-router-dom";
+import { CONFIG } from "@/config/env";
 
 const useAxiosSecure = () => {
   const { accessToken, setToken, logout } = useAuthStore();
+  const navigate = useNavigate();
+  // console.log(accessToken,"secure path")
 
   useEffect(() => {
     // Request Interceptor
@@ -29,7 +33,7 @@ const useAxiosSecure = () => {
 
           try {
             const { data } = await axios.post(
-              "https://your-api-url.com/refresh-token",
+              `${CONFIG.apiUrl}/refresh-token`,
               {},
               { withCredentials: true },
             );
@@ -41,6 +45,7 @@ const useAxiosSecure = () => {
             return axiosInstance(originalRequest);
           } catch (refreshError) {
             logout();
+            navigate("/login");
             return Promise.reject(refreshError);
           }
         }
@@ -52,7 +57,7 @@ const useAxiosSecure = () => {
       axiosInstance.interceptors.request.eject(requestIntercept);
       axiosInstance.interceptors.response.eject(responseIntercept);
     };
-  }, [accessToken, setToken, logout]);
+  }, [accessToken, setToken, logout, navigate]);
 
   return axiosInstance;
 };

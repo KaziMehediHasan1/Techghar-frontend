@@ -1,4 +1,7 @@
+import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
+import ProtectedLayout from "@/components/layout/ProtectedLayout";
+import UserPage from "@/features/dashboard/pages/UserPage";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
@@ -7,7 +10,6 @@ import { createBrowserRouter } from "react-router-dom";
 export const router = createBrowserRouter([
   // it's for admin and normal users only
   {
-    path: "/",
     element: <MainLayout />,
     errorElement: <NotFound />,
     children: [
@@ -26,13 +28,17 @@ export const router = createBrowserRouter([
 
   // it's for admin only
   {
-    path: "",
-    element: "",
-    errorElement: "",
+    path: "/dashboard",
+    element: <ProtectedLayout />,
     children: [
       {
-        path: "",
-        element: "",
+        element: <AdminLayout />,
+        children: [
+          {
+            path: "/dashboard/user",
+            element: <UserPage />,
+          },
+        ],
       },
     ],
   },
