@@ -7,10 +7,10 @@ const AdminLayout = () => {
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background font-dashboard">
       {/* ১. সাইডবার সেকশন */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-64 transform bg-white shadow-lg transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-0 ${
+        className={`fixed inset-y-0 left-0 z-50 w-full max-w-[20%] transform bg-white shadow-lg transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-0 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
