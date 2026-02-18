@@ -1,6 +1,5 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
-import ProtectedLayout from "@/components/layout/ProtectedLayout";
 import UserPage from "@/features/dashboard/pages/UserPage";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
@@ -29,16 +28,11 @@ export const router = createBrowserRouter([
   // it's for admin only
   {
     path: "/dashboard",
-    element: <ProtectedLayout />,
+    element: <AdminLayout />,
     children: [
       {
-        element: <AdminLayout />,
-        children: [
-          {
-            path: "/dashboard/user",
-            element: <UserPage />,
-          },
-        ],
+        index: true,
+        element: <UserPage />,
       },
     ],
   },
