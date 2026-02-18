@@ -21,7 +21,7 @@ function Home() {
           className="file:mr-4 file:py-2 file:px-4  file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"
         />
       </div>
-      <IconBundler.SliderH className="w-10 h-10 text-primary" />
+      <IconBundler.Call className="w-10 h-10 text-primary" />
 
       <div className="flex items-center gap-2 text-amber-600">
         <span className="animate-spin text-xl">⏳</span>
