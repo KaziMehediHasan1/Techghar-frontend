@@ -27,7 +27,10 @@ import {
   SquarePen,
   MapPin,
   PhoneCall,
+  LayoutDashboard,
   Clock,
+  Folder,
+  DollarSign,
   type LucideProps,
 } from "lucide-react";
 
@@ -64,4 +67,7 @@ export const IconBundler = {
   Call: (props: IconProps) => <PhoneCall {...props} />,
   EditPen: (props: IconProps) => <SquarePen {...props} />,
   CancleRound: (props: IconProps) => <CircleX {...props} />,
+  Dashboard: (props: IconProps) => <LayoutDashboard {...props} />,
+  DollarSign: (props: IconProps) => <DollarSign {...props} />,
+  Folder: (props: IconProps) => <Folder {...props} />,
 };

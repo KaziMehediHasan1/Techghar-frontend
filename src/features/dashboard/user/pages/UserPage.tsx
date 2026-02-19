@@ -1,9 +1,5 @@
-import React from 'react'
-
 function UserPage() {
-  return (
-    <div>UserPage</div>
-  )
+  return <div className="text-black">UserPage</div>;
 }
 
-export default UserPage
+export default UserPage;
