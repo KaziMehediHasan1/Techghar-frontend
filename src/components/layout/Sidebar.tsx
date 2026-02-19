@@ -1,7 +1,6 @@
 import LogoImg from "../../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import { IconBundler } from "@/assets/icons/IconBundler";
-import SideBarItems from "@/features/dashboard/components/SideBarItems";
 import clsx from "clsx";
 
 interface SidebarProps {
@@ -13,58 +12,72 @@ export const Sidebar = ({ isSidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       className={clsx(
-        "w-full max-w-[20%] bg-[#031d36]",
-        isSidebarOpen ? "" : "",
+        "h-screen border-r border-gray-200 transition-all duration-300 ease-in-out flex flex-col sticky top-0 left-0 z-100", 
+        isSidebarOpen ? "lg:w-70 w-96" : "w-20",
       )}
     >
-      <section>
-        <div className="flex items-center justify-between text-primary font-semibold text-lg">
-          {isSidebarOpen ? (
+      <button
+        className={clsx(
+          "absolute top-6.5 -right-4 z-110 cursor-pointer",
+          "w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white transition-all hover:scale-110",
+        )}
+        onClick={() => setSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? (
+          <IconBundler.LeftArrow className="size-4" />
+        ) : (
+          <IconBundler.RightArrow className="size-4" />
+        )}
+      </button>
+
+      <section className="flex flex-col h-full">
+        <div className="h-20 flex items-center px-5">
+          <NavLink to="/" className="flex items-center gap-3">
             <img
               src={LogoImg}
-              alt="TechGhar - Best Tech Solutions"
-              loading="eager"
-              className="max-w-10 h-7 lg:h-8 object-contain w-full"
+              alt="Logo"
+              className="w-8 h-8 object-contain shrink-0"
             />
-          ) : (
+            {isSidebarOpen && (
+              <p className="text-xl font-bold truncate animate-in fade-in duration-300">
+                TechGhar
+              </p>
+            )}
+          </NavLink>
+        </div>
+
+        <nav
+          className={clsx(
+            "flex-1 flex flex-col space-y-2 px-3",
+            !isSidebarOpen && "items-center",
+          )}
+        >
+          {route.map((item) => (
             <NavLink
-              key={"dashboard-overview"}
-              to={""}
-              className="flex items-center space-x-2"
+              key={item.name}
+              to={item.path || "#"}
+              className={({ isActive }) =>
+                clsx(
+                  "flex items-center gap-3 p-2 transition-all group relative",
+                  isActive ? "" : "text-gray-500 hover:bg-gray-100",
+                )
+              }
             >
-              <img
-                src={LogoImg}
-                alt="TechGhar - Best Tech Solutions"
-                loading="eager"
-                className="max-w-10 h-10 object-contain w-full"
-              />
-              <p className="text-xl lg:text-2xl font-bold">TechGhar</p>
+              <span className="text-xl shrink-0">{item.icon}</span>
+              {isSidebarOpen && (
+                <span className="font-medium whitespace-nowrap overflow-hidden transition-all duration-300">
+                  {item.name}
+                </span>
+              )}
+
+              {!isSidebarOpen && (
+                <div className="absolute left-full ml-4 px-2 py-1 bg-black text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
+                  {item.name}
+                </div>
+              )}
             </NavLink>
-          )}
-          <button
-            className="text-white"
-            onClick={() => setSidebarOpen(!isSidebarOpen)}
-          >
-            Btn
-          </button>
-        </div>
-        {/* Navigation Bar */}
-        <div className="text-black flex flex-col space-y-1">
-          {route.map(
-            (routes) =>
-              routes.path && (
-                <NavLink
-                  className="flex items-center gap-x-2"
-                  key={routes.name}
-                  to={routes.path}
-                >
-                  {routes.icon}
-                  {routes.name}
-                </NavLink>
-              ),
-          )}
-        </div>
-        {/* Nested route - */}
+          ))}
+        </nav>
       </section>
     </aside>
   );
