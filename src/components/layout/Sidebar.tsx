@@ -18,7 +18,7 @@ export const Sidebar = ({ isSidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       <button
         className={clsx(
-          "absolute top-6.5 -right-4 z-110 cursor-pointer",
+          "absolute top-4.5 -right-4 z-110 cursor-pointer",
           "w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center shadow-lg border-2 border-white transition-all hover:scale-110",
         )}
         onClick={() => setSidebarOpen(!isSidebarOpen)}

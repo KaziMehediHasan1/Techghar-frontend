@@ -6,10 +6,10 @@ interface SidebarProps {
   isSidebarOpen: boolean;
   setSidebarOpen: (value: boolean) => void;
 }
-const SideBarItems = ({ isSidebarOpen, setSidebarOpen }: SidebarProps) => {
+const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
   return (
     <section className="flex flex-col h-full">
-      <div className="h-20 flex items-center px-5">
+      <div className="h-16 flex items-center px-5">
         <NavLink to="/" className="flex items-center gap-3">
           <img
             src={LogoImg}
@@ -26,7 +26,7 @@ const SideBarItems = ({ isSidebarOpen, setSidebarOpen }: SidebarProps) => {
 
       <nav
         className={clsx(
-          "flex-1 flex flex-col space-y-2 px-3",
+          "flex-1 flex flex-col space-y-1 px-3",
           !isSidebarOpen && "items-center",
         )}
       >
