@@ -7,7 +7,7 @@ const AdminLayout = () => {
   return (
     <div className="flex min-h-screen font-dashboard">
       <Sidebar isSidebarOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <main className="w-full p-5">
+      <main className="w-full px-6 py-7">
         <Outlet />
       </main>
     </div>
