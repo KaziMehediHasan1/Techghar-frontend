@@ -31,6 +31,9 @@ import {
   Clock,
   Folder,
   DollarSign,
+  TrendingUp,
+  TrendingDown,
+  DollarSignIcon,
   type LucideProps,
 } from "lucide-react";
 
@@ -70,4 +73,7 @@ export const IconBundler = {
   Dashboard: (props: IconProps) => <LayoutDashboard {...props} />,
   DollarSign: (props: IconProps) => <DollarSign {...props} />,
   Folder: (props: IconProps) => <Folder {...props} />,
+  TrendingDown: (props: IconProps) => <TrendingDown {...props} />,
+  TrendingUp: (props: IconProps) => <TrendingUp {...props} />,
+  Dollar: (props: IconProps) => <DollarSignIcon {...props} />,
 };
