@@ -15,7 +15,7 @@ const Overview = () => {
         <p>Message</p>
       </nav>
       {/* -- CARDS SECTION START -- */}
-      <section className="grid grid-cols-12 gap-4 w-full p-4">
+      <section className="grid grid-cols-12 gap-4 w-full p-4 items-stretch">
         <div className="col-span-12 md:col-span-6 lg:col-span-3 space-y-4">
           <OrderCard />
           <UserCard />
@@ -26,7 +26,7 @@ const Overview = () => {
           <BlogCard />
         </div>
 
-        <div className="col-span-12 lg:col-span-6 bg-red-500 text-center p-4 rounded shadow flex items-center justify-center">
+        <div className="col-span-12 lg:col-span-6">
           <PerformanceChart />
         </div>
 
