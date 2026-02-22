@@ -2,8 +2,6 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,9 +11,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { IconBundler } from "@/assets/icons/IconBundler";
 
-export const description = "A multiple bar chart";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -28,11 +24,11 @@ const chartData = [
 
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Page View",
     color: "var(--chart-1)",
   },
   mobile: {
-    label: "Mobile",
+    label: "Clicks",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
@@ -46,7 +42,7 @@ export function ChartBarMultiple() {
       <CardContent className="aspect-auto">
         <ChartContainer
           config={chartConfig}
-          className="min-h-24 max-h-32.5 w-full"
+          className="h-full max-h-43.5 w-full"
         >
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
@@ -61,12 +57,22 @@ export function ChartBarMultiple() {
               cursor={{ fill: "rgba(0,0,0,0.04)" }}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="#f54242" radius={[4, 4, 0, 0]} barSize={30} />
-            <Bar dataKey="mobile" fill="#8d8888" radius={[4, 4, 0, 0]}  barSize={30}/>
+            <Bar
+              dataKey="desktop"
+              fill="#f54242"
+              radius={[4, 4, 0, 0]}
+              barSize={30}
+            />
+            <Bar
+              dataKey="mobile"
+              fill="#8d8888"
+              radius={[4, 4, 0, 0]}
+              barSize={30}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex items-center justify-center text-center gap-x-4">
+      {/* <CardFooter className="flex items-center justify-center text-center gap-x-4">
         <div className="flex items-center gap-x-1.5">
           <div className="bg-red-600 w-2 h-2 rounded-full" />
           <p className="text-sm">Page view</p>
@@ -75,7 +81,7 @@ export function ChartBarMultiple() {
           <div className="bg-[#8d8888] w-2 h-2 rounded-full" />
           <p className="text-sm">Click</p>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }
