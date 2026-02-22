@@ -41,11 +41,13 @@ export function ChartBarMultiple() {
   return (
     <Card className="shadow-2xl shadow-dim-primary rounded-md bg-white w-full">
       <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Performance</CardTitle>
       </CardHeader>
-      <CardContent className="">
-        <ChartContainer config={chartConfig} >
+      <CardContent className="aspect-auto">
+        <ChartContainer
+          config={chartConfig}
+          className="min-h-24 max-h-32.5 w-full"
+        >
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -56,20 +58,22 @@ export function ChartBarMultiple() {
               tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
-              cursor={false}
+              cursor={{ fill: "rgba(0,0,0,0.04)" }}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar dataKey="desktop" fill="#f54242" radius={[4, 4, 0, 0]} barSize={30} />
+            <Bar dataKey="mobile" fill="#8d8888" radius={[4, 4, 0, 0]}  barSize={30}/>
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <IconBundler.TrendingUp className="h-4 w-4" />
+      <CardFooter className="flex items-center justify-center text-center gap-x-4">
+        <div className="flex items-center gap-x-1.5">
+          <div className="bg-red-600 w-2 h-2 rounded-full" />
+          <p className="text-sm">Page view</p>
         </div>
-        <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+        <div className="flex items-center gap-x-1.5">
+          <div className="bg-[#8d8888] w-2 h-2 rounded-full" />
+          <p className="text-sm">Click</p>
         </div>
       </CardFooter>
     </Card>
