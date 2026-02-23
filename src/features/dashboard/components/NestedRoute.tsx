@@ -16,14 +16,14 @@ interface NestedRouteProps {
 
 export const NestedRoute = ({ item, isSidebarOpen }: NestedRouteProps) => {
   const { pathname } = useLocation();
-  const isChildActive = item.children?.some(
-    (child) => pathname === `${child.path}` || pathname === child.path,
+
+  const isChildActive = item.children?.some((child) =>
+    pathname.includes(child.path!),
   );
-  const CP = item.children?.some((child) => `${child.path}`);
-    console.log(CP, "chppp");
+
   if (!isSidebarOpen) {
     return (
-      <div className="group relative flex items-center justify-center  text-gray-400 hover:bg-gray-100 rounded-lg transition-all w-full">
+      <div className="group relative flex items-center justify-center p-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-all w-full">
         <span className="text-xl shrink-0">{item.icon}</span>
         <div className="absolute left-full ml-4 px-2 py-1 bg-black text-white text-xs rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
           {item.name}
@@ -35,7 +35,7 @@ export const NestedRoute = ({ item, isSidebarOpen }: NestedRouteProps) => {
   return (
     <div className="w-full overflow-hidden transition-all duration-300">
       <Tree
-        className="bg-transparent space-y-0"
+        className="bg-transparent space-y-0 w-full"
         initialExpandedItems={isChildActive ? [item.name] : []}
         openIcon={item.icon}
         closeIcon={item.icon}
@@ -44,37 +44,36 @@ export const NestedRoute = ({ item, isSidebarOpen }: NestedRouteProps) => {
           element={item.name}
           value={item.name}
           className={cn(
-            "p-2 rounded-lg transition-all w-full",
+            "p-2 rounded-lg transition-all w-full flex items-center ",
             isChildActive
-              ? " bg-amber-600 text-white"
+              ? "bg-black text-white"
               : "hover:bg-gray-100 text-gray-700",
           )}
         >
-          <div className="flex flex-col mt-1 ml-2 border-l border-gray-200">
-            {item.children?.map((child: NavItem) =>
-              child.path ? (
-                <File
-                  fileIcon={child.icon}
-                  key={child.path}
-                  value={child.path}
-                  className="p-0 w-full"
+          <div className="flex flex-col pt-1 pl-2 border-l w-full border-gray-200">
+            {item.children?.map((child) => (
+              <File
+                key={child.path}
+                value={child.path!}
+                fileIcon={child.icon}
+                className="p-0 w-full"
+              >
+                <NavLink
+                  to={child.path!}
+                  className={({ isActive }) =>
+                    cn(
+                      "flex gap-2 w-full px-3 py-1.5 rounded text-sm transition-all",
+                      isActive
+                        ? "bg-primary/10 text-primary font-semibold"
+                        : "text-gray-500 hover:text-black hover:bg-gray-100",
+                    )
+                  }
                 >
-                  <NavLink
-                    to={child.path}
-                    className={({ isActive }) =>
-                      cn(
-                        " flex gap-2 w-full rounded text-sm transition-all",
-                        isActive
-                          ? "bg-primary/10 px-1 text-primary"
-                          : "text-gray-500 hover:text-black hover:bg-gray-100",
-                      )
-                    }
-                  >
-                    <p className="truncate">{child.name}</p>
-                  </NavLink>
-                </File>
-              ) : null,
-            )}
+                  {/* <span className="shrink-0">{child.icon}</span> */}
+                  <p className="truncate">{child.name}</p>
+                </NavLink>
+              </File>
+            ))}
           </div>
         </Folder>
       </Tree>

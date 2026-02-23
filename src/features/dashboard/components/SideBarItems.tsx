@@ -38,6 +38,7 @@ const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
               <NavLink
                 key={item.name}
                 to={item.path}
+                end={item.path === "/dashboard"}
                 className={({ isActive }) =>
                   cn(
                     "flex items-center gap-3 p-2 rounded-lg transition-all group relative mb-1",
@@ -78,17 +79,25 @@ const route = [
     name: "Sales",
     icon: <IconBundler.DollarSign />,
     children: [
-      { name: "Orders", path: "sales/orders", icon: <IconBundler.Call /> },
-      { name: "Payments", path: "sales/payments", icon: <IconBundler.Call /> },
-      { name: "Coupons", path: "sales/coupons", icon: <IconBundler.Call /> },
+      {
+        name: "Orders",
+        path: "sales/orders",
+        icon: <IconBundler.ShoppingOrOrder />,
+      },
+      {
+        name: "Payments",
+        path: "sales/payments",
+        icon: <IconBundler.Payment />,
+      },
+      { name: "Coupons", path: "sales/coupons", icon: <IconBundler.Coupon /> },
     ],
   },
   {
     name: "Content",
     icon: <IconBundler.Folder />,
     children: [
-      { name: "Blogs", path: "content/blogs", icon: <IconBundler.Call /> },
-      { name: "Reviews", path: "content/reviews", icon: <IconBundler.Call /> },
+      { name: "Blogs", path: "content/blogs", icon: <IconBundler.Blog /> },
+      { name: "Reviews", path: "content/reviews", icon: <IconBundler.Star /> },
     ],
   },
 ];

@@ -34,6 +34,10 @@ import {
   TrendingUp,
   TrendingDown,
   DollarSignIcon,
+  CreditCard,
+  Ticket,
+  ShoppingCartIcon,
+  FileText,
   type LucideProps,
 } from "lucide-react";
 
@@ -42,6 +46,10 @@ interface IconProps extends LucideProps {
 }
 export const IconBundler = {
   MoreH: (props: IconProps) => <MoreHorizontal {...props} />,
+  Blog: (props: IconProps) => <FileText {...props} />,
+  Coupon: (props: IconProps) => <Ticket {...props} />,
+  Payment: (props: IconProps) => <CreditCard {...props} />,
+  ShoppingOrOrder: (props: IconProps) => <ShoppingCartIcon {...props} />,
   MoreV: (props: IconProps) => <MoreVertical {...props} />,
   Search: (props: IconProps) => <Search {...props} />,
   Cart: (props: IconProps) => <ShoppingCart {...props} />,

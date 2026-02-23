@@ -25,7 +25,7 @@ const payments: TData[] = [
   },
   {
     id: "921f1e31",
-    amount: 250,
+    amount: 255,
     status: "success",
     email: "kazi@gmail.com",
   },
