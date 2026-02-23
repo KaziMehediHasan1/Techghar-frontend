@@ -30,11 +30,11 @@ const Overview = () => {
           <PerformanceChart />
         </div>
 
-        <div className="col-span-12 lg:col-span-4 bg-red-500 text-center p-4 rounded shadow">
-          <RecentOrderTable />
+        <div className="col-span-12 lg:col-span-6">
+          <RecentOrderTable/>
         </div>
 
-        <div className="col-span-12 lg:col-span-8 bg-blue-500 text-center p-4 rounded shadow">
+        <div className="col-span-12 lg:col-span-6">
           <ProductsTable />
         </div>
       </section>
