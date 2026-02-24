@@ -583,21 +583,21 @@ const columns: ColumnDef<IUser>[] = [
     accessorKey: "cartItemCount",
     header: () => <div className="text-left">Cart</div>,
   },
-  {
+  { 
     accessorKey: "role",
     header: () => <div className="text-left">Role</div>,
   },
   {
     accessorKey: "lastPurchasedItem",
-    header: () => <div className="text-center">Last Purchased</div>,
+    header: () => <div className="text-left">Last Purchased</div>,
   },
   {
     accessorKey: "totalPurchaseCount",
-    header: () => <div className="text-center">Total</div>,
+    header: () => <div className="text-left">Total</div>,
   },
   {
     accessorKey: "isAccountActive",
-    header: () => <div className="text-center">Active</div>,
+    header: () => <div className="text-left">Active</div>,
   },
 ];
 function UserPage() {
