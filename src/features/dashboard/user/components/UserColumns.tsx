@@ -1,4 +1,6 @@
+import { RDataTableColumnHeader } from "@/components/RDataTableColumnHeader";
 import type { ColumnDef } from "@tanstack/react-table";
+
 type UserRole = "user" | "admin" | "fake";
 export interface IUser {
   id: string;
@@ -563,13 +565,14 @@ export const userData: IUser[] = [
     isAccountActive: true,
     createdAt: "2023-08-15",
   },
-]; 
+];
 
 export const columns: ColumnDef<IUser>[] = [
   {
     accessorKey: "name",
-    header: () => <div className="text-left">Name</div>,
-    // cell: ({ row }) => <div className="text-left">{row.getValue("name")}</div>,
+    header: ({ column }) => (
+      <RDataTableColumnHeader column={column} title="Name" />
+    ),
   },
   {
     accessorKey: "email",

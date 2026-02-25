@@ -14,6 +14,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { DataTablePagination } from "@/components/RDataTablePagination";
+import { RDataTableViewOptions } from "@/components/RDataTableViewOptions";
 
 interface DashboardTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,7 +35,8 @@ const RDataTable = <TData, TValue>({
   });
 
   return (
-    <div className="shadow-ms shadow-dim-primary rounded-md bg-white">
+    <div className="shadow-ms shadow-dim-primary rounded-md bg-white space-y-3 p-4">
+      <RDataTableViewOptions table={table} />
       <Table>
         <TableHeader className="bg-slate-50">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -74,6 +77,7 @@ const RDataTable = <TData, TValue>({
           )}
         </TableBody>
       </Table>
+      <DataTablePagination table={table} />
     </div>
   );
 };
