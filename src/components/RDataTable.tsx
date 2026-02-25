@@ -2,6 +2,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getPaginationRowModel,
   type ColumnDef,
 } from "@tanstack/react-table";
 
@@ -19,7 +20,7 @@ interface DashboardTableProps<TData, TValue> {
   data: TData[];
 }
 
-const UserTable = <TData, TValue>({
+const RDataTable = <TData, TValue>({
   columns,
   data,
 }: DashboardTableProps<TData, TValue>) => {
@@ -28,6 +29,7 @@ const UserTable = <TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -76,4 +78,4 @@ const UserTable = <TData, TValue>({
   );
 };
 
-export default UserTable;
+export default RDataTable;
