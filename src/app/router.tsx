@@ -1,6 +1,7 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
 import Overview from "@/features/dashboard/pages/Overview";
+import UserList from "@/features/dashboard/user/pages/UserList";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
@@ -35,7 +36,7 @@ export const router = createBrowserRouter([
       {
         path: "users",
         children: [
-          { path: "list", element: "list" }, // details (hide)
+          { path: "list", element: <UserList /> }, // details (hide)
           { path: "admin/staff", element: "staff" },
           { path: "spam-alerts", element: "alerts" },
         ],
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
 
       {
         path: "settings",
-        children: [{ path: "settings", element:"settings" }],
+        children: [{ path: "settings", element: "settings" }],
       },
     ],
   },

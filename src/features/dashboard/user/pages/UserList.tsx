@@ -5,7 +5,7 @@ import { columns, userData } from "@/features/dashboard/user/components/UserColu
 
 
 
-function UserPage() {
+function UserList() {
   return (
     <div className="text-black space-y-2">
       <h2 className="text-xl font-bold tracking-tight">Recent Orders</h2>
@@ -14,4 +14,4 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default UserList;

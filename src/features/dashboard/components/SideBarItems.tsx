@@ -76,13 +76,13 @@ const route = [
   {
     name: "Dashboard",
     path: "/dashboard",
-    icon: <IconBundler.LayoutDashboard size={20} />,
+    icon: <IconBundler.LayoutDashboard size={25} />,
   },
 
   {
     name: "User Management",
     path: "users",
-    icon: <IconBundler.Users size={20} />,
+    icon: <IconBundler.Users size={25} />,
     children: [
       {
         name: "Customer List",
@@ -104,7 +104,7 @@ const route = [
 
   {
     name: "E-Commerce",
-    icon: <IconBundler.ShoppingBag size={20} />,
+    icon: <IconBundler.ShoppingBag size={25} />,
     children: [
       {
         name: "Product List",
@@ -136,7 +136,7 @@ const route = [
 
   {
     name: "Content Manager",
-    icon: <IconBundler.FolderTree size={20} />,
+    icon: <IconBundler.FolderTree size={25} />,
     children: [
       {
         name: "Blogs",
@@ -159,6 +159,6 @@ const route = [
   {
     name: "Settings",
     path: "settings",
-    icon: <IconBundler.Settings size={20} />,
+    icon: <IconBundler.Settings size={25} />,
   },
 ];

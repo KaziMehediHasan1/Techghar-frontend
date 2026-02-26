@@ -52,6 +52,7 @@ import {
 
 interface IconProps extends LucideProps {
   className?: string;
+  // size?: string;
 }
 export const IconBundler = {
   MoreH: (props: IconProps) => <MoreHorizontal {...props} />,
