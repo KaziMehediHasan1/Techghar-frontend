@@ -73,31 +73,92 @@ const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
 export default SideBarItems;
 
 const route = [
-  { name: "Dashboard", path: "/dashboard", icon: <IconBundler.Dashboard /> },
-  { name: "Users", path: "users", icon: <IconBundler.CircleUser /> },
   {
-    name: "Sales",
-    icon: <IconBundler.DollarSign />,
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: <IconBundler.LayoutDashboard size={20} />,
+  },
+
+  {
+    name: "User Management",
+    path: "users",
+    icon: <IconBundler.Users size={20} />,
     children: [
       {
+        name: "Customer List",
+        path: "users/list",
+        icon: <IconBundler.List size={18} />,
+      },
+      {
+        name: "Admin/Staff",
+        path: "users/admin/Staff",
+        icon: <IconBundler.ShieldCheck size={18} />,
+      },
+      {
+        name: "Spam Alerts",
+        path: "users/spam-alerts",
+        icon: <IconBundler.ShieldAlert size={18} />,
+      },
+    ],
+  },
+
+  {
+    name: "E-Commerce",
+    icon: <IconBundler.ShoppingBag size={20} />,
+    children: [
+      {
+        name: "Product List",
+        path: "commerce/product/list",
+        icon: <IconBundler.List size={18} />,
+      },
+      {
+        name: "Add Product",
+        path: "commerce/product/create",
+        icon: <IconBundler.ShoppingBag size={18} />,
+      },
+      {
         name: "Orders",
-        path: "sales/orders",
-        icon: <IconBundler.ShoppingOrOrder />,
+        path: "commerce/product/orders",
+        icon: <IconBundler.ShoppingCart size={18} />,
       },
       {
         name: "Payments",
-        path: "sales/payments",
-        icon: <IconBundler.Payment />,
+        path: "commerce/product/payment",
+        icon: <IconBundler.CreditCard size={18} />,
       },
-      { name: "Coupons", path: "sales/coupons", icon: <IconBundler.Coupon /> },
+      {
+        name: "Coupons",
+        path: "commerce/product/coupons",
+        icon: <IconBundler.TicketPercent size={18} />,
+      },
     ],
   },
+
   {
-    name: "Content",
-    icon: <IconBundler.Folder />,
+    name: "Content Manager",
+    icon: <IconBundler.FolderTree size={20} />,
     children: [
-      { name: "Blogs", path: "content/blogs", icon: <IconBundler.Blog /> },
-      { name: "Reviews", path: "content/reviews", icon: <IconBundler.Star /> },
+      {
+        name: "Blogs",
+        path: "content/blogs",
+        icon: <IconBundler.FileText size={18} />,
+      },
+      {
+        name: "Reviews",
+        path: "content/reviews",
+        icon: <IconBundler.MessageSquareShare size={18} />,
+      },
+      {
+        name: "Contact",
+        path: "content/contact",
+        icon: <IconBundler.Mail size={18} />,
+      },
     ],
+  },
+
+  {
+    name: "Settings",
+    path: "settings",
+    icon: <IconBundler.Settings size={20} />,
   },
 ];

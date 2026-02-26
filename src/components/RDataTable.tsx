@@ -2,10 +2,10 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  getPaginationRowModel,
+  // getPaginationRowModel,
   type ColumnFiltersState,
-  getSortedRowModel,
-  getFilteredRowModel,
+  // getSortedRowModel,
+  // getFilteredRowModel,
   type ColumnDef,
   type SortingState,
 } from "@tanstack/react-table";

@@ -1,13 +1,6 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
-import BlogsPage from "@/features/dashboard/blog/pages/BlogsPage";
-import CouponsPage from "@/features/dashboard/coupon/pages/CouponsPage";
-import OrdersPage from "@/features/dashboard/order/pages/OrdersPage";
 import Overview from "@/features/dashboard/pages/Overview";
-import PaymentsPage from "@/features/dashboard/payment/pages/PaymentsPage";
-import PromotionsPage from "@/features/dashboard/promotion/pages/PromotionsPage";
-import ReviewsPage from "@/features/dashboard/review/pages/ReviewsPage";
-import UserPage from "@/features/dashboard/user/pages/UserPage";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
@@ -39,28 +32,38 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Overview /> },
 
-      { path: "users", element: <UserPage /> },
+      {
+        path: "users",
+        children: [
+          { path: "list", element: "list" }, // details (hide)
+          { path: "admin/staff", element: "staff" },
+          { path: "spam-alerts", element: "alerts" },
+        ],
+      },
 
       {
-        path: "sales",
+        path: "commerce",
         children: [
-          { path: "orders", element: <OrdersPage /> },
-          { path: "payments", element: <PaymentsPage /> },
-          { path: "coupons", element: <CouponsPage /> },
+          { path: "product/list", element: "product listing" },
+          { path: "product/create", element: "product create" },
+          { path: "product/orders", element: "product orders" },
+          { path: "product/payment", element: "payment" },
+          { path: "product/coupons", element: "product orders" },
         ],
       },
 
       {
         path: "content",
         children: [
-          { path: "blogs", element: <BlogsPage /> },
-          { path: "reviews", element: <ReviewsPage /> },
+          { path: "blogs", element: "blogses" },
+          { path: "reviews", element: "reviews" },
+          { path: "contact", element: "contact" },
         ],
       },
 
       {
-        path: "marketing",
-        children: [{ path: "promotions", element: <PromotionsPage /> }],
+        path: "settings",
+        children: [{ path: "settings", element:"settings" }],
       },
     ],
   },
