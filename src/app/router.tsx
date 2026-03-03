@@ -1,5 +1,6 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
+import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
 import About from "@/pages/About";
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
         element: <About />,
       },
       // secure path -
+      {
+        path: "/payment",
+        element: <PaymentPage />,
+      },
     ],
   },
 
