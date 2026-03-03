@@ -503,4 +503,5 @@ const StripePaymentCard = () => {
     </div>
   );
 };
+
 export default StripePaymentCard;

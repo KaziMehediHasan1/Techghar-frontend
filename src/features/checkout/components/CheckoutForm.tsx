@@ -1,9 +1,13 @@
-import { PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  PaymentElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 import { useState } from "react";
 import type { FormEvent } from "react";
 
 // ✅ Step 2: Actual Form — Stripe Elements use করে
-function CheckoutForm() {
+const CheckoutForm = () => {
   const stripe = useStripe(); // Stripe instance
   const elements = useElements(); // Elements instance
   const [message, setMessage] = useState("");
@@ -44,6 +48,6 @@ function CheckoutForm() {
       {message && <p style={{ color: "red" }}>{message}</p>}
     </form>
   );
-}
+};
 
 export default CheckoutForm;

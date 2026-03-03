@@ -8,7 +8,7 @@ import { CONFIG } from "@/config/env";
 const stripePromise = CONFIG.payment_published_key;
 
 // ✅ Step 1: Parent Component — clientSecret fetch করে
-export default function PaymentPage() {
+const PaymentPage = () => {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
@@ -31,4 +31,6 @@ export default function PaymentPage() {
       <CheckoutForm />
     </Elements>
   );
-}
+};
+
+export default PaymentPage;
