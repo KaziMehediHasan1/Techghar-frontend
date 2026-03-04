@@ -41,6 +41,7 @@ import {
   ShoppingBag,
   List,
   PackagePlus,
+  MenuIcon,
   CreditCard,
   TicketPercent,
   FolderTree,
@@ -56,6 +57,7 @@ interface IconProps extends LucideProps {
 }
 export const IconBundler = {
   MoreH: (props: IconProps) => <MoreHorizontal {...props} />,
+  MenuIcon: (props: IconProps) => <MenuIcon {...props} />,
   ShoppingBag: (props: IconProps) => <ShoppingBag {...props} />,
   Settings: (props: IconProps) => <Settings {...props} />,
   FolderTree: (props: IconProps) => <FolderTree {...props} />,
