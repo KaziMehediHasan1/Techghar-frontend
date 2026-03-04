@@ -1,3 +1,4 @@
+import AdBar from "@/components/layout/AdBar";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import { Outlet } from "react-router-dom";
@@ -5,6 +6,7 @@ import { Outlet } from "react-router-dom";
 const MainLayout = () => {
   return (
     <div className="font-sans">
+      <AdBar />
       <Navbar />
       <main>
         <Outlet />
