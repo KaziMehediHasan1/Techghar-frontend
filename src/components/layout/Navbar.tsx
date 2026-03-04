@@ -3,9 +3,11 @@ import Logo from "@/assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import { IconBundler } from "@/assets/icons/IconBundler";
 import { useState } from "react";
+import SearchModal from "@/components/search/SearchModal";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [search, setSearch] = useState<boolean>(false);
   return (
     <div className="border-b border-dim-primary shadow-sm shadow-muted w-full">
       <Wrapper>
@@ -43,7 +45,12 @@ function Navbar() {
 
           {/* SEARCH, PROFILE, CART  */}
           <section className="flex items-center gap-5">
-            <IconBundler.Search />
+            <button onClick={() => setSearch(!search)}>
+              <IconBundler.Search />
+            </button>
+            {search && (
+              <SearchModal open={search} onClose={() => setSearch(false)} />
+            )}
             <div className="relative">
               <IconBundler.Cart className="transform-[rotateY(180deg)]" />
               <p className="absolute -top-4 left-2.5 bg-brand-primary text-white py-0.5 px-1.5 text-xs rounded-full">
@@ -76,7 +83,12 @@ function Navbar() {
 
           {/* SEARCH, PROFILE, CART  */}
           <div className="flex items-center gap-3">
-            <IconBundler.Search size={20} />
+             <button onClick={() => setSearch(!search)}>
+              <IconBundler.Search size={20}/>
+            </button>
+            {search && (
+              <SearchModal open={search} onClose={() => setSearch(false)} />
+            )}
             <div className="relative">
               <IconBundler.Cart
                 className="transform-[rotateY(180deg)]"
@@ -137,7 +149,7 @@ const overlayStyle =
   "fixed inset-0 bg-black/40 z-40 transition-opacity duration-300";
 
 const linkStyle =
-  "block px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors";
+  "block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors";
 
 const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
   return (
@@ -153,7 +165,7 @@ const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
           openMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-5 py-4 border-b">
+        <div className="flex items-center justify-between px-4 py-3 border-b">
           <div className="flex items-center gap-x-3">
             <img
               src={Logo}
@@ -164,7 +176,9 @@ const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
             />
             <h2 className="text-xl font-semibold font-dashboard">TechGhar</h2>
           </div>
-          <button onClick={() => setOpenMenu(false)} className=""><IconBundler.Cancle /></button>
+          <button onClick={() => setOpenMenu(false)} className="">
+            <IconBundler.Cancle />
+          </button>
         </div>
 
         <nav className="mt-3">
