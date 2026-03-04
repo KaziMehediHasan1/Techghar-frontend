@@ -9,7 +9,7 @@ function Navbar() {
   return (
     <div className="border-b border-dim-primary shadow-sm shadow-muted w-full">
       <Wrapper>
-        {/* DESKTOP DEVICE ONLY */}
+        {/****** DESKTOP DEVICE ONLY ******/}
         <section className="hidden xl:flex items-center justify-between py-3">
           {/* LOGO */}
           <NavLink to="/" className="flex items-center gap-x-2">
@@ -54,7 +54,7 @@ function Navbar() {
           </section>
         </section>
 
-        {/* MOBILE AND TABLET */}
+        {/*****  MOBILE AND TABLET *****/}
         <section className="flex xl:hidden items-center justify-between my-1.5">
           {/* TOGGLE BAR */}
           <button
@@ -68,8 +68,7 @@ function Navbar() {
             )}
           </button>
 
-          {/* MOBILE MENU */}
-          {openMenu && <MobileMenu />}
+          <MobileMenu openMenu={openMenu} setOpenMenu={setOpenMenu} links={Links}/>
 
           {/* SEARCH, PROFILE, CART  */}
           <div className="flex items-center gap-3">
@@ -120,8 +119,50 @@ const Links: TNavLink[] = [
   },
 ];
 
-const MobileMenu = () => {
-  return <div>dadf</div>;
+interface MobileMenuProps {
+  openMenu: boolean;
+  setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  links: TNavLink[];
+}
+
+const drawerBaseStyle =
+  "fixed top-0 left-0 z-50 h-screen w-72 bg-white shadow-xl transition-transform duration-300 ease-in-out";
+
+const overlayStyle =
+  "fixed inset-0 bg-black/40 z-40 transition-opacity duration-300";
+
+const linkStyle =
+  "block px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors";
+
+const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
+  return (
+    <>
+      {/* OVERLAY */}
+      {openMenu && (
+        <div className={overlayStyle} onClick={() => setOpenMenu(false)} />
+      )}
+
+      {/* DRAWER */}
+      <div
+        className={`${drawerBaseStyle} ${
+          openMenu ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between px-5 py-4 border-b">
+          <h2 className="text-base font-semibold">Categories</h2>
+          <button onClick={() => setOpenMenu(false)}>✕</button>
+        </div>
+
+        <nav className="mt-3">
+          {links.map((link) => (
+            <a key={link.path} href={link.path} className={linkStyle}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </>
+  );
 };
 
 export default Navbar;
