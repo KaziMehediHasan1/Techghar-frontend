@@ -4,8 +4,10 @@ import { NavLink } from "react-router-dom";
 import { IconBundler } from "@/assets/icons/IconBundler";
 import { useState } from "react";
 import SearchModal from "@/components/search/SearchModal";
+import MobileMenu from "@/components/Navbar/MobileMenu";
+import { Links, type TNavLink } from "@/components/Navbar/Links";
 
-function Navbar() {
+const Navbar = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [search, setSearch] = useState<boolean>(false);
   return (
@@ -30,7 +32,11 @@ function Navbar() {
             {Links.map((link: TNavLink) => (
               <NavLink
                 to={link.path}
-                className="text-sm sm:text-[1rem] font-semibold hover:text-brand-primary"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-sm sm:text-[1rem] font-semibold hover:text-brand-primary text-brand-primary"
+                    : "text-sm sm:text-[1rem] font-semibold hover:text-brand-primary"
+                }
               >
                 {link.label}
               </NavLink>
@@ -83,8 +89,8 @@ function Navbar() {
 
           {/* SEARCH, PROFILE, CART  */}
           <div className="flex items-center gap-3">
-             <button onClick={() => setSearch(!search)}>
-              <IconBundler.Search size={20}/>
+            <button onClick={() => setSearch(!search)}>
+              <IconBundler.Search size={20} />
             </button>
             {search && (
               <SearchModal open={search} onClose={() => setSearch(false)} />
@@ -104,91 +110,8 @@ function Navbar() {
       </Wrapper>
     </div>
   );
-}
+};
 
 export default Navbar;
-type TNavLink = { label: string; path: string };
 
-const Links: TNavLink[] = [
-  {
-    label: "Laptop",
-    path: "/laptop",
-  },
-  {
-    label: "Desktop PCs",
-    path: "/desktop",
-  },
-  {
-    label: "Networking Devices",
-    path: "/network",
-  },
-  {
-    label: "Printer & Scanner",
-    path: "/printer",
-  },
-  {
-    label: "PC Parts",
-    path: "/pc-parts",
-  },
-  {
-    label: "All Other Products",
-    path: "/pc-parts",
-  },
-];
 
-interface MobileMenuProps {
-  openMenu: boolean;
-  setOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  links: TNavLink[];
-}
-
-const drawerBaseStyle =
-  "fixed top-0 left-0 z-50 h-screen w-72 bg-white shadow-xl transition-transform duration-300 ease-in-out";
-
-const overlayStyle =
-  "fixed inset-0 bg-black/40 z-40 transition-opacity duration-300";
-
-const linkStyle =
-  "block px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors";
-
-const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
-  return (
-    <>
-      {/* OVERLAY */}
-      {openMenu && (
-        <div className={overlayStyle} onClick={() => setOpenMenu(false)} />
-      )}
-
-      {/* DRAWER */}
-      <div
-        className={`${drawerBaseStyle} ${
-          openMenu ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="flex items-center justify-between px-4 py-3 border-b">
-          <div className="flex items-center gap-x-3">
-            <img
-              src={Logo}
-              alt="logo"
-              loading="lazy"
-              decoding="async"
-              className="h-auto object-contain w-7 hover:scale-105 transition-transform select-none"
-            />
-            <h2 className="text-xl font-semibold font-dashboard">TechGhar</h2>
-          </div>
-          <button onClick={() => setOpenMenu(false)} className="">
-            <IconBundler.Cancle />
-          </button>
-        </div>
-
-        <nav className="mt-3">
-          {links.map((link) => (
-            <a key={link.path} href={link.path} className={linkStyle}>
-              {link.label}
-            </a>
-          ))}
-        </nav>
-      </div>
-    </>
-  );
-};

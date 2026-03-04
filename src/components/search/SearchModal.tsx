@@ -1,3 +1,4 @@
+import { IconBundler } from "@/assets/icons/IconBundler";
 import { useEffect } from "react";
 
 interface SearchModalProps {
@@ -54,7 +55,7 @@ const SearchModal = ({ open, onClose }: SearchModalProps) => {
               onClick={onClose}
               className="text-gray-500 hover:text-black transition-colors"
             >
-              ✕
+              <IconBundler.Cancle />
             </button>
           </div>
 
