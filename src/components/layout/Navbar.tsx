@@ -68,7 +68,11 @@ function Navbar() {
             )}
           </button>
 
-          <MobileMenu openMenu={openMenu} setOpenMenu={setOpenMenu} links={Links}/>
+          <MobileMenu
+            openMenu={openMenu}
+            setOpenMenu={setOpenMenu}
+            links={Links}
+          />
 
           {/* SEARCH, PROFILE, CART  */}
           <div className="flex items-center gap-3">
@@ -90,6 +94,7 @@ function Navbar() {
   );
 }
 
+export default Navbar;
 type TNavLink = { label: string; path: string };
 
 const Links: TNavLink[] = [
@@ -149,8 +154,17 @@ const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
         }`}
       >
         <div className="flex items-center justify-between px-5 py-4 border-b">
-          <h2 className="text-base font-semibold">Categories</h2>
-          <button onClick={() => setOpenMenu(false)}>✕</button>
+          <div className="flex items-center gap-x-3">
+            <img
+              src={Logo}
+              alt="logo"
+              loading="lazy"
+              decoding="async"
+              className="h-auto object-contain w-7 hover:scale-105 transition-transform select-none"
+            />
+            <h2 className="text-xl font-semibold font-dashboard">TechGhar</h2>
+          </div>
+          <button onClick={() => setOpenMenu(false)} className=""><IconBundler.Cancle /></button>
         </div>
 
         <nav className="mt-3">
@@ -164,5 +178,3 @@ const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
     </>
   );
 };
-
-export default Navbar;
