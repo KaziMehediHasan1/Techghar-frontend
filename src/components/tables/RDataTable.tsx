@@ -18,8 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DataTablePagination } from "@/components/RDataTablePagination";
-import { RDataTableViewOptions } from "@/components/RDataTableViewOptions";
+import { DataTablePagination } from "@/components/tables/RDataTablePagination";
+import { RDataTableViewOptions } from "@/components/tables/RDataTableViewOptions";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 

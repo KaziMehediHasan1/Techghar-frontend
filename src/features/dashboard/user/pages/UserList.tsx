@@ -1,4 +1,4 @@
-import RDataTable from "@/components/RDataTable";
+import RDataTable from "@/components/tables/RDataTable";
 import { columns, userData } from "@/features/dashboard/user/components/UserColumns";
 
 

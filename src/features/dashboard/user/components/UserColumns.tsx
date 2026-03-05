@@ -1,4 +1,4 @@
-import { RDataTableColumnHeader } from "@/components/RDataTableColumnHeader";
+import { RDataTableColumnHeader } from "@/components/tables/RDataTableColumnHeader";
 import type { ColumnDef } from "@tanstack/react-table";
 
 type UserRole = "user" | "admin" | "fake";

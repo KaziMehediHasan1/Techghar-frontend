@@ -39,8 +39,9 @@ import {
   Users,
   ShieldCheck,
   ShoppingBag,
+  CheckCheck,
   List,
-  PackagePlus,
+  PhoneIcon,
   MenuIcon,
   CreditCard,
   TicketPercent,
@@ -50,12 +51,15 @@ import {
   Settings,
   type LucideProps,
 } from "lucide-react";
-
+import { IoMdCall } from "react-icons/io";
 interface IconProps extends LucideProps {
   className?: string;
   // size?: string;
 }
 export const IconBundler = {
+  Phone: (props: IconProps) => <PhoneIcon {...props} />,
+  PhoneCall: (props: IconProps) => <IoMdCall {...props} />,
+  Check: (props: IconProps) => <CheckCheck {...props} />,
   MoreH: (props: IconProps) => <MoreHorizontal {...props} />,
   MenuIcon: (props: IconProps) => <MenuIcon {...props} />,
   ShoppingBag: (props: IconProps) => <ShoppingBag {...props} />,
