@@ -1,9 +1,13 @@
+import Hero from "@/components/home/Hero";
 import Wrapper from "@/components/layout/Wrapper";
 
 function Home() {
   return (
     <div>
-      <Wrapper>dfakd</Wrapper>
+      <Wrapper>
+        {/* SLIDER */}
+        <Hero />
+      </Wrapper>
     </div>
   );
 }

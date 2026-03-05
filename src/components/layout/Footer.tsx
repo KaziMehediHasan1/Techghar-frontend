@@ -10,7 +10,7 @@ const Footer = () => {
           {/* SEARCH AND INPUT FIELD */}
           <section className="flex flex-col gap-y-4 md:gap-y-0 md:flex-row justify-between ">
             <div className="w-full">
-              <h1 className="text-xl md:text-2xl capitalize -tracking-tighter ">
+              <h1 className="text-2xl md:text-3xl capitalize -tracking-tighter ">
                 Sign Up To Our Newsletter.
               </h1>
               <p className="text-xs md:text-sm leading-6 font-extralight  text-dim-primary tracking-tight">
@@ -29,124 +29,95 @@ const Footer = () => {
             </div>
           </section>
           {/* NAVIGATION BAR */}
-          <section className=" dark:bg-gray-100 dark:text-gray-800">
-            <div className="container grid grid-cols-2 mx-auto gap-x-2 gap-y-8 sm:grid-cols-3 md:grid-cols-5">
+          <section className="dark:bg-gray-100 dark:text-gray-800">
+            <div className="container grid grid-cols-2 mx-auto gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-5">
+              {/* Information */}
               <div className="flex flex-col space-y-4">
-                <h2 className="font-medium text-text-dim text-sm">Getting started</h2>
+                <h2 className="font-medium text-text-dim text-sm">
+                  Information
+                </h2>
                 <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-                  <a rel="noopener noreferrer" href="#">
-                    Installation
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Release Notes
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Upgrade Guide
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Using with Preprocessors
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Optimizing for Production
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Browser Support
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    IntelliSense
-                  </a>
+                  <a href="#">About Us</a>
+                  <a href="#">About Zip</a>
+                  <a href="#">Privacy Policy</a>
+                  <a href="#">Search</a>
+                  <a href="#">Terms</a>
+                  <a href="#">Orders and Returns</a>
+                  <a href="#">Contact Us</a>
+                  <a href="#">Advanced Search</a>
+                  <a href="#">Newsletter Subscription</a>
                 </div>
               </div>
+
+              {/* PC Parts */}
               <div className="flex flex-col space-y-4">
-                <h2 className="font-medium text-text-dim text-sm">Core Concepts</h2>
+                <h2 className="font-medium text-text-dim text-sm">PC Parts</h2>
                 <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-                  <a rel="noopener noreferrer" href="#">
-                    Utility-First
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Responsive Design
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Hover, Focus, &amp; Other States
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Dark Mode
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Adding Base Styles
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Extracting Components
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Adding New Utilities
-                  </a>
+                  <a href="#">CPUs</a>
+                  <a href="#">Add On Cards</a>
+                  <a href="#">Hard Drives (Internal)</a>
+                  <a href="#">Graphic Cards</a>
+                  <a href="#">Keyboards / Mice</a>
+                  <a href="#">Cases / Power Supplies / Cooling</a>
+                  <a href="#">RAM (Memory)</a>
+                  <a href="#">Software</a>
+                  <a href="#">Speakers / Headsets</a>
+                  <a href="#">Motherboards</a>
                 </div>
               </div>
+
+              {/* Desktop PCs */}
               <div className="flex flex-col space-y-4">
-                <h2 className="font-medium text-text-dim text-sm">Customization</h2>
+                <h2 className="font-medium text-text-dim text-sm">
+                  Desktop PCs
+                </h2>
                 <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-                  <a rel="noopener noreferrer" href="#">
-                    Configuration
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Theme Configuration
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Breakpoints
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Customizing Colors
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Customizing Spacing
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Configuring Variants
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Plugins
-                  </a>
+                  <a href="#">Custom PCs</a>
+                  <a href="#">Servers</a>
+                  <a href="#">MSI All-in-One PCs</a>
+                  <a href="#">HP/Compaq PCs</a>
+                  <a href="#">ASUS PCs</a>
+                  <a href="#">Tecs PCs</a>
                 </div>
               </div>
+
+              {/* Laptops */}
               <div className="flex flex-col space-y-4">
-                <h2 className="font-medium text-text-dim text-sm">Community</h2>
+                <h2 className="font-medium text-text-dim text-sm">Laptops</h2>
                 <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-                  <a rel="noopener noreferrer" href="#">
-                    GitHub
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Discord
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Twitter
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    YouTube
-                  </a>
+                  <a href="#">Everyday Use Notebooks</a>
+                  <a href="#">MSI Workstation Series</a>
+                  <a href="#">MSI Prestige Series</a>
+                  <a href="#">Tablets and Pads</a>
+                  <a href="#">Netbooks</a>
+                  <a href="#">Infinity Gaming Notebooks</a>
                 </div>
               </div>
+
+              {/* Address */}
               <div className="flex flex-col space-y-4">
-                <h2 className="font-medium text-text-dim text-sm">Community</h2>
+                <h2 className="font-medium text-text-dim text-sm">Address</h2>
                 <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
-                  <a rel="noopener noreferrer" href="#">
-                    GitHub
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Discord
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    Twitter
-                  </a>
-                  <a rel="noopener noreferrer" href="#">
-                    YouTube
-                  </a>
+                  <p>Address: 1234 Street Adress City Address, 1234</p>
+                  <p>
+                    Phones:{" "}
+                    <span className="text-blue-600">(00) 1234 5678</span>
+                  </p>
+                  <p>We are open: Monday-Thursday: 9:00 AM - 5:30 PM</p>
+                  <p>Friday: 9:00 AM - 6:00 PM</p>
+                  <p>Saturday: 11:00 AM - 5:00 PM</p>
+                  <p>
+                    E-mail:{" "}
+                    <span className="text-blue-600">shop@email.com</span>
+                  </p>
                 </div>
               </div>
             </div>
+
+            {/* Copyright */}
             <div className="flex items-center justify-center px-6 pt-12 text-sm">
               <span className="dark:text-gray-600">
-                © Copyright 1986. All Rights Reserved.
+                Copyright © 2020 Shop Pty. Ltd.
               </span>
             </div>
           </section>
