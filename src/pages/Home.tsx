@@ -1,6 +1,7 @@
 import VerticalCard from "@/components/cards/VerticalCard";
 import Hero from "@/components/home/Hero";
 import Wrapper from "@/components/layout/Wrapper";
+import PromotionalCard from "@/components/promotionalCard";
 import { NavLink } from "react-router-dom";
 
 function Home() {
@@ -20,8 +21,8 @@ function Home() {
             </NavLink>
           </div>
           <VerticalCard />
-          
         </section>
+        <PromotionalCard />
       </Wrapper>
     </div>
   );
