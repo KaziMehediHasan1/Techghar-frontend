@@ -6,6 +6,7 @@ import Case from "@/assets/images/desktop-case.webp";
 import { NavLink } from "react-router-dom";
 import CategoryCard from "@/components/cards/CategoryCard";
 import Heading from "@/components/Heading";
+import { Star } from "lucide-react";
 const msiSeries = [
   { name: "MSI GS Series", path: "/laptops/msi-gs-series" },
   { name: "MSI GT Series", path: "/laptops/msi-gt-series" },
@@ -29,7 +30,7 @@ const Card = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       <CategoryCard image={PcCase} link="" title="Custome Build" />
-      <Heading title="Custom PC Build" link="/" className="block sm:hidden"/>
+      <Heading title="Custom PC Build" link="/" className="block sm:hidden" />
       {[1, 2, 3, 4, 5].map((item) => (
         <NavLink to="/product/details">
           <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300">
@@ -58,11 +59,42 @@ const Card = () => {
 
             {/* RATING */}
             <section className="flex items-center gap-1 text-xs sm:text-sm mb-2">
-              <IconBundler.Star className="w-4 h-4 text-yellow-400" />
-              <IconBundler.Star className="w-4 h-4 text-yellow-400" />
-              <IconBundler.Star className="w-4 h-4 text-yellow-400" />
-              <IconBundler.Star className="w-4 h-4 text-yellow-400" />
-              <IconBundler.Star className="w-4 h-4 text-gray-300" />
+              <Star
+                // key={i}
+                size={16}
+                // fill={i < review.rating ? "currentColor" : "none"}
+                // className={i < review.rating ? "" : "text-gray-200"}
+              />
+              <Star
+                // key={i}
+                size={16}
+                // fill={i < review.rating ? "currentColor" : "none"}
+                // className={i < review.rating ? "" : "text-gray-200"}
+              />
+              <Star
+                // key={i}
+                size={16}
+                // fill={i < review.rating ? "currentColor" : "none"}
+                // className={i < review.rating ? "" : "text-gray-200"}
+              />
+              <Star
+                // key={i}
+                size={16}
+                // fill={i < review.rating ? "currentColor" : "none"}
+                // className={i < review.rating ? "" : "text-gray-200"}
+              />
+              <Star
+                // key={i}
+                size={16}
+                // fill={i < review.rating ? "currentColor" : "none"}
+                // className={i < review.rating ? "" : "text-gray-200"}
+              />
+              <Star
+                // key={i}
+                size={16}
+                // fill={i < review.rating ? "currentColor" : "none"}
+                // className={i < review.rating ? "" : "text-gray-200"}
+              />
               <p className="text-gray-500 ml-1">(5)</p>
             </section>
 
