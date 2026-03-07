@@ -1,8 +1,9 @@
-import VerticalCard from "@/components/cards/VerticalCard";
+import BrandLogos from "@/components/BrandLogos";
+import CategoryWiseCard from "@/components/cards/CategoryWiseCard";
 import Hero from "@/components/home/Hero";
 import Wrapper from "@/components/layout/Wrapper";
 import PromotionalCard from "@/components/promotionalCard";
-import { NavLink } from "react-router-dom";
+import NewProduct from "@/pages/NewProduct";
 
 function Home() {
   return (
@@ -10,19 +11,15 @@ function Home() {
       <Wrapper>
         {/* SLIDER */}
         <Hero />
-        <section className="mt-3 space-y-3">
-          <div className="flex items-center justify-between">
-            <h1 className="font-semibold text-sm sm:text-xl">New Products</h1>
-            <NavLink
-              to="/product/new"
-              className="text-xs sm:text-sm hover:text-brand-primary underline"
-            >
-              See All New Products
-            </NavLink>
-          </div>
-          <VerticalCard />
-        </section>
+        <NewProduct />
         <PromotionalCard />
+        <section className="mt-3 space-y-5">
+          <CategoryWiseCard />
+          <CategoryWiseCard />
+          <CategoryWiseCard />
+          <CategoryWiseCard />
+        </section>
+        <BrandLogos />
       </Wrapper>
     </div>
   );
