@@ -1,4 +1,5 @@
 import BrandLogos from "@/components/BrandLogos";
+import BlogCard from "@/components/cards/BlogCard";
 import CategoryWiseCard from "@/components/cards/CategoryWiseCard";
 import Hero from "@/components/home/Hero";
 import Wrapper from "@/components/layout/Wrapper";
@@ -20,6 +21,7 @@ function Home() {
           <CategoryWiseCard />
         </section>
         <BrandLogos />
+        <BlogCard />
       </Wrapper>
     </div>
   );

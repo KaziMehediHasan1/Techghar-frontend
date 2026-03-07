@@ -12,6 +12,7 @@ const msiSeries = [
   { name: "MSI GL Series", path: "/laptops/msi-gl-series" },
   { name: "MSI GE Series", path: "/laptops/msi-ge-series" },
 ];
+
 const CategoryWiseCard = () => {
   return (
     <div className="space-y-5">
