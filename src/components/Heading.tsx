@@ -11,7 +11,7 @@ const Heading = ({ title, link, className }: HeadingProps) => {
   return (
     <section className={cn("mt-3 space-y-3", className)}>
       <div className="flex items-center justify-between">
-        <h1 className="font-semibold text-sm sm:text-xl">{title}</h1>
+        <h1 className="font-bold text-lg sm:text-2xl">{title}</h1>
         <NavLink
           to={link}
           className="text-xs sm:text-sm hover:text-brand-primary underline"

@@ -42,7 +42,7 @@ const BlogCard = () => {
     <section className="w-full py-5">
       {/* Heading Section */}
       <div className="flex items-center justify-between mb-8 border-l-4 border-brand-primary pl-4">
-        <h2 className="font-bold text-sm sm:text-xl text-gray-900">
+        <h2 className="font-bold text-lg sm:text-2xl text-gray-900">
           Read Blogs For More Info Our Products
         </h2>
         <button className="hidden sm:block text-xs sm:text-sm font-semibold text-blue-600 hover:underline">
