@@ -6,6 +6,7 @@ import UserList from "@/features/dashboard/user/pages/UserList";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
+import TermsAndCondition from "@/pages/TermsAndCondition";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/terms",
+        element: <TermsAndCondition />,
       },
       // secure path -
       {
