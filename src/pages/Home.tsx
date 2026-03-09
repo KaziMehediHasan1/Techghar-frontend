@@ -5,7 +5,7 @@ import HelpersCard from "@/components/cards/HelpersCard";
 import ReviewCard from "@/components/cards/ReviewCard";
 import Hero from "@/components/home/Hero";
 import Wrapper from "@/components/layout/Wrapper";
-import PromotionalCard from "@/components/promotionalCard";
+import PromotionalCard from "@/components/PromotionalCard";
 import NewProduct from "@/pages/NewProduct";
 
 function Home() {
