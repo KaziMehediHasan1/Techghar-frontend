@@ -1,5 +1,6 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
+import UserDashboard from "@/components/layout/UserDashboard";
 import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/users-dashboard",
+        element: <UserDashboard />,
         children: [
           { path: "list", element: <UserList /> },
           { path: "admin/staff", element: "staff" },
