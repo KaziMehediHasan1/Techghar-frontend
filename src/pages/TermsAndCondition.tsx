@@ -9,9 +9,9 @@ const TermsAndCondition = () => {
   return (
     <div>
       <Wrapper>
-        <div className="py-6 md:py-10">
+        <div className="my-6 ">
           {/* BREADCRUMB & MAIN TITLE */}
-          <header className="mb-8 space-y-3">
+          <header className="mb-4 space-y-4">
             <BreadcrumbBasic />
             <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900">
               Shop Terms & Conditions
@@ -25,13 +25,13 @@ const TermsAndCondition = () => {
               <h2 className="text-xl md:text-2xl font-bold text-slate-800 leading-tight uppercase">
                 General Terms and Conditions for Sale of Products and Services
               </h2>
-              <div className="mt-6 text-slate-600 leading-relaxed space-y-4">
+              <div className="mt-5 sm:mt-12 text-slate-600 leading-relaxed space-y-6">
                 {/* Definition */}
-                <section>
-                  <h1 className="text-lg sm:text-xl font-bold">
+                <section className="space-y-4 sm:space-y-6">
+                  <h1 className="text-sm sm:text-lg font-bold">
                     Definitions & Interpretation
                   </h1>
-                  <p className="text-sm sm:text-lg -tracking-tighter">
+                  <p className="text-xs sm:text-sm -tracking-tighter">
                     In the following Terms and Conditions of sale, unless the
                     context requires otherwise
                   </p>
@@ -105,9 +105,9 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* General */}
-                <section>
-                  <h1 className="text-lg sm:text-xl font-bold">General</h1>
-                  <p>
+                <section className="space-y-4 sm:space-y-6">
+                  <h1 className="text-sm sm:text-lg font-bold">General</h1>
+                  <p className="text-xs sm:text-sm -tracking-tighter">
                     By ordering the Products and/or accepting delivery of the
                     Products from Shop, the Customer agrees that it is bound by
                     these Terms and Conditions of sale. Customer orders,
@@ -127,10 +127,10 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Quotations */}
-                <section>
+                <section className="space-y-4 sm:space-y-6">
                   {/* General */}
-                  <h1 className="text-lg sm:text-xl font-bold">Quotations</h1>
-                  <p>
+                  <h1 className="text-sm sm:text-lg font-bold">Quotations</h1>
+                  <p className="text-xs sm:text-sm -tracking-tighter">
                     Any quotation by Shop to the Customer will be open for
                     acceptance by the Customer within the period stated in the
                     quotation or, where no period is stated, within seven (7)
@@ -141,12 +141,12 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Prices / Taxes */}
-                <section>
+                <section className="space-y-4 sm:space-y-6">
                   {/* General */}
-                  <h1 className="text-lg sm:text-xl font-bold">
+                  <h1 className="text-sm sm:text-lg font-bold">
                     Prices / Taxes
                   </h1>
-                  <p>
+                  <p className="text-xs sm:text-sm -tracking-tighter">
                     The prices charged by and payable to Shop will be the ruling
                     prices applicable at the time of order placement, provided
                     that the Products are accepted for delivery within a
@@ -166,36 +166,36 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Terms of Payment */}
-                <section>
+                <section className="space-y-4 sm:space-y-6">
                   {/* General */}
-                  <h1 className="text-lg sm:text-xl font-bold">
-                    Prices / Taxes
+                  <h1 className="text-sm sm:text-lg font-bold">
+                    Terms of Payment
                   </h1>
                   <div className="space-y-4">
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Credit Card Payments may attract a surcharge, and Shop
                       will inform the Customer if this is to be the case before
                       processing the transaction.
                     </p>
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Unless otherwise agreed in writing by Shop, where Shop has
                       not agreed in writing to provide commercial credit to the
                       Customer, the total purchase price for Products supplied
                       will be due for payment in cash prior to delivery.
                     </p>
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Where Shop has agreed in writing to provide commercial
                       credit to the Customer, the Customer must make payments in
                       accordance with the payment terms provided by Shop.
                     </p>
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Where Shop has approved the provision of a commercial
                       credit arrangement with the Customer but has not provided
                       notice of the payment terms to the Customer, the Customer
                       must pay the total purchase price for Products supplied
                       within seven days of the statement date.
                     </p>
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Credit Card Payment at an Invoice or transaction level may
                       also be offered to the Customer as a stand-alone payment
                       method, or in conjunction with Credit Card Direct Debit
@@ -205,12 +205,12 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Credit Accounts */}
-                <section>
+                <section className="space-y-4 sm:space-y-6">
                   {/* General */}
-                  <h1 className="text-lg sm:text-xl font-bold">
+                  <h1 className="text-sm sm:text-lg font-bold">
                     Credit Accounts
                   </h1>
-                  <p>
+                  <p className="text-xs sm:text-sm -tracking-tighter">
                     Any commercial credit arrangements that are provided to the
                     Customer by Shop will continue until terminated by Shop at
                     it sole discretion. In the event that Shop terminates the
@@ -221,13 +221,13 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Change of Ownership */}
-                <section>
+                <section className="space-y-4 sm:space-y-6">
                   {/* General */}
-                  <h1 className="text-lg sm:text-xl font-bold">
+                  <h1 className="text-sm sm:text-lg font-bold">
                     Change of Ownership
                   </h1>
                   <div className="space-y-4">
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Trading accounts are approved by Shop based on the
                       information supplied and the representations made by the
                       Customer. In the event that there is a change in ownership
@@ -247,7 +247,7 @@ const TermsAndCondition = () => {
                       and used the Customer's previously approved account for
                       trading.
                     </p>
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       Where a Customer has been authorised by Shop to make
                       payments through Credit Card Direct Debit, the Customer
                       must provide notice in writing at least five (5) days
@@ -259,12 +259,12 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Information on the Products supplied */}
-                <section>
-                  <h1 className="text-lg sm:text-xl font-bold">
+                <section className="space-y-4 sm:space-y-6">
+                  <h1 className="text-sm sm:text-lg font-bold">
                     Information on the Products supplied
                   </h1>
 
-                  <p>
+                  <p className="text-xs sm:text-sm -tracking-tighter">
                     All descriptive specifications, illustrations, drawings,
                     data, dimensions and weights furnished by Shop or otherwise
                     contained in catalogues or other advertising material are
@@ -278,10 +278,10 @@ const TermsAndCondition = () => {
                 </section>
 
                 {/* Delivery */}
-                <section>
-                  <h1 className="text-lg sm:text-xl font-bold">Delivery</h1>
-                  <div>
-                    <p>
+                <section className="space-y-4 sm:space-y-6">
+                  <h1 className="text-sm sm:text-lg font-bold">Delivery</h1>
+                  <div className="space-y-4">
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       The means of delivering the Products to the Customer will
                       be at Shop' discretion. Shop reserves the right to deliver
                       Products in part deliveries. In the event that Shop incurs
@@ -293,7 +293,7 @@ const TermsAndCondition = () => {
                       to accept delivery of the Products sold at any time during
                       normal business hours.
                     </p>
-                    <p>
+                    <p className="text-xs sm:text-sm -tracking-tighter">
                       All descriptive specifications, illustrations, drawings,
                       data, dimensions and weights furnished by Shop or
                       otherwise contained in catalogues or other advertising
