@@ -22,10 +22,10 @@ const TermsAndCondition = () => {
           <main className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* LEFT SIDE: GENERAL TERMS TITLE */}
             <div className="lg:col-span-8">
-              <h2 className="text-xl md:text-2xl font-bold text-slate-800 leading-tight uppercase">
+              <h2 className="text-xl md:text-2xl font-bold leading-tight uppercase">
                 General Terms and Conditions for Sale of Products and Services
               </h2>
-              <div className="mt-5 sm:mt-12 text-slate-600 leading-relaxed space-y-6">
+              <div className="mt-5 sm:mt-12 leading-relaxed space-y-6">
                 {/* Definition */}
                 <section className="space-y-4 sm:space-y-6">
                   <h1 className="text-sm sm:text-lg font-bold">
