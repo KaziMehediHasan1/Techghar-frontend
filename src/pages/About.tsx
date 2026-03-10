@@ -1,4 +1,4 @@
-import { BreadcrumbBasic } from "@/components/Breadcrumb";
+import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import Wrapper from "@/components/layout/Wrapper";
 import Office from "@/assets/images/Office.png";
 import KeyboardImage from "@/assets/images/MachanicalKey.png";

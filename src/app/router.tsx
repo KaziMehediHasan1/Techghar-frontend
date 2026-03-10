@@ -4,6 +4,8 @@ import UserDashboard from "@/components/layout/UserDashboard";
 import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
+import UserDashboardOverview from "@/features/user_dashboard/pages/UserDashboardOverview";
+import UserInfo from "@/features/user_dashboard/pages/UserInfo";
 import About from "@/pages/About";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
@@ -38,13 +40,15 @@ export const router = createBrowserRouter([
         path: "/users-dashboard",
         element: <UserDashboard />,
         children: [
-          { path: "list", element: <UserList /> },
-          { path: "admin/staff", element: "staff" },
+          { index: true, element: <UserDashboardOverview /> },
+          { path: "user/info", element: <UserInfo /> },
           { path: "spam-alerts", element: "alerts" },
         ],
       },
     ],
   },
+
+  // users dashboard ---
 
   // it's for admin only
   {

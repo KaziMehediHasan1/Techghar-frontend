@@ -1,4 +1,4 @@
-import { BreadcrumbBasic } from "@/components/Breadcrumb";
+import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import HelpersCard from "@/components/cards/HelpersCard";
 import Wrapper from "@/components/layout/Wrapper";
 import { useLocation } from "react-router-dom";
