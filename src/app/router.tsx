@@ -33,6 +33,14 @@ export const router = createBrowserRouter([
         path: "/payment",
         element: <PaymentPage />,
       },
+      {
+        path: "/users-dashboard",
+        children: [
+          { path: "list", element: <UserList /> },
+          { path: "admin/staff", element: "staff" },
+          { path: "spam-alerts", element: "alerts" },
+        ],
+      },
     ],
   },
 

@@ -4,9 +4,7 @@ import Office from "@/assets/images/Office.png";
 import KeyboardImage from "@/assets/images/MachanicalKey.png";
 import PCSafe from "@/assets/images/PCSafeBox.png";
 import WhitePC from "@/assets/images/whitePc.png";
-import PCDevelivery from "@/assets/images/DeliveryPC.png";
 import ShopLogo from "@/assets/images/shopLogo.png";
-import DeliverIcon from "@/assets/images/DeliveryIcon.png";
 import QualityIcon from "@/assets/images/QualityIcon.png";
 import SafeIcon from "@/assets/images/SafeIcon.png";
 import ReviewCard from "@/components/cards/ReviewCard";
@@ -142,6 +140,7 @@ const About = () => {
           </div>
         </Wrapper>
       </section>
+      
       <section className="space-y-6 sm:space-y-10 sm:my-12">
         <ReviewCard />
         <HelpersCard />
