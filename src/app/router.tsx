@@ -1,12 +1,10 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
-import UserDashboard from "@/components/layout/UserDashboard";
 import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
-import UserDashboardOverview from "@/features/user_dashboard/pages/UserDashboardOverview";
-import UserInfo from "@/features/user_dashboard/pages/UserInfo";
 import About from "@/pages/About";
+import Contact from "@/pages/Contact";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import TermsAndCondition from "@/pages/TermsAndCondition";
@@ -37,13 +35,8 @@ export const router = createBrowserRouter([
         element: <PaymentPage />,
       },
       {
-        path: "/users-dashboard",
-        element: <UserDashboard />,
-        children: [
-          { index: true, element: <UserDashboardOverview /> },
-          { path: "user/info", element: <UserInfo /> },
-          { path: "spam-alerts", element: "alerts" },
-        ],
+        path: "/contact",
+        element: <Contact />,
       },
     ],
   },
