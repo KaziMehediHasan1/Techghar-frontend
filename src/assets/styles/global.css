@@ -12,6 +12,7 @@
 
 @theme inline {
   /* custom variable */
+  --color-sky: #F5F7FF;
   --color-brand-primary: #0156ff;
   --color-muted: #a2a6b0;
   --color-stock-check-main: #78a962;

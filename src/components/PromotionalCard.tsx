@@ -4,7 +4,7 @@ const PromotionalCard = () => {
   return (
     <div
       className="p-5 rounded flex flex-col sm:flex-row items-center
-        text-center sm:text-left justify-center gap-5 bg-[#F5F7FF] my-5 "
+        text-center sm:text-left justify-center gap-5 bg-sky my-5 "
     >
       <img
         src={ZipLogo}

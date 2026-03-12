@@ -1,5 +1,7 @@
 import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
+import LoginPage from "@/features/auth/pages/LoginPage";
+import SingUpPage from "@/features/auth/pages/SingUpPage";
 import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/signup",
+        element: <SingUpPage />,
       },
     ],
   },
