@@ -41,7 +41,7 @@ const LoginPage = () => {
               </div>
               <div className="flex items-center gap-x-4">
                 <button className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
-                  Submit
+                  Sign In
                 </button>
                 <NavLink
                   to=""
@@ -67,9 +67,9 @@ const LoginPage = () => {
               <li>Keep more than one address</li>
               <li>Track orders and more</li>
             </ul>
-            <button className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
+            <NavLink to="/signup" className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
               Create An Account
-            </button>
+            </NavLink>
           </div>
         </section>
       </Wrapper>

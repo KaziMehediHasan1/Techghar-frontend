@@ -22,7 +22,15 @@ const SingUpPage = () => {
                 If you have an account, sign in with your email address.
               </p>
             </header>
-            <form action="" className="space-y-3">
+            <form action="" className="space-y-4">
+              <div className="space-y-2 flex flex-col gap-2">
+                <label htmlFor="">Name *</label>
+                <input
+                  type="text"
+                  placeholder="enter you name.."
+                  className="p-2 rounded text-xs sm:text-sm bg-white border"
+                />
+              </div>
               <div className="space-y-2 flex flex-col gap-2">
                 <label htmlFor="">Email *</label>
                 <input
@@ -41,7 +49,7 @@ const SingUpPage = () => {
               </div>
               <div className="flex items-center gap-x-4">
                 <button className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
-                  Submit
+                  Sign Up
                 </button>
                 <NavLink
                   to=""
@@ -55,21 +63,26 @@ const SingUpPage = () => {
           {/* others card */}
           <div className="bg-sky p-4 sm:p-6 space-y-3 rounded-md">
             <header className="space-y-2">
-              <h1 className="text-sm sm:text-lg font-semibold">
-                New Customer?
-              </h1>
+              <h1 className="text-sm sm:text-lg font-semibold">Why Join Us?</h1>
               <p className="text-xs sm:text-sm leading-5 tracking-wider">
-                Creating an account has many benefits:-
+                Join our community today and enjoy a personalized shopping
+                experience:-
               </p>
             </header>
             <ul className="list-disc text-xs sm:text-sm space-y-1.5 p-4 sm:p-6">
-              <li>Check out faster</li>
-              <li>Keep more than one address</li>
-              <li>Track orders and more</li>
+              <li>Exclusive Deals: Get access to member-only discounts.</li>
+              <li>
+                Order Tracking: Stay updated on your delivery status in
+                real-time.
+              </li>
+              <li>Wishlist: Save your favorite items for later.</li>
             </ul>
-            <button className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
-              Create An Account
-            </button>
+            <div className="flex items-center gap-1">
+              <p>Already have an account? </p>
+              <NavLink to="/login" className="text-sm text-brand-primary py-2 px-4  cursor-pointer">
+                Log in here
+              </NavLink>
+            </div>
           </div>
         </section>
       </Wrapper>
