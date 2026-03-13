@@ -1,6 +1,8 @@
 import Wrapper from "@/components/layout/Wrapper";
 import Banner from "@/assets/images/AdBanner.png";
 import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
+import Filtered from "@/features/catalog/components/Filtered";
+import CatalogCards from "@/features/catalog/components/CatalogCards";
 const Catalog = () => {
   return (
     <div>
@@ -19,10 +21,20 @@ const Catalog = () => {
         </section>
         {/* Main Section - filter, card section */}
         <section>
-          {/* Filtering Section */}
-          <div></div>
-          {/* Card Data */}
-          <div></div>
+          {/* Toggle bar and card changing button */}
+          <div>
+            
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            {/* Filtering Section */}
+            <div>
+              <Filtered />
+            </div>
+            {/* Card Data */}
+            <div>
+              <CatalogCards />
+            </div>
+          </div>
         </section>
       </Wrapper>
     </div>
