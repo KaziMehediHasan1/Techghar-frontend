@@ -2,6 +2,7 @@ import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import SingUpPage from "@/features/auth/pages/SingUpPage";
+import Catalog from "@/features/catalog/pages/Catalog";
 import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/catalog",
+        element: <Catalog />,
       },
       {
         path: "/about",
