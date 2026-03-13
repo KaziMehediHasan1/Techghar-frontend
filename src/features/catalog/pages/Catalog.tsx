@@ -3,6 +3,7 @@ import Banner from "@/assets/images/AdBanner.png";
 import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import Filtered from "@/features/catalog/components/Filtered";
 import CatalogCards from "@/features/catalog/components/CatalogCards";
+import ButtonSection from "@/features/catalog/components/ButtonSection";
 const Catalog = () => {
   return (
     <div>
@@ -22,18 +23,15 @@ const Catalog = () => {
         {/* Main Section - filter, card section */}
         <section>
           {/* Toggle bar and card changing button */}
-          <div>
-            
-          </div>
+          <ButtonSection />
           <div className="grid grid-cols-1 sm:grid-cols-2">
             {/* Filtering Section */}
-            <div>
-              <Filtered />
-            </div>
+
+            <Filtered />
+
             {/* Card Data */}
-            <div>
-              <CatalogCards />
-            </div>
+
+            <CatalogCards />
           </div>
         </section>
       </Wrapper>
