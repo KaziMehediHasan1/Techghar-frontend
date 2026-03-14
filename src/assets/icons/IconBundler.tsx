@@ -50,12 +50,17 @@ import {
   type LucideProps,
 } from "lucide-react";
 import { IoMdCall } from "react-icons/io";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { CgMenuGridR } from "react-icons/cg";
+
 interface IconProps extends LucideProps {
   className?: string;
   // size?: string;
 }
 export const IconBundler = {
   Phone: (props: IconProps) => <PhoneIcon {...props} />,
+  VercitalSort: (props: IconProps) => <BiMenuAltLeft {...props} />,
+  GridSort: (props: IconProps) => <CgMenuGridR {...props} />,
   PhoneCall: (props: IconProps) => <IoMdCall {...props} />,
   Check: (props: IconProps) => <CheckCheck {...props} />,
   MoreH: (props: IconProps) => <MoreHorizontal {...props} />,
