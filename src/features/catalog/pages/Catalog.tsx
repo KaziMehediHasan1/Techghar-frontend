@@ -1,8 +1,6 @@
 import Wrapper from "@/components/layout/Wrapper";
 import Banner from "@/assets/images/AdBanner.png";
 import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
-import Filtered from "@/features/catalog/components/Filtered";
-import CatalogCards from "@/features/catalog/components/CatalogCards";
 import ButtonSection from "@/features/catalog/components/ButtonSection";
 const Catalog = () => {
   return (
