@@ -12,7 +12,7 @@ const DynamicFilterMenu = ({ name, items }: { name: string; items: string[] }) =
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">{name}N</Button>
+        <Button variant="outline">{name}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>

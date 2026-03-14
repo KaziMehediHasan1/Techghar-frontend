@@ -24,15 +24,7 @@ const Catalog = () => {
         <section>
           {/* Toggle bar and card changing button */}
           <ButtonSection />
-          <div className="grid grid-cols-1 sm:grid-cols-2">
-            {/* Filtering Section */}
-
-            <Filtered />
-
-            {/* Card Data */}
-
-            <CatalogCards />
-          </div>
+         
         </section>
       </Wrapper>
     </div>
