@@ -5,9 +5,11 @@ import Filtered from "@/features/catalog/components/Filtered";
 import ShowMenu from "@/features/catalog/components/ShowMenu";
 import SortMenu from "@/features/catalog/components/SortMenu";
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const ButtonSection = () => {
+  const [cardShowType, setCardShowType] = useState<"list" | "grid">("list");
   return (
     <section className="flex flex-col lg:flex-row gap-4">
       {/* LEFT COLUMN: Sidebar + Header */}
@@ -33,8 +35,12 @@ const ButtonSection = () => {
             <SortMenu />
             <ShowMenu />
             <div className="flex items-center gap-2 ml-2">
-              <IconBundler.GridSort className="w-6 h-6 cursor-pointer" />
-              <IconBundler.VercitalSort className="w-6 h-6 cursor-pointer opacity-40" />
+              <button className="" onClick={() => setCardShowType("grid")}>
+                <IconBundler.GridSort className="w-6 h-6 cursor-pointer" />
+              </button>
+              <button onClick={() => setCardShowType("list")}>
+                <IconBundler.VercitalSort className="w-6 h-6 cursor-pointer opacity-40" />
+              </button>
             </div>
           </div>
         </div>
@@ -64,7 +70,7 @@ const ButtonSection = () => {
               <span className="text-[#A2A6B0] font-normal">Clear</span>
             </Button>
           </section>
-          <CatalogCards />
+          <CatalogCards cardType={cardShowType} />
         </div>
       </main>
     </section>
