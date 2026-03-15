@@ -9,7 +9,7 @@ const VerticalCard = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {[1, 2, 3, 4, 5].map((item) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
         <NavLink to="/product/details">
           <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300">
             {/* STOCK INDICATOR */}

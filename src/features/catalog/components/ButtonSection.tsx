@@ -6,21 +6,23 @@ import ShowMenu from "@/features/catalog/components/ShowMenu";
 import SortMenu from "@/features/catalog/components/SortMenu";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const ButtonSection = () => {
+  const navigate = useNavigate();
   const [cardShowType, setCardShowType] = useState<"list" | "grid">("list");
   return (
     <section className="flex flex-col lg:flex-row gap-4">
       {/* LEFT COLUMN: Sidebar + Header */}
       <aside className="lg:w-62.5 shrink-0">
         <div className="hidden lg:flex flex-col gap-2 p-2">
-          <NavLink
-            to=""
-            className="flex items-center justify-center text-xs font-bold gap-1"
+          
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center ..."
           >
             ‹ Back
-          </NavLink>
+          </button>
         </div>
         <Filtered />
       </aside>
@@ -36,10 +38,10 @@ const ButtonSection = () => {
             <ShowMenu />
             <div className="flex items-center gap-2 ml-2">
               <button className="" onClick={() => setCardShowType("grid")}>
-                <IconBundler.GridSort className="w-6 h-6 cursor-pointer" />
+                <IconBundler.GridSort className="w-6 h-6 hidden sm:block cursor-pointer" />
               </button>
               <button onClick={() => setCardShowType("list")}>
-                <IconBundler.VercitalSort className="w-6 h-6 cursor-pointer opacity-40" />
+                <IconBundler.VercitalSort className="w-6 h-6 hidden sm:block cursor-pointer opacity-40" />
               </button>
             </div>
           </div>

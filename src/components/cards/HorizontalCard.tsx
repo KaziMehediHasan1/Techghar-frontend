@@ -1,5 +1,5 @@
 import { IconBundler } from "@/assets/icons/IconBundler";
-import { Star, ShoppingCart } from "lucide-react";
+import { Star } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Case from "@/assets/images/desktop-case.webp";
@@ -7,9 +7,8 @@ import { Button } from "@/components/ui/button";
 
 const HorizontalCard = () => {
   const [check] = useState(true);
-
   return (
-    <div className="flex flex-col gap-4">
+    <div className="hidden sm:flex flex-col gap-4">
       {[1, 2, 3, 4, 5].map((item) => (
         <NavLink key={item} to="/product/details" className="block">
           <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row gap-6 items-center sm:items-start">
@@ -61,8 +60,8 @@ const HorizontalCard = () => {
             </div>
 
             {/* 3. PRICING & ACTION SECTION - Right aligned on desktop */}
-            <div className="w-full sm:w-32 lg:w-40 flex flex-col items-center sm:items-end justify-center gap-3">
-              <div className="text-center sm:text-right">
+            <div className="w-full  sm:w-32 lg:w-40 flex flex-col sm:items-end justify-center gap-3">
+              <div className="text-left sm:text-right">
                 <p className="text-xs text-gray-400 line-through">$450.00</p>
                 <p className="text-xl font-bold text-black">$320.00</p>
               </div>

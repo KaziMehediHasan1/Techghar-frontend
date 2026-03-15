@@ -22,7 +22,6 @@ const Catalog = () => {
         <section>
           {/* Toggle bar and card changing button */}
           <ButtonSection />
-         
         </section>
       </Wrapper>
     </div>
