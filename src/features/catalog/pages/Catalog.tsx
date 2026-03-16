@@ -2,7 +2,12 @@ import Wrapper from "@/components/layout/Wrapper";
 import Banner from "@/assets/images/AdBanner.png";
 import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import ButtonSection from "@/features/catalog/components/ButtonSection";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 const Catalog = () => {
+  const { categoryName } = useParams(); // router theke dynamic value nibe
+  const [products, setProducts] = useState([]);
+  console.log(categoryName, "categoryName");
   return (
     <div>
       <Wrapper>

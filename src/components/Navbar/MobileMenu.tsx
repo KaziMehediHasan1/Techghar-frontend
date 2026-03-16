@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 
 const drawerBaseStyle =
-  "fixed top-0 left-0 z-50 h-screen w-72 bg-white shadow-xl transition-transform duration-300 ease-in-out";
+  "fixed top-0 left-0 z-100 h-screen w-72 bg-white shadow-xl transition-transform duration-300 ease-in-out";
 
 const overlayStyle =
   "fixed inset-0 bg-black/40 z-40 transition-opacity duration-300";
@@ -27,7 +27,7 @@ const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
       {/* DRAWER */}
       <div
         className={`${drawerBaseStyle} ${
-          openMenu ? "translate-x-0" : "-translate-x-full"
+          openMenu ? "translate-x-0 " : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b">

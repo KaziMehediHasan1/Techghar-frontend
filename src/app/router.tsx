@@ -6,6 +6,7 @@ import Catalog from "@/features/catalog/pages/Catalog";
 import PaymentPage from "@/features/checkout/pages/CheckoutPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
+import ProductDetails from "@/features/product/pages/ProductDetails";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Home from "@/pages/Home";
@@ -25,8 +26,12 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/catalog",
+        path: "/catalog/:categoryName",
         element: <Catalog />,
+      },
+      {
+        path: "/product/:id",
+        element: <ProductDetails />,
       },
       {
         path: "/about",

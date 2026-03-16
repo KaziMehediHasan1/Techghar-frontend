@@ -31,7 +31,7 @@ const Navbar = () => {
           <section className="flex items-center gap-x-7">
             {Links.map((link: TNavLink) => (
               <NavLink
-                to={link.path}
+                to={`/catalog/${link.path}`}
                 className={({ isActive }) =>
                   isActive
                     ? "text-sm sm:text-[1rem] font-semibold hover:text-brand-primary text-brand-primary"
@@ -113,5 +113,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
