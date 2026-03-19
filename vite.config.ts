@@ -1,11 +1,11 @@
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   server: {
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 5173,
     watch: {
       usePolling: true,
@@ -15,4 +15,9 @@ export default defineConfig({
     },
   },
   plugins: [tailwindcss(), react(), tsconfigPaths()],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
+  },
 });
