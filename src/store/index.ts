@@ -12,7 +12,7 @@ export interface ITheme {
 
 // cart related types -
 export interface ICartItem {
-  id: number;
+  id: string;
   title: string;
   price: number;
   quantity: number;
@@ -22,8 +22,8 @@ export interface ICartItem {
 export interface ICartState {
   cart: ICartItem[];
   addToCart: (product: ICartItem) => void;
-  removeFromCart: (id: number) => void;
-  updateQuantity: (id: number, type: "increment" | "decrement") => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, type: "increment" | "decrement") => void;
   clearCart: () => void;
   getTotalPrice: () => number;
 }

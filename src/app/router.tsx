@@ -4,6 +4,7 @@ import LoginPage from "@/features/auth/pages/LoginPage";
 import SingUpPage from "@/features/auth/pages/SingUpPage";
 import Catalog from "@/features/catalog/pages/Catalog";
 import PaymentPage from "@/features/checkout/pages/PaymentPage";
+import PaymentSuccess from "@/features/checkout/pages/PaymentSuccess";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
 import ProductDetails from "@/features/product/pages/ProductDetails";
@@ -46,6 +47,7 @@ export const router = createBrowserRouter([
         path: "/payment",
         element: <PaymentPage />,
       },
+      { path: "/payment-success", element: <PaymentSuccess /> },
       {
         path: "/contact",
         element: <Contact />,

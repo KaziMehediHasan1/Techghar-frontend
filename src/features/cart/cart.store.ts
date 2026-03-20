@@ -14,7 +14,7 @@ export const useCartStore = create<ICartState>()(
           set({ cart: [...get().cart, { ...product, quantity: 1 }] });
         }
       },
-      removeFromCart: (id) =>
+      removeFromCart: (id: string) =>
         set({ cart: get().cart.filter((item) => item.id !== id) }),
       updateQuantity: (id, type) =>
         set({

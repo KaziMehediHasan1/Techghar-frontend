@@ -1,52 +1,79 @@
+import { useState } from "react";
 import {
   PaymentElement,
-  useElements,
   useStripe,
+  useElements,
 } from "@stripe/react-stripe-js";
-import { useState } from "react";
-import type { FormEvent } from "react";
 
-// S2: Actual Form — Stripe Elements use -
-const CheckoutForm = () => {
-  const stripe = useStripe(); // Stripe instance
-  const elements = useElements(); // Elements instance
-  const [message, setMessage] = useState("");
+export default function CheckoutForm() {
+  const stripe = useStripe();
+  const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!stripe || !elements) return;
+    if (!stripe || !elements) return; // not loaded yet
 
     setLoading(true);
+    setErrorMsg("");
 
-    // stripe can validate card info then confirmed payment -
+    // Step 1: validate fields before submitting
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      setErrorMsg(submitError.message);
+      setLoading(false);
+      return;
+    }
+
+    // Step 2: confirm the payment
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/payment-success",
+        // Redirect here after successful payment
+        return_url: `${window.location.origin}/payment-success`,
       },
     });
 
+    // If we reach here, payment failed (success redirects away)
     if (error) {
-      setMessage(error?.message as string);
+      if (error.type === "card_error" || error.type === "validation_error") {
+        setErrorMsg(error.message);
+      } else {
+        setErrorMsg("An unexpected error occurred.");
+      }
     }
-
     setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* ✅ PaymentElement = Stripe এর secure card input UI */}
-      {/* Card number, expiry, CVC সব এই একটা component এ */}
       <PaymentElement />
 
-      <button disabled={!stripe || loading}>
+      {errorMsg && (
+        <p style={{ color: "#ef4444", fontSize: "13px", marginTop: "10px" }}>
+          {errorMsg}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={!stripe || loading}
+        style={{
+          width: "100%",
+          padding: "12px",
+          marginTop: "16px",
+          background: loading ? "#a5b4fc" : "#6366f1",
+          color: "#fff",
+          border: "none",
+          borderRadius: "8px",
+          fontSize: "15px",
+          fontWeight: "600",
+          cursor: loading ? "not-allowed" : "pointer",
+        }}
+      >
         {loading ? "Processing..." : "Pay Now"}
       </button>
-
-      {message && <p style={{ color: "red" }}>{message}</p>}
     </form>
   );
-};
-
-export default CheckoutForm;
+}

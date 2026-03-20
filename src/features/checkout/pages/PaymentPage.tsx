@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "@/features/checkout/components/CheckoutForm";
 import { CONFIG } from "@/config/env";
 import { appearance } from "@/features/checkout/stripe/appearance";
+
 // stripe publishble key -
 const stripePromise = CONFIG.payment_published_key;
 

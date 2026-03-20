@@ -1,6 +1,6 @@
 // auth related types --
 export interface IUser {
-  id?: string;
+  id: string;
   name: string;
   email: string;
   role: "user" | "admin";
