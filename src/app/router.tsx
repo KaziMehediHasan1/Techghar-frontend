@@ -3,7 +3,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import SingUpPage from "@/features/auth/pages/SingUpPage";
 import Catalog from "@/features/catalog/pages/Catalog";
-import PaymentPage from "@/features/checkout/pages/CheckoutPage";
+import PaymentPage from "@/features/checkout/pages/PaymentPage";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
 import ProductDetails from "@/features/product/pages/ProductDetails";

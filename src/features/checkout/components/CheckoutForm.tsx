@@ -6,7 +6,7 @@ import {
 import { useState } from "react";
 import type { FormEvent } from "react";
 
-// ✅ Step 2: Actual Form — Stripe Elements use করে
+// S2: Actual Form — Stripe Elements use -
 const CheckoutForm = () => {
   const stripe = useStripe(); // Stripe instance
   const elements = useElements(); // Elements instance
@@ -15,19 +15,18 @@ const CheckoutForm = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!stripe || !elements) return; // Stripe লোড না হলে skip
+    if (!stripe || !elements) return;
 
     setLoading(true);
 
-    // ✅ এখানে Stripe নিজেই card validate করে payment confirm করে
+    // stripe can validate card info then confirmed payment -
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/payment-success", // payment শেষে যাবে
+        return_url: "http://localhost:3000/payment-success",
       },
     });
 
-    // Error হলেই এখানে আসে (success হলে redirect হয়ে যায়)
     if (error) {
       setMessage(error?.message as string);
     }

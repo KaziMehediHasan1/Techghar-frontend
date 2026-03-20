@@ -3,16 +3,16 @@ import { useState, useEffect } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "@/features/checkout/components/CheckoutForm";
 import { CONFIG } from "@/config/env";
-
-// Stripe load করো — publishable key দিয়ে (public key, safe)
+import { appearance } from "@/features/checkout/stripe/appearance";
+// stripe publishble key -
 const stripePromise = CONFIG.payment_published_key;
 
-// ✅ Step 1: Parent Component — clientSecret fetch করে
+// S1: Parent Component — do fetch clientSecret -
 const PaymentPage = () => {
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    // Backend থেকে PaymentIntent তৈরি করে clientSecret নাও
+    // Backend Create Client secrete -
     fetch("http://localhost:4000/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -22,12 +22,12 @@ const PaymentPage = () => {
       .then((data) => setClientSecret(data.clientSecret));
   }, []);
 
-  // clientSecret না আসা পর্যন্ত Elements render করবো না
+  // clientSecret -
   if (!clientSecret) return <p>Loading payment form...</p>;
 
   return (
-    // ✅ Elements wrapper — এটা দরকার Stripe context এর জন্য
-    <Elements stripe={stripePromise} options={{ clientSecret }}>
+    // Elements wrapper for strip context
+    <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
       <CheckoutForm />
     </Elements>
   );
