@@ -57,13 +57,15 @@ const Navbar = () => {
             {search && (
               <SearchModal open={search} onClose={() => setSearch(false)} />
             )}
-            <div className="relative">
+            <NavLink to="/cart" className="relative">
               <IconBundler.Cart className="transform-[rotateY(180deg)]" />
               <p className="absolute -top-4 left-2.5 bg-brand-primary text-white py-0.5 px-1.5 text-xs rounded-full">
                 4
               </p>
-            </div>
-            <IconBundler.CircleUser />
+            </NavLink>
+            <NavLink to="/">
+              <IconBundler.CircleUser />
+            </NavLink>
           </section>
         </section>
 

@@ -1,5 +1,5 @@
 const SummaryCard = () => (
-  <section className="bg-gray-50 p-6 rounded-sm h-fit sticky top-5">
+  <section className="bg-gray-50 p-6 rounded-sm h-fit top-5">
     <h2 className="text-xl font-bold mb-4">Summary</h2>
 
     <div className="space-y-4 text-sm border-b pb-4">
