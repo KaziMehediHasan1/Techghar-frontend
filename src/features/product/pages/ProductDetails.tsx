@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Wrapper from "@/components/layout/Wrapper";
 import { Button } from "@/components/ui/button";
-import { Heart, Mail, BarChart2 } from "lucide-react";
 import Server from "@/assets/images/server.png";
 import SupportBanner from "@/features/product/components/SupportBanner";
 const ProductDetails = () => {
@@ -21,7 +20,7 @@ const ProductDetails = () => {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`text-xs md:text-sm capitalize transition-all relative py-2
-                    ${activeTab === tab ? "text-black after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-blue-600" : "text-gray-400 hover:text-black"}`}
+                    ${activeTab === tab ? "text-black after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-blue-600" : "text-gray-400 hover:text-black"}`}
                 >
                   {tab === "about"
                     ? "About Product"

@@ -2,6 +2,7 @@ import AdminLayout from "@/components/layout/AdminLayout";
 import MainLayout from "@/components/layout/MainLayout";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import SingUpPage from "@/features/auth/pages/SingUpPage";
+import Cart from "@/features/cart/pages/Cart";
 import Catalog from "@/features/catalog/pages/Catalog";
 import PaymentPage from "@/features/checkout/pages/PaymentPage";
 import PaymentSuccess from "@/features/checkout/pages/PaymentSuccess";
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "/product/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path: "/about",
