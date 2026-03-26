@@ -5,7 +5,6 @@ import PcCase from "@/assets/images/pc-case.png";
 import Case from "@/assets/images/desktop-case.webp";
 import { NavLink } from "react-router-dom";
 import CategoryCard from "@/components/cards/CategoryCard";
-import Heading from "@/components/Heading";
 import { Star } from "lucide-react";
 const msiSeries = [
   { name: "MSI GS Series", path: "/laptops/msi-gs-series" },
@@ -30,8 +29,8 @@ const Card = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       <CategoryCard image={PcCase} link="" title="Custome Build" />
-      <Heading title="Custom PC Build" link="/" className="block sm:hidden" />
-      {[1, 2, 3, 4, 5].map((item) => (
+      {/* <Heading title="Custom " linkName="ddddd" link="/" className="block sm:hidden" /> */}
+      {[1, 2, 3, 4, 5].map(() => (
         <NavLink to="/product/details">
           <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300">
             {/* STOCK INDICATOR */}

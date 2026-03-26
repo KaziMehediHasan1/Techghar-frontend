@@ -8,6 +8,7 @@ import PaymentPage from "@/features/checkout/pages/PaymentPage";
 import PaymentSuccess from "@/features/checkout/pages/PaymentSuccess";
 import Overview from "@/features/dashboard/pages/Overview";
 import UserList from "@/features/dashboard/user/pages/UserList";
+import NewProduct from "@/features/product/pages/NewProduct";
 import ProductDetails from "@/features/product/pages/ProductDetails";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/catalog/:categoryName",
         element: <Catalog />,
+      },
+      {
+        path: "/new_product",
+        element: <NewProduct />,
       },
       {
         path: "/product/:id",

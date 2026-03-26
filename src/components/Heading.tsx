@@ -5,9 +5,10 @@ interface HeadingProps {
   title: string;
   link: string;
   className?: string;
+  linkName: string;
 }
 
-const Heading = ({ title, link, className }: HeadingProps) => {
+const Heading = ({ title, link, className, linkName }: HeadingProps) => {
   return (
     <section className={cn("mt-3 space-y-3", className)}>
       <div className="flex items-center justify-between">
@@ -16,7 +17,7 @@ const Heading = ({ title, link, className }: HeadingProps) => {
           to={link}
           className="text-xs sm:text-sm hover:text-brand-primary underline"
         >
-          See All New Products
+          {linkName}
         </NavLink>
       </div>
     </section>
