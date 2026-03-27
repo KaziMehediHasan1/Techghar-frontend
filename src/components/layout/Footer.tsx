@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="space-y-3 mt-8">
           {/* SEARCH AND INPUT FIELD */}
           <section className="flex flex-col gap-y-4 md:gap-y-0 md:flex-row justify-between ">
-            <div className="w-full">
+            <div className="w-full space-y-2">
               <h1 className="text-2xl md:text-3xl capitalize -tracking-tighter ">
                 Sign Up To Our Newsletter.
               </h1>
