@@ -1,9 +1,25 @@
-import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
-import HelpersCard from "@/components/cards/HelpersCard";
-import Wrapper from "@/components/layout/Wrapper";
-import { NavLink } from "react-router-dom";
+import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
+import HelpersCard from '@/components/cards/HelpersCard';
+import Wrapper from '@/components/layout/Wrapper';
+import { signupApi } from '@/features/auth/auth.api';
+import { NavLink } from 'react-router-dom';
 
 const SingUpPage = () => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    console.log(name, email, password, 'check korchi data');
+    try {
+      const response = await signupApi({ name, email, password });
+      console.log(response, 'signup response');
+    } catch (error) {
+      console.error('Error signing up:', error);
+    }
+  };
+
   return (
     <div className="mt-4">
       <Wrapper>
@@ -22,10 +38,11 @@ const SingUpPage = () => {
                 If you have an account, sign in with your email address.
               </p>
             </header>
-            <form action="" className="space-y-4">
+            <form onSubmit={handleRegister} action="" className="space-y-4">
               <div className="space-y-2 flex flex-col gap-2">
                 <label htmlFor="">Name *</label>
                 <input
+                  name="name"
                   type="text"
                   placeholder="enter you name.."
                   className="p-2 rounded text-xs sm:text-sm bg-white border"
@@ -34,6 +51,7 @@ const SingUpPage = () => {
               <div className="space-y-2 flex flex-col gap-2">
                 <label htmlFor="">Email *</label>
                 <input
+                  name="email"
                   type="email"
                   placeholder="enter you email.."
                   className="p-2 rounded text-xs sm:text-sm bg-white border"
@@ -42,13 +60,17 @@ const SingUpPage = () => {
               <div className="space-y-2 flex flex-col gap-2">
                 <label htmlFor="">Password *</label>
                 <input
+                  name="password"
                   type="password"
                   placeholder="enter you password.."
                   className="p-2 rounded text-xs sm:text-sm bg-white border"
                 />
               </div>
               <div className="flex items-center gap-x-4">
-                <button className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
+                <button
+                  type="submit"
+                  className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer"
+                >
                   Sign Up
                 </button>
                 <NavLink
@@ -79,7 +101,10 @@ const SingUpPage = () => {
             </ul>
             <div className="flex items-center gap-1">
               <p>Already have an account? </p>
-              <NavLink to="/login" className="text-sm text-brand-primary py-2 px-4  cursor-pointer">
+              <NavLink
+                to="/login"
+                className="text-sm text-brand-primary py-2 px-4  cursor-pointer"
+              >
                 Log in here
               </NavLink>
             </div>

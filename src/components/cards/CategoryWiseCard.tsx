@@ -6,12 +6,14 @@ import Case from "@/assets/images/desktop-case.webp";
 import { NavLink } from "react-router-dom";
 import CategoryCard from "@/components/cards/CategoryCard";
 import { Star } from "lucide-react";
+
 const msiSeries = [
   { name: "MSI GS Series", path: "/laptops/msi-gs-series" },
   { name: "MSI GT Series", path: "/laptops/msi-gt-series" },
   { name: "MSI GL Series", path: "/laptops/msi-gl-series" },
   { name: "MSI GE Series", path: "/laptops/msi-ge-series" },
 ];
+
 
 const CategoryWiseCard = () => {
   return (
