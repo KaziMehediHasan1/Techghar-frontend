@@ -1,4 +1,5 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
+
+import http from "@/services/http";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
@@ -10,7 +11,7 @@ export type ApiResponse<T> = {
 };
 
 const usePost = <T, V>(route: string) => {
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = http.useAxiosSecure();
 
   return useMutation<ApiResponse<T>, AxiosError<ApiResponse<unknown>>, V>({
     mutationFn: async (obj: V) => {

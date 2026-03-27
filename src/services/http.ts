@@ -1,15 +1,14 @@
-import { CONFIG } from "@/config/env";
-import { useAuthStore } from "@/features/auth/auth.store";
-import axios from "axios";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { CONFIG } from '@/config/env';
+import { useAuthStore } from '@/features/auth/auth.store';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // baseURL -
 const axiosInstance = axios.create({
   baseURL: CONFIG.apiUrl,
-  timeout: 10000,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
   withCredentials: false,
 });
@@ -29,7 +28,7 @@ const useAxiosSecure = () => {
         }
         return config;
       },
-      (error) => Promise.reject(error),
+      (error) => Promise.reject(error)
     );
 
     // Response Interceptor
@@ -45,7 +44,7 @@ const useAxiosSecure = () => {
             const { data } = await axios.post(
               `${CONFIG.apiUrl}/refresh-token`,
               {},
-              { withCredentials: true },
+              { withCredentials: true }
             );
 
             const newAccessToken = data.accessToken;
@@ -55,12 +54,12 @@ const useAxiosSecure = () => {
             return axiosInstance(originalRequest);
           } catch (refreshError) {
             logout();
-            navigate("/login");
+            navigate('/login');
             return Promise.reject(refreshError);
           }
         }
         return Promise.reject(error);
-      },
+      }
     );
 
     return () => {

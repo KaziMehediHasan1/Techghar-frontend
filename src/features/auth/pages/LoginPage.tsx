@@ -1,9 +1,57 @@
-import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
-import HelpersCard from "@/components/cards/HelpersCard";
-import Wrapper from "@/components/layout/Wrapper";
-import { NavLink } from "react-router-dom";
+import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
+import HelpersCard from '@/components/cards/HelpersCard';
+import Wrapper from '@/components/layout/Wrapper';
+import { loginApi } from '@/features/auth/auth.api';
+import { useAuthStore } from '@/features/auth/auth.store';
+import { NavLink } from 'react-router-dom';
 
 const LoginPage = () => {
+  const { setAuth } = useAuthStore();
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    console.log(email, password, 'form data');
+    try {
+      const response = await loginApi({ email, password });
+      const { accessToken, result } = response.data.data;
+      console.log(accessToken, result, 'login response data');
+      const {
+        email: userEmail,
+        name,
+        photo,
+        uid,
+        _id,
+        updatedAt,
+        createdAt,
+      } = result;
+      const userData = {
+        userEmail,
+        name,
+        photo,
+        uid,
+        _id,
+        updatedAt,
+        createdAt,
+      };
+      console.log(
+        userEmail,
+        name,
+        photo,
+        uid,
+        _id,
+        updatedAt,
+        createdAt,
+        'api check'
+      );
+      if (userData && accessToken) {
+        setAuth(userData, accessToken);
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
   return (
     <div className="mt-4">
       <Wrapper>
@@ -22,10 +70,11 @@ const LoginPage = () => {
                 If you have an account, sign in with your email address.
               </p>
             </header>
-            <form action="" className="space-y-3">
+            <form onSubmit={handleLogin} action="" className="space-y-3">
               <div className="space-y-2 flex flex-col gap-2">
                 <label htmlFor="">Email *</label>
                 <input
+                  name="email"
                   type="email"
                   placeholder="enter you email.."
                   className="p-2 rounded text-xs sm:text-sm bg-white border"
@@ -34,13 +83,17 @@ const LoginPage = () => {
               <div className="space-y-2 flex flex-col gap-2">
                 <label htmlFor="">Password *</label>
                 <input
+                  name="password"
                   type="password"
                   placeholder="enter you password.."
                   className="p-2 rounded text-xs sm:text-sm bg-white border"
                 />
               </div>
               <div className="flex items-center gap-x-4">
-                <button className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
+                <button
+                  type="submit"
+                  className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer"
+                >
                   Sign In
                 </button>
                 <NavLink
@@ -67,7 +120,10 @@ const LoginPage = () => {
               <li>Keep more than one address</li>
               <li>Track orders and more</li>
             </ul>
-            <NavLink to="/signup" className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer">
+            <NavLink
+              to="/signup"
+              className="text-sm bg-brand-primary py-2 px-4 text-white rounded-full cursor-pointer"
+            >
               Create An Account
             </NavLink>
           </div>

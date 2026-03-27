@@ -2,8 +2,11 @@
 export interface IUser {
   id?: string;
   name: string;
-  email: string;
-  role: "user" | "admin";
+  userEmail: string;
+  photo?: string;
+  uid: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IAuthState {
