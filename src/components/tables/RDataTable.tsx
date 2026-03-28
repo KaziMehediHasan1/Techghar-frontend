@@ -18,42 +18,40 @@ import { DataTablePagination } from '@/components/tables/RDataTablePagination';
 import { RDataTableViewOptions } from '@/components/tables/RDataTableViewOptions';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
-import useFetch from '@/hooks/useFetch';
-import useDebounce from '@/hooks/useDebounce';
-import type {
-  ApiResponse,
-} from '@/features/dashboard/user/user.types';
 
 interface DashboardTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  endpoint: string;
+  data: TData[];
+  totalPage: number;
+  pagination: {
+    pageIndex: number;
+    pageSize: number;
+  };
+  setPagination: React.Dispatch<
+    React.SetStateAction<{
+      pageIndex: number;
+      pageSize: number;
+    }>
+  >;
+  globalFilter: string;
+  setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const RDataTable = <TData, TValue>({
   columns,
-  endpoint,
+  data,
+  totalPage,
+  pagination,
+  setPagination,
+  globalFilter,
+  setGlobalFilter,
 }: DashboardTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState('');
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-
-  const debounce = useDebounce(globalFilter, 500);
-
-  const queryUrl = `${endpoint}?search=${debounce}&page=${
-    pagination.pageIndex + 1
-  }&limit=${pagination.pageSize}`;
-
-  // এখানে ApiResponse<TData> ব্যবহার করো
-  const { data, isLoading, error } = useFetch<ApiResponse<TData>>(queryUrl);
-
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable<TData>({
-    data: data?.data || [],
+    data,
     columns,
-    pageCount: data?.data?.length || 0,
+    pageCount: totalPage,
     state: {
       sorting,
       pagination,
@@ -63,15 +61,6 @@ const RDataTable = <TData, TValue>({
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  if (isLoading)
-    return (
-      <div className="p-10 text-center animate-pulse">Loading Users...</div>
-    );
-  if (error)
-    return (
-      <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>
-    );
 
   return (
     <div className="shadow-sm border rounded-md bg-white space-y-3 p-4 w-full">
