@@ -1,8 +1,7 @@
-
-import http from "@/services/http";
-import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import toast from "react-hot-toast";
+import http from '@/services/http';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 export type ApiResponse<T> = {
   message: string;
@@ -20,14 +19,14 @@ const usePost = <T, V>(route: string) => {
     },
     onSuccess: (responseData) => {
       if (responseData?.success) {
-        toast.success(responseData.message || "Operation successful!");
+        toast.success(responseData.message || 'Operation successful!');
       }
     },
     onError: (err) => {
       const errorMessage =
-      err.response?.data?.message || "Something went wrong!";
+        err.response?.data?.message || 'Something went wrong!';
       toast.error(errorMessage);
-      console.error("UsePost Hook Error:", err);
+      console.error('UsePost Hook Error:', err);
     },
   });
 };

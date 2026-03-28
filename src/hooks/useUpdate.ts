@@ -1,7 +1,7 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import toast from "react-hot-toast";
+import http from '@/services/http';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 // Response structure from your Backend
 type ApiResponse<T> = {
@@ -11,7 +11,7 @@ type ApiResponse<T> = {
 };
 
 const useUpdate = <T, V>(route: string, queryKey?: string) => {
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = http.useAxiosSecure();
   const queryClient = useQueryClient();
 
   return useMutation<ApiResponse<T>, AxiosError<ApiResponse<unknown>>, V>({
@@ -26,18 +26,18 @@ const useUpdate = <T, V>(route: string, queryKey?: string) => {
       if (responseData?.message) {
         toast.success(responseData.message);
       }
-      console.log("Update success:", responseData);
+      console.log('Update success:', responseData);
     },
     onError: (error) => {
       const errorMessage =
         error.response?.data?.message ||
         error.message ||
-        "An error occurred while updating.";
+        'An error occurred while updating.';
 
       toast.error(
-        typeof errorMessage === "string" ? errorMessage : "Update failed",
+        typeof errorMessage === 'string' ? errorMessage : 'Update failed'
       );
-      console.error("Update hook error:", error);
+      console.error('Update hook error:', error);
     },
   });
 };

@@ -11,3 +11,7 @@ export const signupApi = (payload: {
 }) => {
   return http.axiosInstance.post('/user/auth/register', payload);
 };
+
+export const logoutApi = () => {
+  return http.axiosInstance.post('/user/auth/logout');
+};

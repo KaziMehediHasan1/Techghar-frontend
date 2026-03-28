@@ -1,16 +1,16 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
+import http from '@/services/http';
 import {
   keepPreviousData,
   useQuery,
   type UseQueryOptions,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
 const useFetch = <T>(
   route: string,
   params: Record<string, string | number | boolean> = {},
-  options?: Partial<UseQueryOptions<T>>,
+  options?: Partial<UseQueryOptions<T>>
 ) => {
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = http.useAxiosSecure();
 
   return useQuery<T>({
     queryKey: [route, params],

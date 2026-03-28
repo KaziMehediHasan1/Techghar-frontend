@@ -1,6 +1,6 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
+import http from '@/services/http';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 
 interface BaseItem {
   id?: string | number;
@@ -11,14 +11,14 @@ interface BaseItem {
 const useDelete = <T extends BaseItem>(
   route: string,
   queryKey: string,
-  idField: keyof T = "id" as keyof T,
+  idField: keyof T = 'id' as keyof T
 ) => {
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = http.useAxiosSecure();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (id: string | number) => {
-      const url = route.endsWith("/") ? `${route}${id}` : `${route}/${id}`;
+      const url = route.endsWith('/') ? `${route}${id}` : `${route}/${id}`;
       const response = await axiosSecure.delete(url);
       return response.data;
     },
@@ -42,12 +42,12 @@ const useDelete = <T extends BaseItem>(
       if (context?.previousData) {
         queryClient.setQueryData([queryKey], context.previousData);
       }
-      toast.error("Deletion failed!");
+      toast.error('Deletion failed!');
       console.error(err);
     },
 
     onSuccess: () => {
-      toast.success("Item deleted successfully");
+      toast.success('Item deleted successfully');
     },
 
     onSettled: () => {

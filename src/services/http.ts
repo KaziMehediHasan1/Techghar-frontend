@@ -10,12 +10,13 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: false,
+  withCredentials: true,
 });
 
 // axios secured funtion using interceptors -
 const useAxiosSecure = () => {
   const { accessToken, setToken, logout } = useAuthStore();
+  
   const navigate = useNavigate();
   // console.log(accessToken,"secure path")
 

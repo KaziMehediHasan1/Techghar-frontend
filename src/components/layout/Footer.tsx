@@ -101,14 +101,14 @@ const Footer = () => {
                   <p>Address: 1234 Street Adress City Address, 1234</p>
                   <p>
                     Phones:{" "}
-                    <span className="text-blue-600">(00) 1234 5678</span>
+                    <span className="text-blue-600">(+880)1942 4567</span>
                   </p>
                   <p>We are open: Monday-Thursday: 9:00 AM - 5:30 PM</p>
                   <p>Friday: 9:00 AM - 6:00 PM</p>
                   <p>Saturday: 11:00 AM - 5:00 PM</p>
                   <p>
                     E-mail:{" "}
-                    <span className="text-blue-600">shop@email.com</span>
+                    <span className="text-blue-600">kazimehedihasan.tech@email.com</span>
                   </p>
                 </div>
               </div>

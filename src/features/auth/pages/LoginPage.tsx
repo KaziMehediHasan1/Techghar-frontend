@@ -3,16 +3,16 @@ import HelpersCard from '@/components/cards/HelpersCard';
 import Wrapper from '@/components/layout/Wrapper';
 import { loginApi } from '@/features/auth/auth.api';
 import { useAuthStore } from '@/features/auth/auth.store';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const { setAuth } = useAuthStore();
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    console.log(email, password, 'form data');
     try {
       const response = await loginApi({ email, password });
       const { accessToken, result } = response.data.data;
@@ -35,18 +35,9 @@ const LoginPage = () => {
         updatedAt,
         createdAt,
       };
-      console.log(
-        userEmail,
-        name,
-        photo,
-        uid,
-        _id,
-        updatedAt,
-        createdAt,
-        'api check'
-      );
       if (userData && accessToken) {
         setAuth(userData, accessToken);
+        navigate('/');
       }
     } catch (error) {
       console.error('Error logging in:', error);
