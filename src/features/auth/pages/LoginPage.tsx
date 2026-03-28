@@ -4,6 +4,7 @@ import Wrapper from '@/components/layout/Wrapper';
 import { loginApi } from '@/features/auth/auth.api';
 import { useAuthStore } from '@/features/auth/auth.store';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -37,10 +38,12 @@ const LoginPage = () => {
       };
       if (userData && accessToken) {
         setAuth(userData, accessToken);
+        toast('Login successful!', { type: 'success' });
         navigate('/');
       }
     } catch (error) {
       console.error('Error logging in:', error);
+      toast('Login failed!', { type: 'error' });
     }
   };
   return (

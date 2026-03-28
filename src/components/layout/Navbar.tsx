@@ -8,6 +8,7 @@ import MobileMenu from '@/components/Navbar/MobileMenu';
 import { Links, type TNavLink } from '@/components/Navbar/Links';
 import { logoutApi } from '@/features/auth/auth.api';
 import { useAuthStore } from '@/features/auth/auth.store';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -196,6 +197,7 @@ const ProfileDropDownBar = ({
       logout();
       setProfileDropdown(false);
       await logoutApi();
+      toast('Logout successful!', { type: 'success' });
     } catch (error) {
       console.log('Logout API error:', error);
     } finally {
