@@ -14,12 +14,12 @@ export const columns: ColumnDef<IUser>[] = [
     header: () => <div className="text-left">Email</div>,
   },
   {
-    accessorKey: 'role',
-    header: () => <div className="text-left">Role</div>,
-  },
-  {
     accessorKey: 'cartItemCount',
     header: () => <div className="text-left">Cart</div>,
+  },
+  {
+    accessorKey: 'role',
+    header: () => <div className="text-left">Role</div>,
   },
   {
     accessorKey: 'lastPurchasedItem',
@@ -27,6 +27,6 @@ export const columns: ColumnDef<IUser>[] = [
   },
   {
     accessorKey: 'totalPurchaseCount',
-    header: () => <div className="text-left">Total Purchase</div>,
+    header: () => <div className="text-left">Total</div>,
   },
 ];

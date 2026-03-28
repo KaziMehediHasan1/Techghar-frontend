@@ -20,6 +20,9 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import useFetch from '@/hooks/useFetch';
 import useDebounce from '@/hooks/useDebounce';
+import type {
+  ApiResponse,
+} from '@/features/dashboard/user/user.types';
 
 interface DashboardTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,20 +41,19 @@ const RDataTable = <TData, TValue>({
   });
 
   const debounce = useDebounce(globalFilter, 500);
-  console.log(debounce, 'check input serach value exactly hit----');
-  // dynamically construct the query URL based on pagination and sorting state
+
   const queryUrl = `${endpoint}?search=${debounce}&page=${
     pagination.pageIndex + 1
   }&limit=${pagination.pageSize}`;
 
-  const { data, isLoading, error } = useFetch(queryUrl);
-  console.log(data?.data, 'check table daaattt----------');
+  // এখানে ApiResponse<TData> ব্যবহার করো
+  const { data, isLoading, error } = useFetch<ApiResponse<TData>>(queryUrl);
 
   // eslint-disable-next-line react-hooks/incompatible-library
-  const table = useReactTable({
+  const table = useReactTable<TData>({
     data: data?.data || [],
     columns,
-    pageCount: data?.data?.length,
+    pageCount: data?.data?.length || 0,
     state: {
       sorting,
       pagination,
