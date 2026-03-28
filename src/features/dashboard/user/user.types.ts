@@ -10,3 +10,5 @@ export interface IUser {
   createdAt?: string | Date;
   isAccountActive: boolean;
 }
+
+

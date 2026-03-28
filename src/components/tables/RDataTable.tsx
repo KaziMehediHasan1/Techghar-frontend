@@ -2,13 +2,9 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  // getPaginationRowModel,
-  type ColumnFiltersState,
-  // getSortedRowModel,
-  // getFilteredRowModel,
   type ColumnDef,
   type SortingState,
-} from "@tanstack/react-table";
+} from '@tanstack/react-table';
 
 import {
   Table,
@@ -17,102 +13,130 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { DataTablePagination } from "@/components/tables/RDataTablePagination";
-import { RDataTableViewOptions } from "@/components/tables/RDataTableViewOptions";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+} from '@/components/ui/table';
+import { DataTablePagination } from '@/components/tables/RDataTablePagination';
+import { RDataTableViewOptions } from '@/components/tables/RDataTableViewOptions';
+import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import useFetch from '@/hooks/useFetch';
+import useDebounce from '@/hooks/useDebounce';
 
 interface DashboardTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+  endpoint: string;
 }
 
 const RDataTable = <TData, TValue>({
   columns,
-  data,
+  endpoint,
 }: DashboardTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = useState('');
   const [pagination, setPagination] = useState({
-    pageIndex: 0, // Initial page
-    pageSize: 10, // Items per page
+    pageIndex: 0,
+    pageSize: 10,
   });
+
+  const debounce = useDebounce(globalFilter, 500);
+  console.log(debounce, 'check input serach value exactly hit----');
+  // dynamically construct the query URL based on pagination and sorting state
+  const queryUrl = `${endpoint}?search=${debounce}&page=${
+    pagination.pageIndex + 1
+  }&limit=${pagination.pageSize}`;
+
+  const { data, isLoading, error } = useFetch(queryUrl);
+  console.log(data?.data, 'check table daaattt----------');
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
-    data, // Backend theke asha data
+    data: data?.data || [],
     columns,
-    pageCount: 20, // Backend theke 'total pages' count lagbe
+    pageCount: data?.data?.length,
     state: {
       sorting,
-      columnFilters,
       pagination,
     },
     onPaginationChange: setPagination,
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    manualPagination: true, // Table ke bolcho: "Tumi nije paginate koro na, ami backend theke anchi"
-    manualFiltering: true,
-    manualSorting: true,
+    manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  if (isLoading)
+    return (
+      <div className="p-10 text-center animate-pulse">Loading Users...</div>
+    );
+  if (error)
+    return (
+      <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>
+    );
+
   return (
-    <div className="shadow-ms shadow-dim-primary rounded-md bg-white space-y-3 p-4 w-full">
-      <section className="flex flex-row-reverse items-center gap-4 w-full ">
-        <RDataTableViewOptions table={table} />
-        <div className="flex items-center py-4 w-full ">
+    <div className="shadow-sm border rounded-md bg-white space-y-3 p-4 w-full">
+      <section className="flex justify-between items-center gap-4 w-full">
+        <div className="flex items-center py-2 w-full">
           <Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
+            placeholder="Search by name or email..."
+            value={globalFilter}
+            onChange={(e) => {
+              setGlobalFilter(e.target.value);
+              setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+            }}
             className="max-w-sm"
           />
         </div>
+        <RDataTableViewOptions table={table} />
       </section>
-      <Table>
-        <TableHeader className="bg-slate-50">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <TableHead
-                  key={header.id}
-                  className="text-slate-600 font-semibold"
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
+
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader className="bg-slate-50">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead
+                    key={header.id}
+                    className="font-semibold text-slate-700"
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
                 ))}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-slate-500"
+                >
+                  No users found matching your search.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
       <DataTablePagination table={table} />
     </div>
   );

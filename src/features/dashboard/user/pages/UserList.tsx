@@ -1,17 +1,13 @@
 import RDataTable from '@/components/tables/RDataTable';
-// import { useAuthStore } from '@/features/auth/auth.store';
-import {
-  columns,
-  userData,
-} from '@/features/dashboard/user/components/UserColumns';
+import { columns } from '@/features/dashboard/user/components/UserColumns';
 
 const UserList = () => {
-  // const { accessToken, setToken, logout } = useAuthStore();
-  // console.log(accessToken, 'check loalhost');
   return (
-    <div className="text-black space-y-2">
-      <h2 className="text-xl font-bold tracking-tight">Recent Orders</h2>
-      <RDataTable columns={columns} data={userData} />
+    <div className="text-black space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold tracking-tight">User Management</h2>
+      </div>
+      <RDataTable columns={columns} endpoint="/user/users" />
     </div>
   );
 };
