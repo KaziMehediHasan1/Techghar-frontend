@@ -43,7 +43,7 @@ const useAxiosSecure = () => {
 
           try {
             const { data } = await axios.post(
-              `${CONFIG.apiUrl}/refresh-token`,
+              `${CONFIG.apiUrl}/auth/refresh-token`,
               {},
               { withCredentials: true }
             );

@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import type { IProductFormData } from '@/features/dashboard/product/product.types';
+import usePost from '@/hooks/usePost';
+import { toast } from 'react-toastify';
 
 // color options and categories can be fetched from the server in real application
 const colorOptions = ['Black', 'White', 'Silver', 'Red', 'Blue', 'Gold'];
@@ -31,7 +33,8 @@ const AddProduct = () => {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const { startUpload } = useUploadThing('imageUploader');
-
+  const { mutate, error, isPending, isSuccess, data } = usePost('/product');
+  console.log(error, isPending, isSuccess, data, 'post response -----');
   const { register, handleSubmit, setValue, watch, reset } = useForm({
     defaultValues: {
       title: '',
@@ -44,7 +47,6 @@ const AddProduct = () => {
     },
   });
 
-  // ইমেজ আপলোড হ্যান্ডলার (ফেইক প্রিভিউ)
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
@@ -58,7 +60,8 @@ const AddProduct = () => {
     try {
       const uploaded = await startUpload(files ? Array.from(files) : []);
       if (uploaded) {
-        const urls = uploaded.map((f) => f.url);
+        const urls = uploaded.map((f) => f.ufsUrl);
+        console.log(urls, 'urls ashol ----------');
         setImageUrls((prev) => [...prev, ...urls]);
       }
     } finally {
@@ -68,18 +71,32 @@ const AddProduct = () => {
 
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
+    setImageUrls((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const onSubmit = (data: IProductFormData) => {
+  const onSubmit = async (data: IProductFormData) => {
     // const imagesURL = await;
+    if (isUploading) {
+      toast.error('Images are still uploading...');
+      return;
+    }
+    if (imageUrls.length === 0)
+      return toast.error('At least one image is required!');
     const finalData = {
       ...data,
       colors: selectedColor,
       images: imageUrls,
       finalPrice: data.price - data.price * (data.discount / 100),
+      stock: true,
     };
     console.log('Submitting to DB:', finalData);
-    // এখানে আপনার API কল হবে
+    mutate(finalData, {
+      onSuccess: () => {
+        reset();
+        setImageUrls([]);
+        setImages([]);
+      },
+    });
   };
 
   return (
@@ -88,7 +105,7 @@ const AddProduct = () => {
         <h2 className="text-2xl font-bold tracking-tight">Add New Product</h2>
       </div>
       <div className="flex flex-col lg:flex-row gap-6">
-        {/* বাম পাশের প্রিভিউ সেকশন */}
+        {/* preview section */}
         <div className="w-full lg:w-1/3 space-y-4">
           <div className="bg-white p-4 rounded-xl shadow-sm border">
             <div className="aspect-square bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center border-2 border-dashed border-slate-200">
@@ -134,10 +151,11 @@ const AddProduct = () => {
 
             <div className="flex gap-3 mt-6">
               <Button
+                disabled={isPending || isUploading}
                 onClick={handleSubmit(onSubmit)}
                 className="flex-1 bg-brand-primary hover:bg-brand-dark"
               >
-                Create Product
+                {isPending ? 'Saving...' : 'Create Product'}
               </Button>
               <Button
                 variant="outline"
@@ -150,9 +168,9 @@ const AddProduct = () => {
           </div>
         </div>
 
-        {/* ডান পাশের ফর্ম সেকশন */}
+        {/* product information form */}
         <div className="w-full lg:w-2/3 space-y-6">
-          {/* ইমেজ আপলোড এরিয়া */}
+          {/* image area */}
           <div className="bg-white p-6 rounded-xl shadow-sm border">
             <h3 className="font-semibold mb-4">Add Product Photo</h3>
             <div className="border-2 border-dashed border-slate-200 rounded-xl p-8 flex flex-wrap gap-4 items-center justify-center">
@@ -188,7 +206,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* প্রোডাক্ট ইনফরমেশন ফর্ম */}
+          {/* product information form */}
           <form className="bg-white p-6 rounded-xl shadow-sm border space-y-6">
             <h3 className="font-semibold text-lg border-bottom pb-2">
               Product Information
@@ -230,7 +248,7 @@ const AddProduct = () => {
                 <label className="text-sm font-medium">Price ($)</label>
                 <Input
                   type="number"
-                  {...register('price')}
+                  {...register('price', { valueAsNumber: true })}
                   placeholder="Base Price"
                 />
               </div>
@@ -238,7 +256,7 @@ const AddProduct = () => {
                 <label className="text-sm font-medium">Quantity (Stock)</label>
                 <Input
                   type="number"
-                  {...register('quantity')}
+                  {...register('quantity', { valueAsNumber: true })}
                   placeholder="Available Amount"
                 />
               </div>
