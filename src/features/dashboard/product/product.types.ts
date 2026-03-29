@@ -31,3 +31,13 @@ export interface IProduct {
   brand: string;
   stock: boolean;
 }
+
+export interface IProductFormData {
+  title: string;
+  category: string;
+  brand: string;
+  price: number;
+  discount: number;
+  quantity: number;
+  description: string;
+}
