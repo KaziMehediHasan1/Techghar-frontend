@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import Wrapper from "@/components/layout/Wrapper";
 import { Button } from "@/components/ui/button";
 import Server from "@/assets/images/server.png";
 import SupportBanner from "@/features/product/components/SupportBanner";
 const ProductDetails = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const [activeTab, setActiveTab] = useState("about");
 
   return (
@@ -61,7 +61,7 @@ const ProductDetails = () => {
       </div>
 
       {/* ২. হিরো সেকশন (প্রোডাক্ট ইনফো) */}
-      <section className="bg-[#F5F7FF] py-10">
+      <section className="bg-white py-10">
         <Wrapper>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             {/* বাম পাশে ইনফরমেশন */}

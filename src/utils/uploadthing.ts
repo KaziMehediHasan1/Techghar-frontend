@@ -6,19 +6,18 @@ export type OurFileRouter = {
 };
 
 export const { useUploadThing } = generateReactHelpers<OurFileRouter>({
-  url: `${import.meta.env.VITE_API_URL}/api/uploadthing`,
+  url: `${import.meta.env.VITE_UPLOADTHING_ENDPOINT}/api/uploadthing`,
 });
 
-// ## 🗺️ আলাদা Repo হলে Flow এরকম
 
 // frontend repo                backend repo
 //      │                            │
 //      │                            │
 // uploadthing.ts              uploadthing.core.ts
-// (নিজের type define)         (actual router)
+//      type define)         (actual router)
 //      │                            │
 //      │    HTTP request            │
 //      └──────────────────────────► /api/uploadthing
 //                                   │
 //                                   ▼
-//                             UploadThing Cloud ✅
+//                             UploadThing Cloud 
