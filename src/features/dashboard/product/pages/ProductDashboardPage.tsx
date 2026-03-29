@@ -15,13 +15,9 @@ const ProductDashboardPage = () => {
     pageSize: 10,
   });
   const debounce = useDebounce(globalFilter, 500);
-  const queryUrl = `/product?search=${debounce}`;
-  // search=${debounce}&page=${
-  //   pagination.pageIndex + 1
-  // }&limit=${pagination.pageSize}
+  const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const { data, isLoading, error } =
     useFetch<TProductApiResponse<IProduct>>(queryUrl);
-  console.log(data?.data, 'fetchh ------');
 
   if (isLoading)
     return (
@@ -32,20 +28,21 @@ const ProductDashboardPage = () => {
       <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>
     );
 
-  // totalPage={
-  //   data?.data.total
-  //     ? Math.ceil(data.data.total / pagination.pageSize)
-  //     : 0
-  // }
+  const totalPageCount = Math.ceil(
+    data?.data?.meta?.totalPage || 0 / pagination.pageSize
+  );
+
   return (
     <div className="text-black space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold tracking-tight">Product Management</h2>
+        <h2 className="text-2xl font-bold tracking-tight">
+          Product Management
+        </h2>
       </div>
       <RDataTable
         columns={PColumns}
-        data={data?.data || []}
-        totalPage={data?.total || 0}
+        data={data?.data?.result || []}
+        totalPage={totalPageCount}
         setPagination={setPagination}
         pagination={pagination}
         globalFilter={globalFilter}
