@@ -10,7 +10,6 @@ const ProductDetails = () => {
 
   return (
     <div className="bg-white min-h-screen">
-      {/* ১. স্টিকি ট্যাব বার (Image 2 style) */}
       <div className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <Wrapper>
           <div className="flex flex-col md:flex-row justify-between items-center py-2 md:py-4 gap-4">

@@ -1,0 +1,33 @@
+export interface TProductApiResponse<T> {
+  success?: boolean;
+  message?: string;
+  data: T[];
+  total?: number;
+  page?: number;
+  limit?: number;
+}
+
+export type TProductAPIResponse = {
+  _id: string;
+  title: string;
+  description: string;
+  quantity: number;
+  price: number;
+  category: string;
+  images: string[];
+  finalPrice: number;
+  brand: string;
+  stock: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export interface IProduct {
+  title: string;
+  price: number;
+  category: string;
+  quntity: number;
+  colors: string;
+  brand: string;
+  stock: boolean;
+}
