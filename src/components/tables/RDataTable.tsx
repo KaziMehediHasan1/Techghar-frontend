@@ -49,6 +49,8 @@ const RDataTable = <TData, TValue>({
   setPagination,
   globalFilter,
   setGlobalFilter,
+  isDeletePending,
+  isUpdatePending,
 }: DashboardTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   // eslint-disable-next-line react-hooks/incompatible-library
@@ -64,6 +66,10 @@ const RDataTable = <TData, TValue>({
     onSortingChange: setSorting,
     manualPagination: true,
     getCoreRowModel: getCoreRowModel(),
+    meta: {
+      isDeletePending,
+      isUpdatePending,
+    },
   });
 
   return (

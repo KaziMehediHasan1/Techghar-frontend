@@ -38,21 +38,19 @@ const ProductDashboardPage = () => {
     mutateAsync: deleteMutate,
     isPending: isDeletePending,
     isError: isDeleteError,
-  } = useDelete('/product', 'product');
+  } = useDelete('/product', '/product');
 
   // update mutation hook for updating a product
   const {
     mutateAsync: updateMutate,
     isPending: isUpdatePending,
     isError: isUpdateError,
-  } = useUpdate('/product', 'product');
+  } = useUpdate('/product', '/product');
 
   // fetching data from backend with query params for search and pagination
   const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const { data, isLoading, error } =
     useFetch<TProductApiResponse<IProduct>>(queryUrl);
-
-  console.log(data, 'data formate--');
 
   if (isLoading)
     return (

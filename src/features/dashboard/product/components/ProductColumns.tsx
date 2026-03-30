@@ -2,7 +2,7 @@ import { RDataTableColumnHeader } from '@/components/tables/RDataTableColumnHead
 import { Button } from '@/components/ui/button';
 import type { IProduct } from '@/features/dashboard/product/product.types';
 import type { ColumnDef } from '@tanstack/react-table';
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Loader2, Trash2 } from 'lucide-react';
 
 export const PColumns = (
   handleDelete: (id: string) => void,
@@ -41,9 +41,14 @@ export const PColumns = (
   {
     id: 'edit',
     header: 'Edit',
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const product = row.original;
-      console.log(product, 'check clumn proooooooooo');
+      const meta = table.options.meta as {
+        isDeletePending: boolean;
+        loadingId: string | null;
+      };
+      const isDeleting =
+        meta?.isDeletePending && meta?.loadingId === product._id;
       return (
         <Button
           variant="ghost"
@@ -51,7 +56,11 @@ export const PColumns = (
           onClick={() => handleUpdate(product?._id || '', product)}
           className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
         >
-          <Edit className="w-4 h-4" />
+          {isDeleting ? (
+            <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+          ) : (
+            <Edit className="w-4 h-4" />
+          )}
         </Button>
       );
     },
@@ -61,16 +70,28 @@ export const PColumns = (
   {
     id: 'delete',
     header: 'Delete',
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const product = row.original;
+      const meta = table.options.meta as {
+        isDeletePending: boolean;
+        loadingId: string | null;
+      };
+      const isDeleting =
+        meta?.isDeletePending && meta?.loadingId === product._id;
+
       return (
         <Button
           variant="ghost"
           size="sm"
+          disabled={isDeleting}
           onClick={() => handleDelete(product?._id || '')}
-          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+          className="text-red-600"
         >
-          <Trash2 className="w-4 h-4" />
+          {isDeleting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Trash2 className="w-4 h-4" />
+          )}
         </Button>
       );
     },

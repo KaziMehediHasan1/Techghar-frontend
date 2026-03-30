@@ -13,7 +13,7 @@ const useFetch = <T>(
   const axiosSecure = http.useAxiosSecure();
 
   return useQuery<T>({
-    queryKey: [route, params],
+    queryKey: [route.split('?')[0], route],
     queryFn: async () => {
       const res = await axiosSecure.get<T>(route, { params });
       return res.data;
