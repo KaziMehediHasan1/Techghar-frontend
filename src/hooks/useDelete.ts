@@ -10,7 +10,7 @@ interface BaseItem {
 
 const useDelete = <T extends BaseItem>(
   route: string,
-  queryKey: string,
+  queryKey?: string,
   idField: keyof T = 'id' as keyof T
 ) => {
   const axiosSecure = http.useAxiosSecure();
@@ -19,6 +19,7 @@ const useDelete = <T extends BaseItem>(
   return useMutation({
     mutationFn: async (id: string | number) => {
       const url = route.endsWith('/') ? `${route}${id}` : `${route}/${id}`;
+      console.log('delete-url:-', url, 'id dekho - ', id);
       const response = await axiosSecure.delete(url);
       return response.data;
     },
@@ -47,6 +48,7 @@ const useDelete = <T extends BaseItem>(
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKey] });
       toast.success('Item deleted successfully');
     },
 

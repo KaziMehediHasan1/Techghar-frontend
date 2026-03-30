@@ -35,6 +35,10 @@ interface DashboardTableProps<TData, TValue> {
   >;
   globalFilter: string;
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
+  handleDelete: (id: string) => void;
+  handleUpdate: (id: string, updatedData: Partial<TData>) => void;
+  isDeletePending: boolean;
+  isUpdatePending: boolean;
 }
 
 const RDataTable = <TData, TValue>({
@@ -44,6 +48,10 @@ const RDataTable = <TData, TValue>({
   pagination,
   setPagination,
   globalFilter,
+  isDeletePending,
+  isUpdatePending,
+  handleDelete,
+  handleUpdate,
   setGlobalFilter,
 }: DashboardTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);

@@ -10,13 +10,32 @@ type ApiResponse<T> = {
   data?: T;
 };
 
-const useUpdate = <T, V>(route: string, queryKey?: string) => {
+interface UpdateVariables<V> {
+  id: string | number;
+  data: V;
+}
+
+const useUpdate = <T, V>(
+  route: string,
+  queryKey?: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _idField: keyof T = 'id' as keyof T
+) => {
   const axiosSecure = http.useAxiosSecure();
   const queryClient = useQueryClient();
 
-  return useMutation<ApiResponse<T>, AxiosError<ApiResponse<unknown>>, V>({
-    mutationFn: async (obj: V) => {
-      const response = await axiosSecure.patch<ApiResponse<T>>(route, obj);
+  return useMutation<
+    ApiResponse<T>,
+    AxiosError<ApiResponse<unknown>>,
+    UpdateVariables<V>
+  >({
+    mutationFn: async ({ id, data }) => {
+      const url = route.endsWith('/') ? `${route}${id}` : `${route}/${id}`;
+
+      console.log('update-url:-', url, 'id dekho - ', id);
+
+      // axiosSecure.patch(url, body)
+      const response = await axiosSecure.patch<ApiResponse<T>>(url, data);
       return response.data;
     },
     onSuccess: (responseData) => {

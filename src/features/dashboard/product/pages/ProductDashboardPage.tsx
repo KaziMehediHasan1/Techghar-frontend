@@ -1,3 +1,4 @@
+import { showDeleteConfirmation } from '@/components/ConfirmationToast';
 import RDataTable from '@/components/tables/RDataTable';
 import { PColumns } from '@/features/dashboard/product/components/ProductColumns';
 import type {
@@ -5,8 +6,11 @@ import type {
   TProductApiResponse,
 } from '@/features/dashboard/product/product.types';
 import useDebounce from '@/hooks/useDebounce';
+import useDelete from '@/hooks/useDelete';
 import useFetch from '@/hooks/useFetch';
+import useUpdate from '@/hooks/useUpdate';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const ProductDashboardPage = () => {
   const [globalFilter, setGlobalFilter] = useState('');
@@ -15,6 +19,22 @@ const ProductDashboardPage = () => {
     pageSize: 10,
   });
   const debounce = useDebounce(globalFilter, 500);
+
+  // delete mutation hook for deleting a product
+  const {
+    mutateAsync: deleteMutate,
+    isPending: isDeletePending,
+    isError: isDeleteError,
+  } = useDelete('/product', 'products');
+
+  // update mutation hook for updating a product
+  const {
+    mutate: updateMutate,
+    isPending: isUpdatePending,
+    isError: isUpdateError,
+  } = useUpdate('/product', 'products');
+
+  // fetching data from backend with query params for search and pagination
   const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const { data, isLoading, error } =
     useFetch<TProductApiResponse<IProduct>>(queryUrl);
@@ -32,6 +52,30 @@ const ProductDashboardPage = () => {
     data?.data?.meta?.totalPage || 0 / pagination.pageSize
   );
 
+  // delete handler for deleting a product
+  const handleDelete = async (id: string) => {
+    console.log(id, 'deleted iddddd heree');
+    // Implementation for delete functionality
+    showDeleteConfirmation({
+      message: 'Are you sure you want to delete this?',
+      onConfirm: async () => {
+        await deleteMutate(id);
+      },
+    });
+  };
+
+  // update handler for updating a product
+  const handleUpdate = async (id: string, updatedData: Partial<IProduct>) => {
+    // Implementation for update functionality
+    const res = await updateMutate({ id, data: updatedData });
+    console.log(res, 'response dekhoo');
+    if (isUpdateError) {
+      toast.error('Failed to update the product. Please try again.');
+    }
+  };
+
+  const columns = PColumns(handleDelete, handleUpdate);
+
   return (
     <div className="text-black space-y-4">
       <div className="flex justify-between items-center">
@@ -40,7 +84,11 @@ const ProductDashboardPage = () => {
         </h2>
       </div>
       <RDataTable
-        columns={PColumns}
+        isDeletePending={isDeletePending}
+        isUpdatePending={isUpdatePending}
+        handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
+        columns={columns}
         data={data?.data?.result || []}
         totalPage={totalPageCount}
         setPagination={setPagination}
