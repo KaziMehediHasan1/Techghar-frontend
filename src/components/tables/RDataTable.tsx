@@ -48,10 +48,6 @@ const RDataTable = <TData, TValue>({
   pagination,
   setPagination,
   globalFilter,
-  isDeletePending,
-  isUpdatePending,
-  handleDelete,
-  handleUpdate,
   setGlobalFilter,
 }: DashboardTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);

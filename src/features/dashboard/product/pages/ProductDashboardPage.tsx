@@ -1,8 +1,10 @@
 import { showDeleteConfirmation } from '@/components/ConfirmationToast';
 import RDataTable from '@/components/tables/RDataTable';
 import { PColumns } from '@/features/dashboard/product/components/ProductColumns';
+import { UpdateProductModal } from '@/features/dashboard/product/components/UpdateProductModal';
 import type {
   IProduct,
+  IProductUpdateData,
   TProductApiResponse,
 } from '@/features/dashboard/product/product.types';
 import useDebounce from '@/hooks/useDebounce';
@@ -13,6 +15,17 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const ProductDashboardPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedProduct, setSelectedProduct] = useState<IProductUpdateData>({
+    id: '',
+    title: '',
+    category: '',
+    brand: '',
+    price: 0,
+    discount: 0,
+    quantity: 0,
+    description: '',
+  });
   const [globalFilter, setGlobalFilter] = useState('');
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -25,19 +38,21 @@ const ProductDashboardPage = () => {
     mutateAsync: deleteMutate,
     isPending: isDeletePending,
     isError: isDeleteError,
-  } = useDelete('/product', 'products');
+  } = useDelete('/product', 'product');
 
   // update mutation hook for updating a product
   const {
-    mutate: updateMutate,
+    mutateAsync: updateMutate,
     isPending: isUpdatePending,
     isError: isUpdateError,
-  } = useUpdate('/product', 'products');
+  } = useUpdate('/product', 'product');
 
   // fetching data from backend with query params for search and pagination
   const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const { data, isLoading, error } =
     useFetch<TProductApiResponse<IProduct>>(queryUrl);
+
+  console.log(data, 'data formate--');
 
   if (isLoading)
     return (
@@ -54,24 +69,30 @@ const ProductDashboardPage = () => {
 
   // delete handler for deleting a product
   const handleDelete = async (id: string) => {
-    console.log(id, 'deleted iddddd heree');
-    // Implementation for delete functionality
     showDeleteConfirmation({
       message: 'Are you sure you want to delete this?',
       onConfirm: async () => {
         await deleteMutate(id);
       },
     });
+    if (isDeleteError) {
+      toast.error('Failed to delete the product. Please try again.');
+    }
   };
 
   // update handler for updating a product
   const handleUpdate = async (id: string, updatedData: Partial<IProduct>) => {
-    // Implementation for update functionality
-    const res = await updateMutate({ id, data: updatedData });
-    console.log(res, 'response dekhoo');
+    console.log(id, updatedData, 'hnadleUpdate ---');
+    setIsModalOpen(true);
+    setSelectedProduct({ ...updatedData, id } as IProductUpdateData);
     if (isUpdateError) {
       toast.error('Failed to update the product. Please try again.');
     }
+  };
+
+  const onUpdateSubmit = async (id: string, updatedData: Partial<IProduct>) => {
+    await updateMutate({ id, data: updatedData });
+    setIsModalOpen(false);
   };
 
   const columns = PColumns(handleDelete, handleUpdate);
@@ -83,6 +104,13 @@ const ProductDashboardPage = () => {
           Product Management
         </h2>
       </div>
+      <UpdateProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        productData={selectedProduct}
+        onUpdate={onUpdateSubmit}
+        isLoading={isUpdatePending}
+      />
       <RDataTable
         isDeletePending={isDeletePending}
         isUpdatePending={isUpdatePending}

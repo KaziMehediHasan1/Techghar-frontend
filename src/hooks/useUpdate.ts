@@ -40,7 +40,7 @@ const useUpdate = <T, V>(
     },
     onSuccess: (responseData) => {
       if (queryKey) {
-        queryClient.invalidateQueries({ queryKey: [queryKey] });
+        queryClient.invalidateQueries({ queryKey: [queryKey],exact: false, });
       }
       if (responseData?.message) {
         toast.success(responseData.message);

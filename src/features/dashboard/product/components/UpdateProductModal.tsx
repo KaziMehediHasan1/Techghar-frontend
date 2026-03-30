@@ -11,12 +11,13 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import type { IProductUpdateData } from '@/features/dashboard/product/product.types';
 
 interface UpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  productData: unknown; 
-  onUpdate: (id: string, data: []) => Promise<void>;
+  productData: IProductUpdateData;
+  onUpdate: (id: string, data: IProductUpdateData) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -27,8 +28,9 @@ export const UpdateProductModal = ({
   onUpdate,
   isLoading,
 }: UpdateModalProps) => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm<IProductUpdateData>();
 
+  // console.log("table theke asholo -", productData.id)
   // যখনই মোডাল ওপেন হবে বা productData চেঞ্জ হবে, ফর্ম রিসেট হবে
   useEffect(() => {
     if (productData) {
@@ -36,8 +38,14 @@ export const UpdateProductModal = ({
     }
   }, [productData, reset]);
 
-  const onSubmit = async (data: any) => {
-    await onUpdate(productData._id, data);
+  const onSubmit = async (data: IProductUpdateData) => {
+    console.log(
+      'data dekhbo -',
+      data,
+      'id dekhbo oi data er-',
+      productData.id
+    );
+    await onUpdate(productData.id, data);
     onClose();
   };
 

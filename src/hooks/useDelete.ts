@@ -25,7 +25,7 @@ const useDelete = <T extends BaseItem>(
     },
 
     onMutate: async (id: string | number) => {
-      await queryClient.cancelQueries({ queryKey: [queryKey] });
+      await queryClient.cancelQueries({ queryKey: [queryKey], exact: false });
 
       const previousData = queryClient.getQueryData<T[]>([queryKey]);
 
@@ -53,7 +53,7 @@ const useDelete = <T extends BaseItem>(
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [queryKey] });
+      queryClient.invalidateQueries({ queryKey: [queryKey], exact: false });
     },
   });
 };

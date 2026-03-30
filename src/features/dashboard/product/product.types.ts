@@ -51,3 +51,14 @@ export interface IProductFormData {
   quantity: number;
   description: string;
 }
+
+export interface IProductUpdateData {
+  id: string;
+  title?: string;
+  category?: string;
+  brand?: string;
+  price?: number;
+  discount?: number;
+  quantity?: number;
+  description?: string;
+}
