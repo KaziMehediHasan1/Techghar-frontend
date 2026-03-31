@@ -1,12 +1,12 @@
 import { showDeleteConfirmation } from '@/components/ConfirmationToast';
 import RDataTable from '@/components/tables/RDataTable';
-import { PColumns } from '@/features/dashboard/product/components/ProductColumns';
-import { UpdateProductModal } from '@/features/dashboard/product/components/UpdateProductModal';
 import type {
-  IProduct,
-  IProductUpdateData,
-  TProductApiResponse,
-} from '@/features/dashboard/product/product.types';
+  IBlog,
+  IBlogUpdateData,
+  TBlogApiResponse,
+} from '@/features/dashboard/blog/blog.types';
+import { BlogColumns } from '@/features/dashboard/blog/components/BlogColumns';
+import { UpdateBlogsModal } from '@/features/dashboard/blog/components/UpdateBlogsModal';
 import useDebounce from '@/hooks/useDebounce';
 import useDelete from '@/hooks/useDelete';
 import useFetch from '@/hooks/useFetch';
@@ -14,100 +14,97 @@ import useUpdate from '@/hooks/useUpdate';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-const ProductDashboardPage = () => {
+const BlogDashboardPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState<IProductUpdateData>({
-    id: '',
+  const [selectedBlog, setSelectedBlog] = useState<IBlogUpdateData>({
+    _id: '',
     title: '',
     category: '',
-    brand: '',
-    price: 0,
-    discount: 0,
-    quantity: 0,
+    alt: '',
     description: '',
+    image: [],
   });
+
   const [globalFilter, setGlobalFilter] = useState('');
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
   const debounce = useDebounce(globalFilter, 500);
 
-  // delete mutation hook for deleting a product
   const {
     mutateAsync: deleteMutate,
     isPending: isDeletePending,
     isError: isDeleteError,
-  } = useDelete('/product', '/product');
-
-  // update mutation hook for updating a product
+  } = useDelete('/blog', '/blog');
   const {
     mutateAsync: updateMutate,
     isPending: isUpdatePending,
     isError: isUpdateError,
-  } = useUpdate('/product', '/product');
+  } = useUpdate('/blog', '/blog');
 
-  // fetching data from backend with query params for search and pagination
-  const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
+  const queryUrl = `/blog?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const { data, isLoading, error } =
-    useFetch<TProductApiResponse<IProduct>>(queryUrl);
-
+    useFetch<TBlogApiResponse<IBlog>>(queryUrl);
+  console.log('blog data:-', data);
   if (isLoading)
     return (
-      <div className="p-10 text-center animate-pulse">Loading Users...</div>
+      <div className="p-10 text-center animate-pulse">Loading Blogs...</div>
     );
   if (error)
     return (
-      <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>
+      <div className="p-10 text-red-500 text-center">
+        Failed to fetch blogs.
+      </div>
     );
 
   const totalPageCount = Math.ceil(
-    data?.data?.meta?.totalPage || 0 / pagination.pageSize
+    (data?.data?.meta?.totalPage || 0) / pagination.pageSize
   );
 
-  // delete handler for deleting a product
   const handleDelete = async (id: string) => {
     showDeleteConfirmation({
-      message: 'Are you sure you want to delete this?',
+      message: 'Are you sure you want to delete this blog?',
       onConfirm: async () => {
         await deleteMutate(id);
+        toast.success('Blog deleted successfully');
       },
     });
     if (isDeleteError) {
-      toast.error('Failed to delete the product. Please try again.');
+      toast.error('Failed to delete the blog. Please try again.');
     }
   };
 
-  // update handler for updating a product
-  const handleUpdate = async (id: string, updatedData: Partial<IProduct>) => {
+  const handleUpdate = (id: string, updatedData: IBlogUpdateData) => {
     setIsModalOpen(true);
-    setSelectedProduct({ ...updatedData, id } as IProductUpdateData);
+    setSelectedBlog({ ...updatedData, id } as IBlogUpdateData);
     if (isUpdateError) {
-      toast.error('Failed to update the product. Please try again.');
+      toast.error('Failed to update the blog. Please try again.');
     }
   };
 
-  const onUpdateSubmit = async (id: string, updatedData: Partial<IProduct>) => {
+  const onUpdateSubmit = async (
+    id: string,
+    updatedData: Partial<IBlogUpdateData>
+  ) => {
     await updateMutate({ id, data: updatedData });
     setIsModalOpen(false);
+    toast.success('Blog updated successfully');
   };
 
-  const columns = PColumns(handleDelete, handleUpdate);
+  const columns = BlogColumns(handleDelete, handleUpdate);
 
   return (
     <div className="text-black space-y-4">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold tracking-tight">
-          Product Management
-        </h2>
+        <h2 className="text-2xl font-bold tracking-tight">Blog Management</h2>
       </div>
-      <UpdateProductModal
+
+      <UpdateBlogsModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        productData={selectedProduct}
+        blogData={selectedBlog}
         onUpdate={onUpdateSubmit}
         isLoading={isUpdatePending}
       />
+
       <RDataTable
         isDeletePending={isDeletePending}
         isUpdatePending={isUpdatePending}
@@ -125,4 +122,4 @@ const ProductDashboardPage = () => {
   );
 };
 
-export default ProductDashboardPage;
+export default BlogDashboardPage;

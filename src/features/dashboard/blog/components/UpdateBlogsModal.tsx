@@ -11,15 +11,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import type { IBlogUpdateData } from '@/features/dashboard/blog/blog.types';
 
-export interface IBlogUpdateData {
-  _id: string;
-  title: string;
-  category: string;
-  alt: string;
-  description: string;
-  image?: string[];
-}
+
 
 interface UpdateModalProps {
   isOpen: boolean;

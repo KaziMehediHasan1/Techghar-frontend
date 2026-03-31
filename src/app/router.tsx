@@ -19,7 +19,7 @@ import Home from '@/pages/Home';
 import NotFound from '@/pages/NotFound';
 import TermsAndCondition from '@/pages/TermsAndCondition';
 import { createBrowserRouter } from 'react-router-dom';
-import BlogsPage from '../features/dashboard/blog/pages/BlogsPage';
+import BlogsPage from '../features/dashboard/blog/pages/BlogDashboardPage';
 import AddBlog from '@/features/dashboard/blog/pages/AddBlog';
 
 export const router = createBrowserRouter([
