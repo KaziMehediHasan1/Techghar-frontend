@@ -31,7 +31,7 @@ export const UpdateProductModal = ({
   const { register, handleSubmit, reset } = useForm<IProductUpdateData>();
 
   // console.log("table theke asholo -", productData.id)
-  // যখনই মোডাল ওপেন হবে বা productData চেঞ্জ হবে, ফর্ম রিসেট হবে
+
   useEffect(() => {
     if (productData) {
       reset(productData);

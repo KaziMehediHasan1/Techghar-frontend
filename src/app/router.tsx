@@ -6,6 +6,7 @@ import Cart from '@/features/cart/pages/Cart';
 import Catalog from '@/features/catalog/pages/Catalog';
 import PaymentPage from '@/features/checkout/pages/PaymentPage';
 import PaymentSuccess from '@/features/checkout/pages/PaymentSuccess';
+import OrdersPage from '@/features/dashboard/order/pages/OrdersPage';
 import Overview from '@/features/dashboard/pages/Overview';
 import AddProduct from '@/features/dashboard/product/pages/AddProduct';
 import ProductDashboardPage from '@/features/dashboard/product/pages/ProductDashboardPage';
@@ -87,7 +88,7 @@ export const router = createBrowserRouter([
       {
         path: 'users',
         children: [
-          { path: 'list', element: <UserList /> }, // details (hide)
+          { path: 'list', element: <UserList /> },
           { path: 'admin/staff', element: 'staff' },
           { path: 'spam-alerts', element: 'alerts' },
         ],
@@ -98,7 +99,7 @@ export const router = createBrowserRouter([
         children: [
           { path: 'product/list', element: <ProductDashboardPage /> },
           { path: 'product/create', element: <AddProduct /> },
-          { path: 'product/orders', element: 'product orders' },
+          { path: 'product/orders', element: <OrdersPage /> },
           { path: 'product/payment', element: 'payment' },
           { path: 'product/coupons', element: 'product orders' },
         ],
