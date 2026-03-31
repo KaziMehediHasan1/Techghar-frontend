@@ -19,6 +19,8 @@ import Home from '@/pages/Home';
 import NotFound from '@/pages/NotFound';
 import TermsAndCondition from '@/pages/TermsAndCondition';
 import { createBrowserRouter } from 'react-router-dom';
+import BlogsPage from '../features/dashboard/blog/pages/BlogsPage';
+import AddBlog from '@/features/dashboard/blog/pages/AddBlog';
 
 export const router = createBrowserRouter([
   // it's for admin and normal users only
@@ -108,7 +110,8 @@ export const router = createBrowserRouter([
       {
         path: 'content',
         children: [
-          { path: 'blogs', element: 'blogses' },
+          { path: 'blogs', element: <BlogsPage /> },
+          { path: 'blogs/create', element: <AddBlog /> },
           { path: 'reviews', element: 'reviews' },
           { path: 'contact', element: 'contact' },
         ],

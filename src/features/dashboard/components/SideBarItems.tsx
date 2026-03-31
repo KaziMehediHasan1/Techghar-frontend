@@ -144,6 +144,11 @@ const route = [
         icon: <IconBundler.FileText size={18} />,
       },
       {
+        name: "Add Blog",
+        path: "content/blogs/create",
+        icon: <IconBundler.FileText size={18} />,
+      },
+      {
         name: "Reviews",
         path: "content/reviews",
         icon: <IconBundler.MessageSquareShare size={18} />,
