@@ -4,6 +4,7 @@ export interface IUser {
   name: string;
   userEmail: string;
   photo?: string;
+  role: 'admin' | 'user';
   uid: string;
   createdAt?: string;
   updatedAt?: string;

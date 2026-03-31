@@ -21,6 +21,8 @@ import TermsAndCondition from '@/pages/TermsAndCondition';
 import { createBrowserRouter } from 'react-router-dom';
 import BlogsPage from '../features/dashboard/blog/pages/BlogDashboardPage';
 import AddBlog from '@/features/dashboard/blog/pages/AddBlog';
+import ProtectedRoute from '@/app/ProtectedRoute';
+import Unauthorized from '@/pages/Unauthorized';
 
 export const router = createBrowserRouter([
   // it's for admin and normal users only
@@ -75,6 +77,10 @@ export const router = createBrowserRouter([
         path: '/signup',
         element: <SingUpPage />,
       },
+      {
+        path: '/unauthorized',
+        element: <Unauthorized />,
+      }
     ],
   },
 
@@ -83,7 +89,11 @@ export const router = createBrowserRouter([
   // it's for admin only
   {
     path: '/dashboard',
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute allowedRoles={['admin']}>
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <Overview /> },
 
