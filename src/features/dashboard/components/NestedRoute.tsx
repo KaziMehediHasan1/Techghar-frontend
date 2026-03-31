@@ -60,6 +60,7 @@ export const NestedRoute = ({ item, isSidebarOpen }: NestedRouteProps) => {
               >
                 <NavLink
                   to={child.path!}
+                  end
                   className={({ isActive }) =>
                     cn(
                       "flex gap-2 w-full px-3 py-1.5 rounded text-sm transition-all",

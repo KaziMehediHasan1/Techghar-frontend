@@ -61,7 +61,6 @@ const AddProduct = () => {
       const uploaded = await startUpload(files ? Array.from(files) : []);
       if (uploaded) {
         const urls = uploaded.map((f) => f.ufsUrl);
-        console.log(urls, 'urls ashol ----------');
         setImageUrls((prev) => [...prev, ...urls]);
       }
     } finally {
@@ -89,7 +88,6 @@ const AddProduct = () => {
       finalPrice: data.price - data.price * (data.discount / 100),
       stock: true,
     };
-    console.log('Submitting to DB:', finalData);
     mutate(finalData, {
       onSuccess: () => {
         reset();
