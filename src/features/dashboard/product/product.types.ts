@@ -1,4 +1,4 @@
-export interface TProductApiResponse<T> {
+export interface TProduct<T> {
   success?: boolean;
   message?: string;
 
@@ -11,6 +11,7 @@ export interface TProductApiResponse<T> {
       totalPage: number;
     };
   };
+
   total?: number;
   page?: number;
   limit?: number;

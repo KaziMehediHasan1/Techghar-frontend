@@ -1,12 +1,13 @@
-import { useState } from "react";
-// import { useParams } from "react-router-dom";
-import Wrapper from "@/components/layout/Wrapper";
-import { Button } from "@/components/ui/button";
-import Server from "@/assets/images/server.png";
-import SupportBanner from "@/features/product/components/SupportBanner";
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Wrapper from '@/components/layout/Wrapper';
+import { Button } from '@/components/ui/button';
+import Server from '@/assets/images/server.png';
+import SupportBanner from '@/features/product/components/SupportBanner';
 const ProductDetails = () => {
-  // const { id } = useParams();
-  const [activeTab, setActiveTab] = useState("about");
+  const { id } = useParams();
+  console.log('paramId', id);
+  const [activeTab, setActiveTab] = useState('about');
 
   return (
     <div className="bg-white min-h-screen">
@@ -14,18 +15,18 @@ const ProductDetails = () => {
         <Wrapper>
           <div className="flex flex-col md:flex-row justify-between items-center py-2 md:py-4 gap-4">
             <div className="flex gap-4 lg:gap-8">
-              {["about", "details", "specs"].map((tab) => (
+              {['about', 'details', 'specs'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={`text-xs md:text-sm capitalize transition-all relative py-2
-                    ${activeTab === tab ? "text-black after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-blue-600" : "text-gray-400 hover:text-black"}`}
+                    ${activeTab === tab ? 'text-black after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-blue-600' : 'text-gray-400 hover:text-black'}`}
                 >
-                  {tab === "about"
-                    ? "About Product"
-                    : tab === "details"
-                      ? "Details"
-                      : "Specs"}
+                  {tab === 'about'
+                    ? 'About Product'
+                    : tab === 'details'
+                      ? 'Details'
+                      : 'Specs'}
                 </button>
               ))}
             </div>
@@ -91,7 +92,7 @@ const ProductDetails = () => {
 
               <div className="flex items-center gap-6 pt-4">
                 <p className="text-[10px] font-bold">
-                  Have a Question?{" "}
+                  Have a Question?{' '}
                   <span className="text-[#0156FF] cursor-pointer">
                     Contact Us
                   </span>
@@ -111,7 +112,7 @@ const ProductDetails = () => {
               {/* Zip payment indicator */}
               <div className="absolute -bottom-5 right-0 flex items-center gap-2">
                 <span className="text-[10px] text-gray-400">
-                  own it now, up to 6 months interest free{" "}
+                  own it now, up to 6 months interest free{' '}
                   <span className="underline cursor-pointer">learn more</span>
                 </span>
               </div>
@@ -119,8 +120,6 @@ const ProductDetails = () => {
           </div>
         </Wrapper>
       </section>
-
-     
 
       <SupportBanner />
     </div>

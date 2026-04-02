@@ -12,7 +12,7 @@ import AddProduct from '@/features/dashboard/product/pages/AddProduct';
 import ProductDashboardPage from '@/features/dashboard/product/pages/ProductDashboardPage';
 import UserList from '@/features/dashboard/user/pages/UserList';
 import NewProduct from '@/features/product/pages/NewProduct';
-import ProductDetails from '@/features/product/pages/ProductDetails';
+import ProductDetails from '@/pages/ProductDetails';
 import About from '@/pages/About';
 import Contact from '@/pages/Contact';
 import Home from '@/pages/Home';
