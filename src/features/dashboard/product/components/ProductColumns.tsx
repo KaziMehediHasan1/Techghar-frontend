@@ -23,10 +23,6 @@ export const PColumns = (
     header: () => <div className="text-left">Category</div>,
   },
   {
-    accessorKey: 'quntity',
-    header: () => <div className="text-left">Quantity</div>,
-  },
-  {
     accessorKey: 'colors',
     header: () => <div className="text-left">Color</div>,
   },
@@ -37,6 +33,62 @@ export const PColumns = (
   {
     accessorKey: 'stock',
     header: () => <div className="text-left">Stock</div>,
+  },
+  {
+    accessorKey: 'title',
+    header: ({ column }) => (
+      <RDataTableColumnHeader column={column} title="Product" />
+    ),
+    cell: ({ row }) => (
+      <div className="flex flex-col">
+        <span className="font-medium">{row.original.title}</span>
+        <span className="text-[10px] text-gray-400">
+          SKU: {row.original.sku || 'N/A'}
+        </span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'price',
+    header: 'Price Info',
+    cell: ({ row }) => (
+      <div className="text-left">
+        <p className="font-bold text-blue-600">
+          ${row.original.finalPrice || row.original.price}
+        </p>
+        {row.original.discount > 0 && (
+          <p className="text-[10px] text-red-400 line-through">
+            ${row.original.price} (-{row.original.discount}%)
+          </p>
+        )}
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'category',
+    header: 'Category',
+  },
+  {
+    accessorKey: 'quantity', 
+    header: 'Stock',
+    cell: ({ row }) => (
+      <div className="flex flex-col">
+        <span
+          className={row.original.quantity < 5 ? 'text-red-500 font-bold' : ''}
+        >
+          Qty: {row.original.quantity}
+        </span>
+        <span
+          className={`text-[10px] ${row.original.stock ? 'text-green-500' : 'text-red-500'}`}
+        >
+          {row.original.stock ? '● In Stock' : '● Out of Stock'}
+        </span>
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'brand',
+    header: 'Brand',
   },
   {
     id: 'edit',

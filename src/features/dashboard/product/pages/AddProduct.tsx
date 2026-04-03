@@ -12,9 +12,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import type { IProductFormData } from '@/features/dashboard/product/product.types';
 import usePost from '@/hooks/usePost';
 import { toast } from 'react-toastify';
+import type { IProductFormData } from '@/features/dashboard/product/product.types';
 
 // color options and categories can be fetched from the server in real application
 const colorOptions = ['Black', 'White', 'Silver', 'Red', 'Blue', 'Gold'];
@@ -37,21 +37,22 @@ const AddProduct = () => {
   const { startUpload } = useUploadThing('imageUploader');
   const { mutate, error, isPending, isSuccess, data } = usePost('/product');
   console.log(error, isPending, isSuccess, data, 'post response -----');
-  const { register, handleSubmit, setValue, watch, reset } = useForm({
-    defaultValues: {
-      title: '',
-      category: '',
-      brand: '',
-      price: 0,
-      discount: 0,
-      quantity: 0,
-      description: '',
-      sku: '',
-      modelName: '',
-      series: '',
-      warranty: 'No Warranty',
-    },
-  });
+  const { register, handleSubmit, setValue, watch, reset } =
+    useForm<IProductFormData>({
+      defaultValues: {
+        title: '',
+        category: '',
+        brand: '',
+        price: 0,
+        discount: 0,
+        quantity: 0,
+        description: '',
+        sku: '',
+        modelName: '',
+        series: '',
+        warranty: 'No Warranty',
+      },
+    });
 
   const addSpec = () => setSpecs([...specs, { label: '', value: '' }]);
   const updateSpec = (index: number, key: 'label' | 'value', val: string) => {
@@ -350,7 +351,12 @@ const AddProduct = () => {
             <div className="space-y-3">
               <label className="text-sm font-medium flex justify-between">
                 Specifications{' '}
-                <Button type="button" size="sm" className='block' onClick={addSpec}>
+                <Button
+                  type="button"
+                  size="sm"
+                  className="block"
+                  onClick={addSpec}
+                >
                   <Plus size={14} />
                 </Button>
               </label>

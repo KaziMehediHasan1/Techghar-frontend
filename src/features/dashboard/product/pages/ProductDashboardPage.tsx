@@ -1,11 +1,13 @@
 import { showDeleteConfirmation } from '@/components/ConfirmationToast';
 import RDataTable from '@/components/tables/RDataTable';
 import { PColumns } from '@/features/dashboard/product/components/ProductColumns';
+import ProductTableSkeleton from '@/features/dashboard/product/components/ProductTableSkeleton';
 import { UpdateProductModal } from '@/features/dashboard/product/components/UpdateProductModal';
 import type {
   IProduct,
   IProductUpdateData,
-  TProductApiResponse,
+  TProduct,
+  TProductAPIResponse,
 } from '@/features/dashboard/product/product.types';
 import useDebounce from '@/hooks/useDebounce';
 import useDelete from '@/hooks/useDelete';
@@ -19,12 +21,14 @@ const ProductDashboardPage = () => {
   const [selectedProduct, setSelectedProduct] = useState<IProductUpdateData>({
     id: '',
     title: '',
-    category: '',
+    category: undefined,
     brand: '',
     price: 0,
     discount: 0,
     quantity: 0,
     description: '',
+    sku: '',
+    warranty: 'No Warranty',
   });
   const [globalFilter, setGlobalFilter] = useState('');
   const [pagination, setPagination] = useState({
@@ -50,12 +54,11 @@ const ProductDashboardPage = () => {
   // fetching data from backend with query params for search and pagination
   const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const { data, isLoading, error } =
-    useFetch<TProductApiResponse<IProduct>>(queryUrl);
+    useFetch<TProduct<TProductAPIResponse>>(queryUrl);
 
-  if (isLoading)
-    return (
-      <div className="p-10 text-center animate-pulse">Loading Users...</div>
-    );
+  console.log(data, 'product data-');
+
+  if (isLoading) return <ProductTableSkeleton />;
   if (error)
     return (
       <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>

@@ -311,7 +311,7 @@ const TermsAndCondition = () => {
             </div>
 
             {/* RIGHT SIDE: QUICK NAVIGATION / INDEX CARD */}
-            <aside className="hidden lg:block lg:col-span-4 bg-[#F5F7FF] p-6 rounded-md">
+            <aside className="hidden lg:block lg:col-span-4 bg-sky p-6 rounded-md">
               <h3 className="text-lg font-bold text-blue-900 mb-4 border-b border-blue-200 pb-2">
                 Definitions & Interpretation
               </h3>
@@ -347,7 +347,7 @@ const TermsAndCondition = () => {
           {/* support */}
         </div>
       </Wrapper>
-      <div className="bg-[#F5F7FF] py-5">
+      <div className="bg-sky py-5">
         <HelpersCard />
       </div>
     </div>
