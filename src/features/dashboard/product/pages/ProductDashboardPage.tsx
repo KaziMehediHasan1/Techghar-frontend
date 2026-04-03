@@ -1,4 +1,5 @@
 import { showDeleteConfirmation } from '@/components/ConfirmationToast';
+import { ErrorState } from '@/components/ErrorState';
 import RDataTable from '@/components/tables/RDataTable';
 import { PColumns } from '@/features/dashboard/product/components/ProductColumns';
 import ProductTableSkeleton from '@/features/dashboard/product/components/ProductTableSkeleton';
@@ -59,10 +60,7 @@ const ProductDashboardPage = () => {
   console.log(data, 'product data-');
 
   if (isLoading) return <ProductTableSkeleton />;
-  if (error)
-    return (
-      <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>
-    );
+  if (error) return <ErrorState />;
 
   const totalPageCount = Math.ceil(
     data?.data?.meta?.totalPage || 0 / pagination.pageSize

@@ -1,4 +1,5 @@
 import { showDeleteConfirmation } from '@/components/ConfirmationToast';
+import { ErrorState } from '@/components/ErrorState';
 import RDataTable from '@/components/tables/RDataTable';
 import { OrderColumns } from '@/features/dashboard/order/components/OrderColumns';
 import UpdateOrderModal from '@/features/dashboard/order/components/UpdateOrderModal';
@@ -7,6 +8,7 @@ import type {
   TOrder,
   TOrderApiResponse,
 } from '@/features/dashboard/order/order.types';
+import ProductTableSkeleton from '@/features/dashboard/product/components/ProductTableSkeleton';
 import useDebounce from '@/hooks/useDebounce';
 import useDelete from '@/hooks/useDelete';
 import useFetch from '@/hooks/useFetch';
@@ -20,8 +22,6 @@ const OrdersPage = () => {
     _id: '',
     quantity: 0,
     status: '',
-    productName: '',
-    customerEmail: '',
   });
   const [globalFilter, setGlobalFilter] = useState('');
   const [pagination, setPagination] = useState({
@@ -50,14 +50,8 @@ const OrdersPage = () => {
     useFetch<TOrderApiResponse<TOrder>>(queryUrl);
 
   console.log('Order Data Formate -', data);
-  if (isLoading)
-    return (
-      <div className="p-10 text-center animate-pulse">Loading Users...</div>
-    );
-  if (error)
-    return (
-      <div className="p-10 text-red-500 text-center">Failed to fetch data.</div>
-    );
+  if (isLoading) return <ProductTableSkeleton />;
+  if (error) return <ErrorState />;
 
   const totalPageCount = Math.ceil(
     data?.data?.meta?.totalPage || 0 / pagination.pageSize
@@ -77,7 +71,10 @@ const OrdersPage = () => {
   };
 
   // update handler for updating a product
-  const handleUpdate = async (id: string, updatedData: Partial<IOrderUpdateData>) => {
+  const handleUpdate = async (
+    id: string,
+    updatedData: Partial<IOrderUpdateData>
+  ) => {
     console.log(id, updatedData, 'hnadleUpdate order ---');
     setIsModalOpen(true);
     setSelectedProduct({ ...updatedData, _id: id } as IOrderUpdateData);

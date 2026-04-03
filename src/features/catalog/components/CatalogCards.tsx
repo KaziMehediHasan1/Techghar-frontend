@@ -1,8 +1,8 @@
-import HorizontalCard from "@/components/cards/HorizontalCard";
-import VerticalCard from "@/components/cards/VerticalCard";
-import Pagination from "@/components/Pagination";
+import HorizontalCard from '@/components/cards/HorizontalCard';
+import VerticalCard from '@/components/cards/VerticalCard';
+import Pagination from '@/components/Pagination';
 // Path to the component above
-import { useState } from "react";
+import { useState } from 'react';
 
 type TCard = {
   cardType: string;
@@ -24,14 +24,14 @@ const CatalogCards = ({ cardType }: TCard) => {
         </div>
 
         <div className="hidden sm:block">
-          {cardType === "grid" ? <VerticalCard /> : <HorizontalCard />}
+          {cardType === 'grid' ? <VerticalCard /> : <HorizontalCard />}
         </div>
       </div>
 
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        onPageChange={(page) => setCurrentPage(page)}
+        onPageChange={(page: number) => setCurrentPage(page)}
       />
     </div>
   );

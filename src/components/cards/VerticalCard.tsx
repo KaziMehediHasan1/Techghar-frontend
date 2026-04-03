@@ -4,15 +4,14 @@ import { Star } from 'lucide-react';
 import type { INewProduct } from '@/types/newProductTypes';
 
 interface VerticalCardProps {
-  data: INewProduct[];
+  data?: INewProduct[];
 }
 
 const VerticalCard = ({ data }: VerticalCardProps) => {
-  console.log('Product Data:-', data);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {data.map((item: INewProduct) => (
+      {data?.map((item: INewProduct) => (
         <NavLink to={`/product/${item._id}`} className="flex h-full" key={item._id}>
           <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
             {/* STOCK INDICATOR */}
