@@ -3,25 +3,24 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 
-export function BreadcrumbBasic() {
+type BreadcrumbBasicProps = {
+  text: string[];
+  link?: string;
+};
+
+export function BreadcrumbBasic({ text, link }: BreadcrumbBasicProps) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="#">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="#">Components</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-        </BreadcrumbItem>
+        {text?.map((item, index) => (
+          <BreadcrumbItem key={index} className='text-sm'>
+            <BreadcrumbLink className='text-sm' href={link || '/'}>{item}</BreadcrumbLink>
+            {index < text.length - 1 && <BreadcrumbSeparator />}
+          </BreadcrumbItem>
+        ))}
       </BreadcrumbList>
     </Breadcrumb>
   );

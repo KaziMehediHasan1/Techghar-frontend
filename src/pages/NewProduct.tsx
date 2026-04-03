@@ -10,7 +10,6 @@ import type {
 
 const NewProduct = () => {
   // fetching data from backend with query params for search and pagination
-  // const queryUrl = `/product?search=${debounce}&page=${pagination.pageIndex + 1}&limit=${pagination.pageSize}`;
   const queryUrl = `/product/new`;
   const { data, isLoading } =
     useFetch<TNewProductApiResponse<INewProduct>>(queryUrl);
