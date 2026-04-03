@@ -1,18 +1,18 @@
-import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
-import HelpersCard from "@/components/cards/HelpersCard";
-import Wrapper from "@/components/layout/Wrapper";
-import { useLocation } from "react-router-dom";
+import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
+import HelpersCard from '@/components/cards/HelpersCard';
+import Wrapper from '@/components/layout/Wrapper';
+import { useLocation } from 'react-router-dom';
 
 const TermsAndCondition = () => {
   const location = useLocation();
-  console.log(location, "pathname");
+  console.log(location, 'pathname');
   return (
     <div>
       <Wrapper>
         <div className="my-6 ">
           {/* BREADCRUMB & MAIN TITLE */}
           <header className="mb-4 space-y-4">
-            <BreadcrumbBasic />
+            <BreadcrumbBasic text={['home']} />
             <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900">
               Shop Terms & Conditions
             </h1>
@@ -42,7 +42,7 @@ const TermsAndCondition = () => {
                         <p>
                           <span className="font-bold text-slate-900">
                             "Shop"
-                          </span>{" "}
+                          </span>{' '}
                           means Shop Pty Ltd ABN 11 222 333 444.
                         </p>
                       </li>
@@ -51,7 +51,7 @@ const TermsAndCondition = () => {
                         <p>
                           <span className="font-bold text-slate-900">
                             "Customer"
-                          </span>{" "}
+                          </span>{' '}
                           means the person or corporation placing an order for
                           the purchase of goods or services from Shop.
                         </p>
@@ -61,7 +61,7 @@ const TermsAndCondition = () => {
                         <p>
                           <span className="font-bold text-slate-900">
                             "Products"
-                          </span>{" "}
+                          </span>{' '}
                           means any goods, materials, equipment or services
                           provided to the Customer by Shop.
                         </p>
@@ -85,7 +85,7 @@ const TermsAndCondition = () => {
                         <span className="font-semibold">(f)</span>
                         <p>
                           For all periods and times specified in clauses 5 and
-                          11,{" "}
+                          11,{' '}
                           <span className="italic">time is of the essence</span>
                           .
                         </p>
@@ -93,7 +93,7 @@ const TermsAndCondition = () => {
                       <li className="flex gap-2">
                         <span className="font-semibold">(g)</span>
                         <p>
-                          All references to currency are references to{" "}
+                          All references to currency are references to{' '}
                           <span className="font-semibold">
                             Australian dollars
                           </span>

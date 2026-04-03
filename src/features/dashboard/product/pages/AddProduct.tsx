@@ -28,6 +28,8 @@ const categories = [
 ];
 
 const AddProduct = () => {
+  const [specs, setSpecs] = useState([{ label: '', value: '' }]);
+  const [features, setFeatures] = useState(['']);
   const [images, setImages] = useState<string[]>([]);
   const [selectedColor, setSelectedColor] = useState('Black');
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -44,8 +46,26 @@ const AddProduct = () => {
       discount: 0,
       quantity: 0,
       description: '',
+      sku: '',
+      modelName: '',
+      series: '',
+      warranty: 'No Warranty',
     },
   });
+
+  const addSpec = () => setSpecs([...specs, { label: '', value: '' }]);
+  const updateSpec = (index: number, key: 'label' | 'value', val: string) => {
+    const newSpecs = [...specs];
+    newSpecs[index][key] = val;
+    setSpecs(newSpecs);
+  };
+
+  const addFeature = () => setFeatures([...features, '']);
+  const updateFeature = (index: number, val: string) => {
+    const newFeatures = [...features];
+    newFeatures[index] = val;
+    setFeatures(newFeatures);
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -83,8 +103,10 @@ const AddProduct = () => {
       return toast.error('At least one image is required!');
     const finalData = {
       ...data,
-      colors: selectedColor,
+      colors: [selectedColor],
       images: imageUrls,
+      specs: specs.filter((s) => s.label && s.value),
+      features: features.filter((f) => f.trim() !== ''),
       finalPrice: data.price - data.price * (data.discount / 100),
       stock: true,
     };
@@ -95,6 +117,18 @@ const AddProduct = () => {
         setImages([]);
       },
     });
+  };
+
+  const removeSpec = (index: number) => {
+    if (specs.length > 1) {
+      setSpecs(specs.filter((_, i) => i !== index));
+    }
+  };
+
+  const removeFeature = (index: number) => {
+    if (features.length > 1) {
+      setFeatures(features.filter((_, i) => i !== index));
+    }
   };
 
   return (
@@ -274,6 +308,105 @@ const AddProduct = () => {
                   />
                 ))}
               </div>
+            </div>
+
+            {/* sku  */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">SKU (Optional)</label>
+                <Input {...register('sku')} placeholder="Unique SKU" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Model Name</label>
+                <Input
+                  {...register('modelName')}
+                  placeholder="e.g. Trident 3"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Series</label>
+                <Input
+                  {...register('series')}
+                  placeholder="e.g. Gaming Series"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Discount (%)</label>
+                <Input
+                  type="number"
+                  {...register('discount', { valueAsNumber: true })}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Warranty</label>
+                <Input {...register('warranty')} placeholder="e.g. 1 Year" />
+              </div>
+            </div>
+
+            {/* Dynamic Specs */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium flex justify-between">
+                Specifications{' '}
+                <Button type="button" size="sm" className='block' onClick={addSpec}>
+                  <Plus size={14} />
+                </Button>
+              </label>
+              {specs.map((spec, i) => (
+                <div key={i} className="flex gap-2 items-center">
+                  <Input
+                    placeholder="Label (e.g. CPU)"
+                    value={spec.label}
+                    onChange={(e) => updateSpec(i, 'label', e.target.value)}
+                  />
+                  <Input
+                    placeholder="Value (e.g. i7 10th Gen)"
+                    value={spec.value}
+                    onChange={(e) => updateSpec(i, 'value', e.target.value)}
+                  />
+                  {/* Delete Button */}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeSpec(i)}
+                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <X size={16} />
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            {/* Dynamic Features */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium flex justify-between">
+                Key Features{' '}
+                <Button type="button" size="sm" onClick={addFeature}>
+                  <Plus size={14} />
+                </Button>
+              </label>
+              {features.map((feature, i) => (
+                <div key={i} className="flex gap-2 items-center">
+                  <Input
+                    placeholder="Feature point"
+                    value={feature}
+                    onChange={(e) => updateFeature(i, e.target.value)}
+                  />
+                  {/* Delete Button */}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => removeFeature(i)}
+                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                  >
+                    <X size={16} />
+                  </Button>
+                </div>
+              ))}
             </div>
 
             <div className="space-y-2">
