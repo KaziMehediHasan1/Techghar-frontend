@@ -11,8 +11,8 @@ const ButtonSection = ({
   products,
   totalItems,
 }: {
-  products: [];
-  totalItems: number;
+  products?: [];
+  totalItems?: number;
 }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
