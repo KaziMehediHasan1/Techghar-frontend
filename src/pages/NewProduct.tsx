@@ -1,8 +1,8 @@
 import VerticalCard from '@/components/cards/VerticalCard';
 import VerticalCardSkeleton from '@/components/cards/VerticalCardSkeleton';
 import Heading from '@/components/Heading';
+import useFreeFetch from '@/hooks/useFreeFetch';
 
-import useFetch from '@/hooks/useFetch';
 import type {
   INewProduct,
   TNewProductApiResponse,
@@ -12,7 +12,7 @@ const NewProduct = () => {
   // fetching data from backend with query params for search and pagination
   const queryUrl = `/product/new`;
   const { data, isLoading } =
-    useFetch<TNewProductApiResponse<INewProduct>>(queryUrl);
+    useFreeFetch<TNewProductApiResponse<INewProduct>>(queryUrl);
   const result = data?.data || [];
   console.log('Check New data -');
   return (

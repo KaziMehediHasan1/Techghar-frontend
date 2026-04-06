@@ -31,7 +31,7 @@ const DynamicFilterMenu = ({ name, items }: DynamicFilterMenuProps) => {
       params.set(name, value);
     }
 
-    params.set('page', '1');
+    params.set(name,value);
 
     setSearchParams(params);
   };

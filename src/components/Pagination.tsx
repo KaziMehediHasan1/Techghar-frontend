@@ -1,6 +1,9 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange }: any) => {
+  // যদি totalPages না থাকে বা ০ হয়, তবে কিছুই রেন্ডার করবে না
+  if (!totalPages || totalPages <= 0) return null;
+
   return (
     <div className="flex justify-center items-center gap-2 mt-8 mb-4">
       {/* Previous Button */}
@@ -22,8 +25,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-semibold transition-all
               ${
                 currentPage === pageNumber
-                  ? "bg-sky border-2 border-transparent text-black"
-                  : "text-gray-500 hover:bg-gray-50"
+                  ? 'bg-sky-500 border-2 border-transparent text-white' // sky কালার ঠিক করা হয়েছে
+                  : 'text-gray-500 hover:bg-gray-50'
               }`}
           >
             {pageNumber}
@@ -42,5 +45,4 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     </div>
   );
 };
-
-export default Pagination;
+export default  Pagination;

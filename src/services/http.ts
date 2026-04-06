@@ -13,10 +13,14 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+const axiosPublicInstance = () => {
+  return axiosInstance;
+};
+
 // axios secured funtion using interceptors -
 const useAxiosSecure = () => {
   const { accessToken, setToken, logout } = useAuthStore();
-  
+
   const navigate = useNavigate();
   // console.log(accessToken,"secure path")
 
@@ -73,6 +77,7 @@ const useAxiosSecure = () => {
 };
 
 const http = {
+  axiosPublicInstance,
   axiosInstance,
   useAxiosSecure,
 };

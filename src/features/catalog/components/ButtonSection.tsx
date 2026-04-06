@@ -4,15 +4,20 @@ import CatalogCards from '@/features/catalog/components/CatalogCards';
 import Filtered from '@/features/catalog/components/Filtered';
 import ShowMenu from '@/features/catalog/components/ShowMenu';
 import SortMenu from '@/features/catalog/components/SortMenu';
+import type { INewProduct } from '@/types/newProductTypes';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const ButtonSection = ({
-  products,
+  data,
   totalItems,
+  isLoading,
+  pageNo,
 }: {
-  products?: [];
+  data?: INewProduct[] | undefined;
   totalItems?: number;
+  isLoading?: boolean;
+  pageNo?: number;
 }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,12 +52,12 @@ const ButtonSection = ({
         <Filtered />
       </aside>
 
-      {/* RIGHT COLUMN: Controls + Products */}
+      {/* RIGHT COLUMN: Controls + data */}
       <main className="flex-1">
         {/* This is the new TopBar specifically for the right side */}
         <div className="flex flex-wrap items-center justify-between mb-2 gap-4">
           <p className="text-gray-500 text-xs">
-            Showing {products?.length} of {totalItems} items
+            Showing {data?.length} of {totalItems} items
           </p>
 
           <div className="flex items-center gap-3">
@@ -70,7 +75,7 @@ const ButtonSection = ({
         </div>
 
         {/* filterd items */}
-        <div className="">
+        <div>
           <section className="flex items-center gap-3">
             {activeFilters?.length > 0 && (
               <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -103,7 +108,13 @@ const ButtonSection = ({
               </div>
             )}
           </section>
-          <CatalogCards cardType={cardShowType} />
+          <CatalogCards
+            cardType={cardShowType}
+            data={data}
+            isLoading={isLoading}
+            totalPage={totalItems}
+            pageNo={pageNo}
+          />
         </div>
       </main>
     </section>

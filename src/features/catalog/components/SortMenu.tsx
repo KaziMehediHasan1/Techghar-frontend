@@ -4,7 +4,7 @@ const items = ['ASC', 'DESC'];
 const SortMenu = () => {
   return (
     <div>
-      <DynamicFilterMenu name="Sort" items={items} />
+      <DynamicFilterMenu name="sort" items={items} />
     </div>
   );
 };
