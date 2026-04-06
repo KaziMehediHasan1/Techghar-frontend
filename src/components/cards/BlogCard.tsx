@@ -1,41 +1,6 @@
-import React from 'react';
-import LaptopAccessories from '@/assets/images/Laptop-Accessories.jpg';
-import Gadget from '@/assets/images/Gadget.jpeg';
-import ATSCase from '@/assets/images/ATS-Case.jpeg';
 import { NavLink } from 'react-router-dom';
 import useFreeFetch from '@/hooks/useFreeFetch';
 
-// Demo Data (Repeated for UI Testing)
-const BLOG_POSTS = [
-  {
-    id: 1,
-    image: LaptopAccessories,
-    title: 'Best Laptop Accessories for Productivity in 2026',
-    date: 'March 5, 2026',
-    category: 'Accessories',
-  },
-  {
-    id: 2,
-    image: Gadget,
-    title: 'Top 10 Must-Have Gadgets for Every Tech Enthusiast',
-    date: 'March 2, 2026',
-    category: 'Gadgets',
-  },
-  {
-    id: 3,
-    image: ATSCase,
-    title: 'How to Choose the Perfect PC Case for Your Build',
-    date: 'Feb 28, 2026',
-    category: 'Hardware',
-  },
-  {
-    id: 4,
-    image: LaptopAccessories, // Repeated for demo
-    title: 'Maintaining Your Gear: A Full Guide',
-    date: 'Feb 20, 2026',
-    category: 'Maintenance',
-  },
-];
 type TBlogData = {
   id: number;
   image: string;
@@ -67,7 +32,7 @@ const BlogCard = () => {
 
       {/* Responsive Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {blogData.slice(0, 4).map((blog) => (
+        {blogData?.slice(0, 4).map((blog) => (
           <div
             key={blog.id}
             className="group flex flex-col bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
