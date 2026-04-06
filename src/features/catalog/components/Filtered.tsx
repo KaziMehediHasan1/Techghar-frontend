@@ -48,6 +48,8 @@ const Filtered = () => {
     };
   }, [data]);
 
+ 
+
   const handleFilterClick = (key: string, value: string) => {
     const currentParams = new URLSearchParams(searchParams);
     if (currentParams.get(key) === value) {

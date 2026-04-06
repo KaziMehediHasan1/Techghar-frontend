@@ -8,18 +8,19 @@ import { useMemo } from 'react';
 import type { INewProduct } from '@/types/newProductTypes';
 
 const Catalog = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get('category');
   const price = searchParams.get('price');
   const sort = searchParams.get('sort');
   const page = searchParams.get('page');
-  // const limit = searchParams.get('limit');
+  const limit = searchParams.get('limit');
 
   const queryUrl = `/product?category=${
     category || ''
-  }&price=${price || ''}&sort=${sort || ''}&limit=${page || ''}`;
+  }&price=${price || ''}&sort=${sort || ''}&page=${page || '1'}&limit=${limit || '10'}`;
 
   const { data, isLoading } = useFreeFetch(queryUrl);
+  console.log(data?.data);
   const meta = data?.data?.meta;
   const PageNo = meta?.page;
   const totalPage = meta?.totalPage;
@@ -53,6 +54,13 @@ const Catalog = () => {
   // const [products, setProducts] = useState([]); totalItems={totalPage} pageNo={ApiPage}
   // console.log('categoryName', categoryName, 'Search Params-', searchParams);
 
+  // Page change hole URL update korar function
+  const handlePageChange = (pageNumber: number) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('page', pageNumber.toString());
+    setSearchParams(newParams); 
+  };
+
   return (
     <div>
       <Wrapper>
@@ -67,6 +75,7 @@ const Catalog = () => {
             isLoading={isLoading}
             pageNo={PageNo}
             totalItems={totalPage}
+            onPageChange={handlePageChange}
           />
         </section>
       </Wrapper>

@@ -12,9 +12,10 @@ type TCard = {
   isLoading?: boolean;
   totalPage?: number;
   pageNo?: number;
+  onPageChange?: (page: number) => void;
 };
 
-const CatalogCards = ({ cardType, data, isLoading, totalPage }: TCard) => {
+const CatalogCards = ({ cardType, data, isLoading, totalPage, onPageChange }: TCard) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
@@ -40,7 +41,10 @@ const CatalogCards = ({ cardType, data, isLoading, totalPage }: TCard) => {
       <Pagination
         currentPage={currentPage}
         totalPages={totalPage}
-        onPageChange={(page: number) => setCurrentPage(page)}
+        onPageChange={(page: number) => {
+          setCurrentPage(page);
+          onPageChange?.(page);
+        }}
       />
     </div>
   );

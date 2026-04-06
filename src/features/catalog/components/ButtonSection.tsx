@@ -13,11 +13,13 @@ const ButtonSection = ({
   totalItems,
   isLoading,
   pageNo,
+  onPageChange,
 }: {
   data?: INewProduct[] | undefined;
   totalItems?: number;
   isLoading?: boolean;
   pageNo?: number;
+  onPageChange?: (page: number) => void;
 }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -114,6 +116,7 @@ const ButtonSection = ({
             isLoading={isLoading}
             totalPage={totalItems}
             pageNo={pageNo}
+            onPageChange={onPageChange}
           />
         </div>
       </main>

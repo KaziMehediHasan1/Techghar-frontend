@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }: any) => {
-  // যদি totalPages না থাকে বা ০ হয়, তবে কিছুই রেন্ডার করবে না
   if (!totalPages || totalPages <= 0) return null;
 
   return (
