@@ -4,7 +4,7 @@ const items = ['10', '20', '30', '40', '50'];
 const ShowMenu = () => {
   return (
     <div>
-      <DynamicFilterMenu name="limit" items={items} />
+      <DynamicFilterMenu label='show' name="limit" items={items} />
     </div>
   );
 };

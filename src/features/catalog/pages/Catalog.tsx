@@ -1,11 +1,10 @@
 import Wrapper from '@/components/layout/Wrapper';
 import Banner from '@/assets/images/AdBanner.png';
-// import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import ButtonSection from '@/features/catalog/components/ButtonSection';
 import { useSearchParams } from 'react-router-dom';
 import useFreeFetch from '@/hooks/useFreeFetch';
 import { useMemo } from 'react';
-import type { INewProduct } from '@/types/newProductTypes';
+import type { IApiResponse, INewProduct } from '@/types/newProductTypes';
 
 const Catalog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,8 +18,7 @@ const Catalog = () => {
     category || ''
   }&price=${price || ''}&sort=${sort || ''}&page=${page || '1'}&limit=${limit || '10'}`;
 
-  const { data, isLoading } = useFreeFetch(queryUrl);
-  console.log(data?.data);
+  const { data, isLoading } = useFreeFetch<IApiResponse>(queryUrl);
   const meta = data?.data?.meta;
   const PageNo = meta?.page;
   const totalPage = meta?.totalPage;
@@ -28,8 +26,6 @@ const Catalog = () => {
 
   const processedProducts = useMemo(() => {
     if (!data?.data?.result) return [];
-
-    console.log('Processing products data...');
 
     return data?.data?.result?.map((item: INewProduct) => ({
       _id: item._id,
@@ -41,7 +37,7 @@ const Catalog = () => {
       stock: item?.stock ?? false,
       category: item?.category,
       brand: item?.brand,
-      // images: Array?.isArray(item?.images) ? item?.images : [],
+      colors: item?.colors || [],
       images:
         Array.isArray(item.images) && item?.images.length > 0
           ? item.images
@@ -51,10 +47,7 @@ const Catalog = () => {
       updatedAt: item?.updatedAt,
     }));
   }, [data]);
-  // const [products, setProducts] = useState([]); totalItems={totalPage} pageNo={ApiPage}
-  // console.log('categoryName', categoryName, 'Search Params-', searchParams);
 
-  // Page change hole URL update korar function
   const handlePageChange = (pageNumber: number) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('page', pageNumber.toString());

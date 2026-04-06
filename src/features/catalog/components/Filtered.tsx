@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { ChevronUp, ChevronDown, Check, X, Filter } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import useFreeFetch from '@/hooks/useFreeFetch';
+import type { IApiResponse, INewProduct } from '@/types/newProductTypes';
 
 // --- Demo Data ---
 const priceRanges = [
@@ -11,6 +12,7 @@ const priceRanges = [
   { label: '$2,000.00 - $3,000.00', value: '2000-3000' },
 ];
 
+
 const Filtered = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,17 +20,17 @@ const Filtered = () => {
   // const queryUrl = `/product?category=&price=&colors=&page=1&sort=desc&limit=25`;
   // console.log('query URL:-', queryUrl);
 
-  const { data, isLoading } = useFreeFetch('/product?limit=50');
+  const { data, isLoading } = useFreeFetch<IApiResponse>('/product?limit=50');
   // console.log('Filterd Data Here:-', data?.data.result);
   const dynamicFilters = useMemo(() => {
-    const products = data?.data?.result || data?.data?.result || [];
+    const products: INewProduct[] = data?.data?.result || [];
 
     if (products.length === 0)
       return { categories: [], colors: [], categoryCounts: {} };
 
     // 1. Unique Categories & Counting
     const counts: Record<string, number> = {};
-    products.forEach((p: any) => {
+    products.forEach((p: INewProduct) => {
       if (p.category) {
         counts[p.category] = (counts[p.category] || 0) + 1;
       }
@@ -38,17 +40,18 @@ const Filtered = () => {
 
     // 2. Unique Colors
     const uniqueColors = Array.from(
-      new Set(products.flatMap((p: any) => p.colors || []))
-    ).filter(Boolean);
+      new Set(products.flatMap((p: INewProduct) => p.colors || []))
+    );
+    const stringColors = uniqueColors.filter((color): color is string =>
+      Boolean(color)
+    );
 
     return {
       categories: uniqueCategories,
-      colors: uniqueColors,
+      colors: stringColors,
       categoryCounts: counts,
     };
   }, [data]);
-
- 
 
   const handleFilterClick = (key: string, value: string) => {
     const currentParams = new URLSearchParams(searchParams);
@@ -98,7 +101,7 @@ const Filtered = () => {
           <ChevronUp size={16} />
         </div>
         <div className="flex gap-3">
-          {dynamicFilters.colors.slice(1, 5).map((color: string) => {
+          {dynamicFilters.colors.slice(1, 5).map((color) => {
             const isActive = searchParams.get('colors') === color;
             return (
               <div
@@ -106,13 +109,15 @@ const Filtered = () => {
                 onClick={() => handleFilterClick('colors', color)}
                 className={`w-7 h-7 rounded-full cursor-pointer transition-all flex items-center justify-center border-2 
                     ${isActive ? 'ring-2 ring-[#0156FF] ring-offset-2 border-white scale-110' : 'border-gray-200 opacity-80 hover:opacity-100'}`}
-                style={{ backgroundColor: color.toLowerCase() }}
+                style={{
+                  backgroundColor: color ? color.toLowerCase() : undefined,
+                }}
               >
                 {isActive && (
                   <Check
                     size={12}
                     className={
-                      color.toLowerCase() === 'white'
+                      color && color.toLowerCase() === 'white'
                         ? 'text-black'
                         : 'text-white'
                     }
@@ -129,7 +134,7 @@ const Filtered = () => {
   return (
     <div className="w-full">
       {/* --- [ADDED] Small Device Trigger Button --- */}
-      <div className="sm:hidden mb-4">
+      <div className="lg:hidden mb-4">
         <button
           onClick={() => setIsMobileMenuOpen(true)}
           className="w-full py-3 bg-gray-50 text-sm font-bold border border-gray-200 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
@@ -141,7 +146,7 @@ const Filtered = () => {
 
       {/* --- [ADDED] Mobile Drawer Full Overlay --- */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-1000 sm:hidden">
+        <div className="fixed inset-0 z-1000 lg:hidden">
           {/* Backdrop Blur */}
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
@@ -188,7 +193,7 @@ const Filtered = () => {
       )}
 
       {/* --- [UNCHANGED] Desktop Sidebar View --- */}
-      <div className="hidden sm:flex flex-col bg-sky p-5 rounded border border-gray-100">
+      <div className="hidden lg:flex flex-col bg-sky p-5 rounded border border-gray-100">
         <h2 className="text-center font-bold text-sm mb-4 uppercase tracking-wider">
           Filters
         </h2>
@@ -208,7 +213,9 @@ const Filtered = () => {
           className={`mt-6 w-full py-3 rounded-full cursor-pointer text-xs font-bold transition-all
             ${activeFilterCount > 0 ? 'bg-[#0156FF] text-white hover:bg-blue-700 shadow-md shadow-blue-100' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
         >
-          Apply Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
+          {isLoading
+            ? 'Loading...'
+            : `Apply Filters ${activeFilterCount > 0 ? `(${activeFilterCount})` : ''}`}
         </button>
       </div>
     </div>
@@ -216,7 +223,19 @@ const Filtered = () => {
 };
 
 // --- [UNCHANGED COMPONENT] ---
-const FilterSection = ({ title, items, counts, activeValue, onSelect }) => {
+const FilterSection = ({
+  title,
+  items,
+  counts,
+  activeValue,
+  onSelect,
+}: {
+  title: string;
+  items: string[];
+  counts: (number | string)[];
+  activeValue: string | null;
+  onSelect: (value: string) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (

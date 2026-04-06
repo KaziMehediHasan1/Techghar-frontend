@@ -10,12 +10,12 @@ import {
 import { useSearchParams } from 'react-router-dom';
 
 interface DynamicFilterMenuProps {
-  name: string; // URL parameter key (e.g., 'category' or 'brand')
-  // label: string; // Display label (e.g., 'Position' or 'Brand')
+  name: string; 
+  label: string; 
   items: string[]; // Filter options
 }
 
-const DynamicFilterMenu = ({ name, items }: DynamicFilterMenuProps) => {
+const DynamicFilterMenu = ({ name, label, items }: DynamicFilterMenuProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Get current value from URL
@@ -31,7 +31,7 @@ const DynamicFilterMenu = ({ name, items }: DynamicFilterMenuProps) => {
       params.set(name, value);
     }
 
-    params.set(name,value);
+    params.set(name, value);
 
     setSearchParams(params);
   };
@@ -43,7 +43,7 @@ const DynamicFilterMenu = ({ name, items }: DynamicFilterMenuProps) => {
           variant="outline"
           className="rounded border-[#CACDD8] px-3 py-1 h-9 text-xs font-semibold flex items-center gap-2 bg-white hover:bg-gray-50 text-black shadow-none border"
         >
-          <span className="text-[#A2A6B0] font-normal">{name}:</span>
+          <span className="text-[#A2A6B0] font-normal">{label}:</span>
           <span className="capitalize">{currentValue || 'All'}</span>
           <ChevronDown
             size={14}

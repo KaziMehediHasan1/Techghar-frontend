@@ -15,7 +15,7 @@ const ButtonSection = ({
   pageNo,
   onPageChange,
 }: {
-  data?: INewProduct[] | undefined;
+  data?: INewProduct[] | [];
   totalItems?: number;
   isLoading?: boolean;
   pageNo?: number;

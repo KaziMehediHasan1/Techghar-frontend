@@ -1,6 +1,6 @@
-import Wrapper from "@/components/layout/Wrapper";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import Wrapper from '@/components/layout/Wrapper';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 const Footer = () => {
   return (
@@ -100,15 +100,14 @@ const Footer = () => {
                 <div className="flex flex-col space-y-2 text-sm dark:text-gray-600">
                   <p>Address: 1234 Street Adress City Address, 1234</p>
                   <p>
-                    Phones:{" "}
+                    Phones:{' '}
                     <span className="text-blue-600">(+880)1942 4567</span>
                   </p>
                   <p>We are open: Monday-Thursday: 9:00 AM - 5:30 PM</p>
                   <p>Friday: 9:00 AM - 6:00 PM</p>
                   <p>Saturday: 11:00 AM - 5:00 PM</p>
                   <p>
-                    E-mail:{" "}
-                    <span className="text-blue-600">kazimehedihasan.tech@email.com</span>
+                    E-mail: <span className="text-blue-600">kazimehedihasan.tech</span>
                   </p>
                 </div>
               </div>

@@ -10,7 +10,7 @@ type TCard = {
   cardType: string;
   data: INewProduct[] | undefined;
   isLoading?: boolean;
-  totalPage?: number;
+  totalPage?: number | 0 | undefined;
   pageNo?: number;
   onPageChange?: (page: number) => void;
 };
@@ -40,7 +40,7 @@ const CatalogCards = ({ cardType, data, isLoading, totalPage, onPageChange }: TC
 
       <Pagination
         currentPage={currentPage}
-        totalPages={totalPage}
+        totalPages={totalPage || 0}
         onPageChange={(page: number) => {
           setCurrentPage(page);
           onPageChange?.(page);
