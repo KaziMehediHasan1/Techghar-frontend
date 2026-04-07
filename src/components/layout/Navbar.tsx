@@ -48,7 +48,7 @@ const Navbar = () => {
               </NavLink>
             ))}
             <NavLink
-              to="/"
+              to="/new_product"
               className="border-2 text-sm sm:text-[1rem] text-brand-primary px-3 py-1.5 border-brand-primary rounded-full"
             >
               Our Deals
