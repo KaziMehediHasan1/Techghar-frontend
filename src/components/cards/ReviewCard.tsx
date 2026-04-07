@@ -1,11 +1,12 @@
-import React from "react";
-import { Star } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import Wrapper from "@/components/layout/Wrapper";
+import React from 'react';
+import { Star } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import Wrapper from '@/components/layout/Wrapper';
+import useFreeFetch from '@/hooks/useFreeFetch';
 
 interface IReviewData {
   id: number;
@@ -19,61 +20,63 @@ interface IReviewData {
 const ReviewData: IReviewData[] = [
   {
     id: 1,
-    user_name: "Ariful Islam",
-    title: "Excellent Performance!",
+    user_name: 'Ariful Islam',
+    title: 'Excellent Performance!',
     review_text:
-      "The laptop accessories are top-notch. Build quality is premium and delivery was super fast.",
+      'The laptop accessories are top-notch. Build quality is premium and delivery was super fast.',
     rating: 5,
-    date: "2 days ago",
+    date: '2 days ago',
   },
   {
     id: 2,
-    user_name: "Sara Khan",
-    title: "Very Reliable",
+    user_name: 'Sara Khan',
+    title: 'Very Reliable',
     review_text:
-      "I bought an ATS Case and it fits perfectly. Airflow is amazing. Highly recommended for gamers.",
+      'I bought an ATS Case and it fits perfectly. Airflow is amazing. Highly recommended for gamers.',
     rating: 4,
-    date: "1 week ago",
+    date: '1 week ago',
   },
   {
     id: 3,
-    user_name: "Tanvir Ahmed",
-    title: "Good Value for Money",
+    user_name: 'Tanvir Ahmed',
+    title: 'Good Value for Money',
     review_text:
-      "Budget-friendly gadgets but feels very premium in hand. Will buy again from this shop.",
+      'Budget-friendly gadgets but feels very premium in hand. Will buy again from this shop.',
     rating: 5,
-    date: "Feb 2026",
+    date: 'Feb 2026',
   },
   {
     id: 4,
-    user_name: "Rahat Kabir",
-    title: "Impressive Support",
+    user_name: 'Rahat Kabir',
+    title: 'Impressive Support',
     review_text:
-      "Had a small issue with my order, but their customer support resolved it within hours.",
+      'Had a small issue with my order, but their customer support resolved it within hours.',
     rating: 4,
-    date: "Jan 2026",
+    date: 'Jan 2026',
   },
   {
     id: 5,
-    user_name: "Rahat Kabir",
-    title: "Impressive Support",
+    user_name: 'Rahat Kabir',
+    title: 'Impressive Support',
     review_text:
-      "Had a small issue with my order, but their customer support resolved it within hours.",
+      'Had a small issue with my order, but their customer support resolved it within hours.',
     rating: 4,
-    date: "Jan 2026",
+    date: 'Jan 2026',
   },
   {
     id: 6,
-    user_name: "Rahat Kabir",
-    title: "Impressive Support",
+    user_name: 'Rahat Kabir',
+    title: 'Impressive Support',
     review_text:
-      "Had a small issue with my order, but their customer support resolved it within hours.",
+      'Had a small issue with my order, but their customer support resolved it within hours.',
     rating: 4,
-    date: "Jan 2026",
+    date: 'Jan 2026',
   },
 ];
 
 const ReviewCard = () => {
+  const { data } = useFreeFetch('/review');
+  console.log('Review---', data);
   return (
     <Wrapper>
       <section className="w-full py-5">
@@ -129,8 +132,8 @@ const ReviewCard = () => {
                         <Star
                           key={i}
                           size={16}
-                          fill={i < review.rating ? "currentColor" : "none"}
-                          className={i < review.rating ? "" : "text-gray-200"}
+                          fill={i < review.rating ? 'currentColor' : 'none'}
+                          className={i < review.rating ? '' : 'text-gray-200'}
                         />
                       ))}
                     </div>

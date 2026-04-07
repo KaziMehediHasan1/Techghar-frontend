@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import useFreeFetch from '@/hooks/useFreeFetch';
 
 type TBlogData = {
-  id: number;
+  _id: string;
   image: string;
   title: string;
   date: string;
@@ -33,8 +33,9 @@ const BlogCard = () => {
       {/* Responsive Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {blogData?.slice(0, 4).map((blog) => (
-          <div
-            key={blog.id}
+          <NavLink
+            to={`/blog/${blog?._id}`}
+            key={blog?._id}
             className="group flex flex-col bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
           >
             {/* Image Container */}
@@ -64,7 +65,7 @@ const BlogCard = () => {
                 </NavLink>
               </div>
             </div>
-          </div>
+          </NavLink>
         ))}
       </div>
     </section>

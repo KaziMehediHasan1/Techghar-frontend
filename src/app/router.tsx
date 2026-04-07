@@ -23,9 +23,9 @@ import BlogsPage from '../features/dashboard/blog/pages/BlogDashboardPage';
 import AddBlog from '@/features/dashboard/blog/pages/AddBlog';
 import ProtectedRoute from '@/app/ProtectedRoute';
 import Unauthorized from '@/pages/Unauthorized';
+import BlogDetailPage from '@/pages/BlogDetailPage';
 
 export const router = createBrowserRouter([
-  // it's for admin and normal users only
   {
     element: <MainLayout />,
     errorElement: <NotFound />,
@@ -56,6 +56,10 @@ export const router = createBrowserRouter([
         element: <About />,
       },
       {
+        path: '/blog/:id',
+        element: <BlogDetailPage />,
+      },
+      {
         path: '/terms',
         element: <TermsAndCondition />,
       },
@@ -80,13 +84,10 @@ export const router = createBrowserRouter([
       {
         path: '/unauthorized',
         element: <Unauthorized />,
-      }
+      },
     ],
   },
 
-  // users dashboard ---
-
-  // it's for admin only
   {
     path: '/dashboard',
     element: (
