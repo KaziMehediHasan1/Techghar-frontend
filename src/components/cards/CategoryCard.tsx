@@ -1,12 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 type CategoryCardProps = {
   title: string;
   link: string;
   image: string;
+  linkName: string;
 };
 
-const CategoryCard = ({ title, link, image }: CategoryCardProps) => {
+const CategoryCard = ({ title, link, image, linkName }: CategoryCardProps) => {
   return (
     <div
       style={{ backgroundImage: `url(${image})` }}
@@ -29,7 +30,7 @@ const CategoryCard = ({ title, link, image }: CategoryCardProps) => {
           to={link}
           className="text-white text-sm md:text-base border-b border-white pb-1 hover:text-gray-300 hover:border-gray-300 transition-all"
         >
-          See All Products
+          {linkName}
         </NavLink>
       </div>
     </div>

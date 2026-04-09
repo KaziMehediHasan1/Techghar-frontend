@@ -15,12 +15,20 @@ interface IProductData {
   images: string[];
 }
 
-const CategoryWiseCard = ({ data }: { data: IProductData[] }) => {
+const CategoryWiseCard = ({
+  data,
+  categoryTitle,
+  linkName,
+}: {
+  data: IProductData[];
+  categoryTitle: string;
+  linkName: string;
+}) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
       {/* Static Category Card - Ensure this also handles height if possible */}
       <div className="flex h-full">
-        <CategoryCard image={PcCase} link="" title="Custom Build" />
+        <CategoryCard image={PcCase} link="" linkName={linkName} title={categoryTitle} />
       </div>
 
       {/* Dynamic Product Cards */}
@@ -66,7 +74,9 @@ const CategoryWiseCard = ({ data }: { data: IProductData[] }) => {
                   size={16}
                   fill={i < product.averageRating ? '#FFB800' : 'none'}
                   className={
-                    i < product.averageRating ? 'text-[#FFB800]' : 'text-gray-300'
+                    i < product.averageRating
+                      ? 'text-[#FFB800]'
+                      : 'text-gray-300'
                   }
                 />
               ))}

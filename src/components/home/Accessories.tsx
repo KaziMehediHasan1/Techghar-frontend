@@ -1,23 +1,9 @@
 import useFreeFetch from '@/hooks/useFreeFetch';
 import CategoryWiseCard from '../cards/CategoryWiseCard';
 import CategoryWiseSkeleton from './CategoryCardSkeleton';
+import type { IProductAPIResponse } from '@/types/homepage.type';
 
-interface IProductData {
-  _id: string;
-  averageRating: number;
-  stock: boolean;
-  totalReviews: number;
-  price: number;
-  finalPrice: number;
-  title: string;
-  images: string[];
-}
-interface IProductAPIResponse {
-  success: boolean;
-  data: {
-    result: IProductData[];
-  };
-}
+
 
 const Accessories = () => {
   const { data, isLoading } = useFreeFetch<IProductAPIResponse>(
@@ -30,7 +16,11 @@ const Accessories = () => {
         <CategoryWiseSkeleton />
       ) : (
         // Pass data.data.result based on your console log
-        <CategoryWiseCard data={data?.data?.result || []} />
+        <CategoryWiseCard
+          data={data?.data?.result || []}
+          categoryTitle="Accessories"
+          linkName="See All Accessories"
+        />
       )}
     </div>
   );
