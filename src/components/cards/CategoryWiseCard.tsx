@@ -1,42 +1,40 @@
-import { IconBundler } from "@/assets/icons/IconBundler";
-import ProductNavbar from "@/components/Navbar/ProductNavbar";
-import { useState } from "react";
-import PcCase from "@/assets/images/pc-case.png";
-import Case from "@/assets/images/desktop-case.webp";
-import { NavLink } from "react-router-dom";
-import CategoryCard from "@/components/cards/CategoryCard";
-import { Star } from "lucide-react";
+import { IconBundler } from '@/assets/icons/IconBundler';
+import PcCase from '@/assets/images/pc-case.png';
+import { NavLink } from 'react-router-dom';
+import CategoryCard from '@/components/cards/CategoryCard';
+import { Star } from 'lucide-react';
 
-const msiSeries = [
-  { name: "MSI GS Series", path: "/laptops/msi-gs-series" },
-  { name: "MSI GT Series", path: "/laptops/msi-gt-series" },
-  { name: "MSI GL Series", path: "/laptops/msi-gl-series" },
-  { name: "MSI GE Series", path: "/laptops/msi-ge-series" },
-];
+interface IProductData {
+  _id: string;
+  averageRating: number;
+  stock: boolean;
+  totalReviews: number;
+  price: number;
+  finalPrice: number;
+  title: string;
+  images: string[];
+}
 
-
-const CategoryWiseCard = () => {
-  return (
-    <div className="space-y-5">
-      <ProductNavbar categoryLink={msiSeries} />
-      <Card />
-    </div>
-  );
-};
-
-export default CategoryWiseCard;
-
-const Card = () => {
-  const [check] = useState<boolean>(true);
+const CategoryWiseCard = ({ data }: { data: IProductData[] }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      <CategoryCard image={PcCase} link="" title="Custome Build" />
-      {/* <Heading title="Custom " linkName="ddddd" link="/" className="block sm:hidden" /> */}
-      {[1, 2, 3, 4, 5].map(() => (
-        <NavLink to="/product/details">
-          <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300">
+      {/* Static Category Card - Ensure this also handles height if possible */}
+      <div className="flex h-full">
+        <CategoryCard image={PcCase} link="" title="Custom Build" />
+      </div>
+
+      {/* Dynamic Product Cards */}
+      {data?.map((product) => (
+        <NavLink
+          key={product._id}
+          to={`/product/${product._id}`}
+          className="flex h-full" // 1. Stretch NavLink to grid height
+        >
+          <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+            {' '}
+            {/* 2. Column layout with full height */}
             {/* STOCK INDICATOR */}
-            {check ? (
+            {product.stock ? (
               <div className="flex items-center gap-1 text-green-600 text-xs sm:text-sm mb-2">
                 <IconBundler.Check className="w-4 h-4 p-0.5 bg-green-500 rounded-full text-white" />
                 <p>In Stock</p>
@@ -47,69 +45,50 @@ const Card = () => {
                 <p>Check Availability</p>
               </div>
             )}
-
             {/* IMAGE */}
             <div className="flex justify-center mb-3">
               <img
-                src={Case}
-                alt="gadget-image"
+                src={
+                  product.images[0] ||
+                  'https://placehold.co/400x400?text=No+Image'
+                }
+                alt={product.title}
                 loading="lazy"
                 className="w-full h-40 sm:h-44 object-contain"
               />
             </div>
-
+            {/* RATING */}
             {/* RATING */}
             <section className="flex items-center gap-1 text-xs sm:text-sm mb-2">
-              <Star
-                // key={i}
-                size={16}
-                // fill={i < review.rating ? "currentColor" : "none"}
-                // className={i < review.rating ? "" : "text-gray-200"}
-              />
-              <Star
-                // key={i}
-                size={16}
-                // fill={i < review.rating ? "currentColor" : "none"}
-                // className={i < review.rating ? "" : "text-gray-200"}
-              />
-              <Star
-                // key={i}
-                size={16}
-                // fill={i < review.rating ? "currentColor" : "none"}
-                // className={i < review.rating ? "" : "text-gray-200"}
-              />
-              <Star
-                // key={i}
-                size={16}
-                // fill={i < review.rating ? "currentColor" : "none"}
-                // className={i < review.rating ? "" : "text-gray-200"}
-              />
-              <Star
-                // key={i}
-                size={16}
-                // fill={i < review.rating ? "currentColor" : "none"}
-                // className={i < review.rating ? "" : "text-gray-200"}
-              />
-              <Star
-                // key={i}
-                size={16}
-                // fill={i < review.rating ? "currentColor" : "none"}
-                // className={i < review.rating ? "" : "text-gray-200"}
-              />
-              <p className="text-gray-500 ml-1">(5)</p>
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  size={16}
+                  fill={i < product.averageRating ? '#FFB800' : 'none'}
+                  className={
+                    i < product.averageRating ? 'text-[#FFB800]' : 'text-gray-300'
+                  }
+                />
+              ))}
+
+              <p className="text-gray-500 ml-1">({product.totalReviews})</p>
             </section>
-
             {/* TITLE */}
-            <h2 className="text-sm sm:text-base font-medium text-gray-800 line-clamp-2 mb-3">
-              EX DISPLAY : MSI Pro 16 Flex-036AU 15.6 MULTITOUCH All-In-One PC
+            <h2 className="text-sm sm:text-base font-medium text-gray-800 line-clamp-2 mb-3 grow">
+              {' '}
+              {/* 3. Grow fills available space */}
+              {product.title}
             </h2>
-
             {/* PRICING */}
-            <section className="flex items-center gap-2">
+            <section className="flex items-center gap-2 mt-auto">
+              {' '}
+              {/* 4. mt-auto pins this to the bottom */}
               <p className="text-xs sm:text-sm text-gray-400 line-through">
-                $450
+                ${product.price?.toFixed(2)}
               </p>
-              <p className="text-lg font-semibold text-brand-primary">$320</p>
+              <p className="text-lg font-semibold text-blue-600">
+                ${product.finalPrice?.toFixed(2)}
+              </p>
             </section>
           </div>
         </NavLink>
@@ -117,3 +96,5 @@ const Card = () => {
     </div>
   );
 };
+
+export default CategoryWiseCard;

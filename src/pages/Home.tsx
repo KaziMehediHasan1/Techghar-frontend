@@ -1,12 +1,12 @@
-import BrandLogos from "@/components/BrandLogos";
-import BlogCard from "@/components/cards/BlogCard";
-import CategoryWiseCard from "@/components/cards/CategoryWiseCard";
-import HelpersCard from "@/components/cards/HelpersCard";
-import ReviewCard from "@/components/cards/ReviewCard";
-import Hero from "@/components/home/Hero";
-import Wrapper from "@/components/layout/Wrapper";
-import PromotionalCard from "@/components/PromotionalCard";
-import NewProduct from "@/pages/NewProduct";
+import BrandLogos from '@/components/BrandLogos';
+import BlogCard from '@/components/cards/BlogCard';
+import HelpersCard from '@/components/cards/HelpersCard';
+import ReviewCard from '@/components/cards/ReviewCard';
+import Accessories from '@/components/home/Accessories';
+import Hero from '@/components/home/Hero';
+import Wrapper from '@/components/layout/Wrapper';
+import PromotionalCard from '@/components/PromotionalCard';
+import NewProduct from '@/pages/NewProduct';
 
 function Home() {
   return (
@@ -17,10 +17,7 @@ function Home() {
         <NewProduct />
         <PromotionalCard />
         <section className="mt-3 space-y-5">
-          <CategoryWiseCard />
-          <CategoryWiseCard />
-          <CategoryWiseCard />
-          <CategoryWiseCard />
+          <Accessories />
         </section>
         <BrandLogos />
         <BlogCard />
