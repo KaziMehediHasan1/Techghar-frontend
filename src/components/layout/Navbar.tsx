@@ -9,12 +9,15 @@ import { Links, type TNavLink } from '@/components/Navbar/Links';
 import { logoutApi } from '@/features/auth/auth.api';
 import { useAuthStore } from '@/features/auth/auth.store';
 import { toast } from 'react-toastify';
+import { useCartStore } from '@/store/useCartStore';
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [search, setSearch] = useState<boolean>(false);
   const [profileDropdown, setProfileDropdown] = useState<boolean>(false);
   const { user, logout } = useAuthStore();
+  const { totalItems } = useCartStore();
+  console.log('totalItems', totalItems());
 
   return (
     <div className="border-b border-dim-primary shadow-sm shadow-muted w-full">
@@ -66,7 +69,7 @@ const Navbar = () => {
             <NavLink to="/cart" className="relative">
               <IconBundler.Cart className="transform-[rotateY(180deg)]" />
               <p className="absolute -top-4 left-2.5 bg-brand-primary text-white py-0.5 px-1.5 text-xs rounded-full">
-                4
+                {totalItems()}
               </p>
             </NavLink>
             <div className="relative">

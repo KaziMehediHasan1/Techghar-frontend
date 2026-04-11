@@ -1,14 +1,27 @@
-import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
-import Wrapper from "@/components/layout/Wrapper";
-import ProductItem from "@/features/cart/components/ProductItem";
-import SummaryCard from "@/features/cart/components/SummaryCard";
+// import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
+import Wrapper from '@/components/layout/Wrapper';
+import ProductItem from '@/features/cart/components/ProductItem';
+import SummaryCard from '@/features/cart/components/SummaryCard';
+import { useCartStore } from '@/store/useCartStore';
+import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
+  const {
+    cart,
+    removeFromCart,
+    updateQuantity,
+    totalPrice,
+    clearCart,
+    totalItems,
+  } = useCartStore();
+  console.log(cart, totalPrice(), totalItems(), 'Check all is are showing');
+
+  // const handleUpdata = () => {};
   return (
     <div className="">
       <Wrapper>
         <section className="space-y-4">
-          <BreadcrumbBasic />
+          {/* <BreadcrumbBasic /> */}
           <h1 className="text-2xl sm:text-3xl font-semibold mt-2">
             Shopping Cart
           </h1>
@@ -27,20 +40,31 @@ const Cart = () => {
 
             {/* List of Products */}
             <div className="space-y-4">
-              <ProductItem />
-              <ProductItem />
+              {cart.map((item) => (
+                <ProductItem
+                  key={item._id}
+                  image={item?.image}
+                  title={item.title}
+                  price={item.price}
+                  quantity={item?.quantity}
+                  total={item.price * item.quantity}
+                  removeFromCart={removeFromCart}
+                  updataeQuantity={updateQuantity}
+                  _id={item._id}
+                />
+              ))}
             </div>
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 mt-8">
-              <button className="px-6 py-2 border border-gray-400 rounded-full text-sm font-medium">
+              <NavLink to="/" className="px-6 py-2 border border-gray-400 rounded-full text-sm font-medium">
                 Continue Shopping
-              </button>
-              <button className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium">
+              </NavLink>
+              <button
+                onClick={() => clearCart()}
+                className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium"
+              >
                 Clear Shopping Cart
-              </button>
-              <button className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium ml-auto">
-                Update Shopping Cart
               </button>
             </div>
           </div>
@@ -55,4 +79,4 @@ const Cart = () => {
   );
 };
 
-export default Cart
+export default Cart;

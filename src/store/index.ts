@@ -10,22 +10,24 @@ export interface ITheme {
   toggleTheme: () => void;
 }
 
-// cart related types -
+
 export interface ICartItem {
-  id: string;
+  _id: string;
   title: string;
   price: number;
-  quantity: number;
   image: string;
+  quantity: number;
+  stock?: boolean;
 }
 
 export interface ICartState {
   cart: ICartItem[];
-  addToCart: (product: ICartItem) => void;
+  addToCart: (item: ICartItem) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, type: "increment" | "decrement") => void;
   clearCart: () => void;
-  getTotalPrice: () => number;
+  totalItems: () => number;
+  totalPrice: () => number;
 }
 
 // wishlist related types -

@@ -11,8 +11,19 @@ import type {
 } from '@/types/productDetails';
 import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
 import ProductDetailSkeletonLoader from '@/components/ProductDetailSkeletonLoader';
+import { useCartStore } from '@/store/useCartStore';
+
+// interface IProductAddCart {
+//   _id: string;
+//   title: string;
+//   price: number;
+//   images: string;
+//   quantity: number;
+//   stock?: boolean;
+// }
 
 const ProductDetails = () => {
+  const { addToCart, cart } = useCartStore();
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'about' | 'details' | 'specs'>(
     'about'
@@ -40,6 +51,31 @@ const ProductDetails = () => {
   if (!product)
     return <div className="text-center py-20">Product not found!</div>;
 
+  const handleAddToCart = () => {
+    addToCart({
+      _id: product._id,
+      title: product.title,
+      price: product.finalPrice || product.price,
+      image: product.images[0],
+      quantity: quantity,
+      stock: product.stock,
+    });
+    // console.log(
+    //   'ID',
+    //   _id,
+    //   'Title',
+    //   title,
+    //   'Images',
+    //   images,
+    //   'Price',
+    //   price,
+    //   'Quantity',
+    //   quantity,
+    //   'Stock',
+    //   stock
+    // );
+    console.log('Check Cart Data', cart);
+  };
   return (
     <div className="bg-white min-h-screen font-sans antialiased text-[#242424]">
       {/* --- Sticky Sub-Header --- */}
@@ -85,7 +121,10 @@ const ProductDetails = () => {
                   <Plus size={14} />
                 </button>
               </div>
-              <Button className="bg-[#0156FF] hover:bg-blue-700 rounded-full px-8 h-10">
+              <Button
+                onClick={() => handleAddToCart()}
+                className="bg-[#0156FF] hover:bg-blue-700 rounded-full px-8 h-10"
+              >
                 Add to Cart
               </Button>
             </div>
