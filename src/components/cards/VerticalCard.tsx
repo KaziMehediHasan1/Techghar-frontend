@@ -77,12 +77,12 @@ const VerticalCard = ({ data, isLoading }: VerticalCardProps) => {
                 <section className="flex items-center mt-auto gap-2">
                   {/* Old code: {item.price.toFixed(2)} */}
                   <p className="text-xs sm:text-sm text-gray-400 line-through">
-                    {item?.price ? item?.price.toFixed(2) : '0.00'}
+                    {item?.price ? item?.price : '0.00'}
                   </p>
 
                   {/* Old code: {item.finalPrice.toFixed(2)} */}
                   <p className="text-lg font-semibold text-brand-primary">
-                    ${item?.finalPrice ? item?.finalPrice.toFixed(2) : '0.00'}
+                    ${item?.finalPrice ? item?.finalPrice: '0.00'}
                   </p>
                 </section>
               </div>

@@ -1,7 +1,7 @@
 const VerticalCardSkeleton = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {[...Array(10)].map((_, index) => (
+      {[...Array(5)].map((_, index) => (
         <div
           key={index}
           className="w-full bg-white rounded-md border border-gray-200 p-4 flex flex-col h-full animate-pulse"
