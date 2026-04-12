@@ -16,7 +16,6 @@ const Cart = () => {
   } = useCartStore();
   console.log(cart, totalPrice(), totalItems(), 'Check all is are showing');
 
-  // const handleUpdata = () => {};
   return (
     <div className="">
       <Wrapper>

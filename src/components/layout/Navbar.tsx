@@ -17,7 +17,6 @@ const Navbar = () => {
   const [profileDropdown, setProfileDropdown] = useState<boolean>(false);
   const { user, logout } = useAuthStore();
   const { totalItems } = useCartStore();
-  console.log('totalItems', totalItems());
 
   return (
     <div className="border-b border-dim-primary shadow-sm shadow-muted w-full">

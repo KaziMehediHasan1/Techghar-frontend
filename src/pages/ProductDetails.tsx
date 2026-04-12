@@ -13,17 +13,9 @@ import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
 import ProductDetailSkeletonLoader from '@/components/ProductDetailSkeletonLoader';
 import { useCartStore } from '@/store/useCartStore';
 
-// interface IProductAddCart {
-//   _id: string;
-//   title: string;
-//   price: number;
-//   images: string;
-//   quantity: number;
-//   stock?: boolean;
-// }
 
 const ProductDetails = () => {
-  const { addToCart, cart } = useCartStore();
+  const { addToCart } = useCartStore();
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'about' | 'details' | 'specs'>(
     'about'
@@ -60,21 +52,6 @@ const ProductDetails = () => {
       quantity: quantity,
       stock: product.stock,
     });
-    // console.log(
-    //   'ID',
-    //   _id,
-    //   'Title',
-    //   title,
-    //   'Images',
-    //   images,
-    //   'Price',
-    //   price,
-    //   'Quantity',
-    //   quantity,
-    //   'Stock',
-    //   stock
-    // );
-    console.log('Check Cart Data', cart);
   };
   return (
     <div className="bg-white min-h-screen font-sans antialiased text-[#242424]">

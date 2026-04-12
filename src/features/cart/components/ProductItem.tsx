@@ -37,7 +37,7 @@ const ProductItem = ({
     <div className="col-span-12 md:col-span-6 grid grid-cols-3 items-center text-center">
       <div>
         <span className="md:hidden block text-xs text-gray-400">Price</span>
-        <p className="font-semibold">{price}.00</p>
+        <p className="font-semibold">${price}.00</p>
       </div>
       <div className="flex justify-center">
         <input
@@ -51,7 +51,7 @@ const ProductItem = ({
       </div>
       <div>
         <span className="md:hidden block text-xs text-gray-400">Subtotal</span>
-        <p className="font-semibold">{total}</p>
+        <p className="font-semibold">${total}.00</p>
       </div>
     </div>
 
