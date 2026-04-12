@@ -1,27 +1,27 @@
-import { useState } from "react";
+import { useState, type FormEvent } from 'react';
 import {
   PaymentElement,
   useStripe,
   useElements,
-} from "@stripe/react-stripe-js";
+} from '@stripe/react-stripe-js';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!stripe || !elements) return; // not loaded yet
 
     setLoading(true);
-    setErrorMsg("");
+    setErrorMsg('');
 
     // Step 1: validate fields before submitting
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setErrorMsg(submitError.message);
+      setErrorMsg(submitError?.message || '');
       setLoading(false);
       return;
     }
@@ -37,10 +37,10 @@ export default function CheckoutForm() {
 
     // If we reach here, payment failed (success redirects away)
     if (error) {
-      if (error.type === "card_error" || error.type === "validation_error") {
-        setErrorMsg(error.message);
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setErrorMsg(error?.message || '');
       } else {
-        setErrorMsg("An unexpected error occurred.");
+        setErrorMsg('An unexpected error occurred.');
       }
     }
     setLoading(false);
@@ -51,7 +51,7 @@ export default function CheckoutForm() {
       <PaymentElement />
 
       {errorMsg && (
-        <p style={{ color: "#ef4444", fontSize: "13px", marginTop: "10px" }}>
+        <p style={{ color: '#ef4444', fontSize: '13px', marginTop: '10px' }}>
           {errorMsg}
         </p>
       )}
@@ -60,19 +60,19 @@ export default function CheckoutForm() {
         type="submit"
         disabled={!stripe || loading}
         style={{
-          width: "100%",
-          padding: "12px",
-          marginTop: "16px",
-          background: loading ? "#a5b4fc" : "#6366f1",
-          color: "#fff",
-          border: "none",
-          borderRadius: "8px",
-          fontSize: "15px",
-          fontWeight: "600",
-          cursor: loading ? "not-allowed" : "pointer",
+          width: '100%',
+          padding: '12px',
+          marginTop: '16px',
+          background: loading ? '#a5b4fc' : '#6366f1',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '8px',
+          fontSize: '15px',
+          fontWeight: '600',
+          cursor: loading ? 'not-allowed' : 'pointer',
         }}
       >
-        {loading ? "Processing..." : "Pay Now"}
+        {loading ? 'Processing...' : 'Pay Now'}
       </button>
     </form>
   );

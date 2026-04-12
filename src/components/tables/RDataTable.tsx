@@ -35,10 +35,10 @@ interface DashboardTableProps<TData, TValue> {
   >;
   globalFilter: string;
   setGlobalFilter: React.Dispatch<React.SetStateAction<string>>;
-  handleDelete: (id: string) => void;
-  handleUpdate: (id: string, updatedData: Partial<TData>) => void;
-  isDeletePending: boolean;
-  isUpdatePending: boolean;
+  handleDelete?: (id: string) => void;
+  handleUpdate?: (id: string, updatedData: Partial<TData>) => void;
+  isDeletePending?: boolean;
+  isUpdatePending?: boolean;
 }
 
 const RDataTable = <TData, TValue>({

@@ -4,7 +4,7 @@ import LoginPage from '@/features/auth/pages/LoginPage';
 import SingUpPage from '@/features/auth/pages/SingUpPage';
 import Cart from '@/features/cart/pages/Cart';
 import Catalog from '@/features/catalog/pages/Catalog';
-import PaymentPage from '@/features/checkout/pages/PaymentPage';
+// import PaymentPage from '@/features/checkout/pages/PaymentPage';
 import PaymentSuccess from '@/features/checkout/pages/PaymentSuccess';
 import OrdersPage from '@/features/dashboard/order/pages/OrdersPage';
 import Overview from '@/features/dashboard/pages/Overview';
@@ -64,10 +64,10 @@ export const router = createBrowserRouter([
         element: <TermsAndCondition />,
       },
       // secure path -
-      {
-        path: '/payment',
-        element: <PaymentPage />,
-      },
+      // {
+      //   path: '/payment',
+      //   element: <PaymentPage />,
+      // },
       { path: '/payment-success', element: <PaymentSuccess /> },
       {
         path: '/contact',

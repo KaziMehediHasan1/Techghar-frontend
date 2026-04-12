@@ -1,5 +1,5 @@
 import { IconBundler } from "@/assets/icons/IconBundler";
-import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
+// import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import Wrapper from "@/components/layout/Wrapper";
 
 const Contact = () => {
@@ -8,7 +8,7 @@ const Contact = () => {
       <Wrapper>
         {/* Header Section */}
         <header className="space-y-4 mb-8">
-          <BreadcrumbBasic />
+          {/* <BreadcrumbBasic /> */}
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             Contact Us
           </h1>

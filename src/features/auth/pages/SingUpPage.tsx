@@ -24,7 +24,7 @@ const SingUpPage = () => {
     <div className="mt-4">
       <Wrapper>
         <section className="space-y-2 sm:space-y-4">
-          <BreadcrumbBasic />
+          {/* <BreadcrumbBasic /> */}
           <h1 className="text-xl sm:text-2xl font-bold">Customer Sign Up</h1>
         </section>
         <section className="mt-2 sm:mt-4 flex flex-col sm:flex-row gap-6 sm:gap-10">

@@ -10,11 +10,8 @@ const Cart = () => {
     cart,
     removeFromCart,
     updateQuantity,
-    totalPrice,
     clearCart,
-    totalItems,
   } = useCartStore();
-  console.log(cart, totalPrice(), totalItems(), 'Check all is are showing');
 
   return (
     <div className="">

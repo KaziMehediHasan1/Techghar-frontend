@@ -18,7 +18,7 @@ export function BreadcrumbBasic({ text, link }: BreadcrumbBasicProps) {
         {text?.map((item, index) => (
           <BreadcrumbItem key={index} className='text-sm'>
             <BreadcrumbLink className='text-sm' href={link || '/'}>{item}</BreadcrumbLink>
-            {index < text.length - 1 && <BreadcrumbSeparator />}
+            {index < text?.length - 1 && <BreadcrumbSeparator />}
           </BreadcrumbItem>
         ))}
       </BreadcrumbList>

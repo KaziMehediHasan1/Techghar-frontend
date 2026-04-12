@@ -32,7 +32,7 @@ const UpdateCartModal = ({ item, isOpen, onClose }: UpdateCartModalProps) => {
 
         <div className="flex items-center gap-4 py-4">
           <img
-            src={item.images[0]}
+            src={item.image}
             alt={item.title}
             className="w-20 h-20 object-contain border rounded"
           />

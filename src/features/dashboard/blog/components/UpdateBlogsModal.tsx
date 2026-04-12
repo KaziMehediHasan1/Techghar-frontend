@@ -39,8 +39,10 @@ export const UpdateBlogsModal = ({
   }, [blogData, reset]);
 
   const onSubmit = async (data: IBlogUpdateData) => {
-    await onUpdate(blogData._id, data);
-    onClose();
+    if (blogData._id) {
+      await onUpdate(blogData._id, data);
+      onClose();
+    }
   };
 
   return (

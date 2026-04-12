@@ -1,4 +1,4 @@
-import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
+// import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
 import Wrapper from "@/components/layout/Wrapper";
 import Office from "@/assets/images/Office.png";
 import KeyboardImage from "@/assets/images/MachanicalKey.png";
@@ -15,7 +15,7 @@ const About = () => {
     <div className="mt-4 space-y-1">
       <Wrapper>
         <div className="space-y-4 mb-6">
-          <BreadcrumbBasic />
+          {/* <BreadcrumbBasic /> */}
           <h1 className="text-2xl sm:text-3xl font-bold">About Us</h1>
         </div>
       </Wrapper>
@@ -55,7 +55,7 @@ const About = () => {
       {/* Section 2: Shop.com */}
       <section className="py-12 sm:py-20">
         <Wrapper>
-          <div className="flex flex-col lg:flex-row items-center items-center gap-10 lg:gap-16">
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
             <div className="flex-1 w-full">
               <img
                 src={KeyboardImage}

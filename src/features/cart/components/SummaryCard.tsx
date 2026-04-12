@@ -2,7 +2,6 @@ import { useCartStore } from '@/store/useCartStore';
 
 const SummaryCard = () => {
   const { cart } = useCartStore();
-  console.log('Cart Summary', cart);
   return (
     <section className="bg-gray-50 p-6 rounded-sm h-fit top-5">
       <h2 className="text-xl font-bold mb-4">Summary</h2>
