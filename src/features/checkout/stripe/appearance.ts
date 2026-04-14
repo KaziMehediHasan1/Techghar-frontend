@@ -1,42 +1,51 @@
-// @/features/checkout/stripe/appearance.js
-export const stripeAppearance = {
-  theme: 'night' as const, 
+import type { Appearance } from "@stripe/stripe-js";
+
+// @/features/checkout/stripe/appearance.ts
+;
+
+export const stripeAppearance: Appearance = {
+  theme: 'flat' as const,
 
   variables: {
-    colorPrimary: '#0156FF',        // তোমার electric blue
-    colorBackground: '#111111',     // obsidian surface
-    colorText: '#ffffff',
-    colorTextSecondary: '#888888',
-    colorDanger: '#ff4444',
-    fontFamily: 'Inter, sans-serif',
-    borderRadius: '8px',
+    colorPrimary: '#0156FF',       // Blue
+    colorBackground: '#ffffff',    // White
+    colorText: '#000000',          // Black
+    colorTextSecondary: '#666666',
+    colorDanger: '#ef4444',
+    fontFamily: 'Inter, system-ui, sans-serif',
+    borderRadius: '6px',           // Professional rounded corners
     spacingUnit: '4px',
   },
 
+  disableAnimations: false,
+
   rules: {
     '.Input': {
-      backgroundColor: '#0a0a0a',
-      border: '1px solid #222222',
-      color: '#ffffff',
+      backgroundColor: '#ffffff',
+      border: '1px solid #e5e7eb', // Light gray border
+      padding: '12px',
+      boxShadow: 'none',
+      transition: 'border 0.2s ease',
     },
     '.Input:focus': {
       border: '1px solid #0156FF',
-      boxShadow: '0 0 0 2px rgba(1, 86, 255, 0.15)',
     },
     '.Label': {
-      fontFamily: '"Fira Code", monospace',
-      fontSize: '10px',
-      letterSpacing: '1px',
-      textTransform: 'uppercase',
-      color: '#444444',
+      fontWeight: '600',
+      marginBottom: '6px',
+      fontSize: '14px',
+      color: '#1a1a1a',
     },
     '.Tab': {
-      backgroundColor: '#111111',
-      border: '1px solid #1a1a1a',
+      border: '1px solid #e5e7eb',
+      boxShadow: 'none',
     },
     '.Tab--selected': {
-      borderColor: '#0156FF',
-      backgroundColor: '#0156FF15',
+      border: '1px solid #0156FF',
+      backgroundColor: '#f0f7ff', // Very light blue background
+    },
+    '.TabLabel--selected': {
+      color: '#0156FF',
     },
   },
 };

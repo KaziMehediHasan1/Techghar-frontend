@@ -30,7 +30,6 @@ const SummaryCard = () => {
   const navigate = useNavigate();
   const { cart, totalPrice, totalItems } = useCartStore();
   const { user } = useAuthStore();
-  console.log('USer', user?._id);
   const { mutateAsync: PaymentIntentMutation } = usePost<
     PaymentIntentResponse,
     PaymentIntentPayload
@@ -81,6 +80,7 @@ const SummaryCard = () => {
     }
   };
 
+
   return (
     <section className="bg-gray-50 p-6 rounded-sm h-fit top-5">
       <h2 className="text-xl font-bold mb-4">Summary</h2>
@@ -122,6 +122,7 @@ const SummaryCard = () => {
       <div className="mt-6 space-y-3">
         <button
           onClick={() => handleCheckout()}
+          disabled={cart.length == 0}
           className="w-full bg-blue-600 text-white cursor-pointer py-3 rounded-full font-semibold hover:bg-blue-700"
         >
           Proceed to Checkout

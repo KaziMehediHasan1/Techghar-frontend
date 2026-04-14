@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
   const { cart, removeFromCart, updateQuantity, clearCart } = useCartStore();
-  console.log(cart, 'check cart');
   return (
     <div className="">
       <Wrapper>

@@ -23,6 +23,7 @@ export default function CheckoutForm() {
   const orderId = location?.state.orderId;
   const { mutateAsync: OrderStatusUpdateMutation } = useUpdate(`/order`);
   const { mutateAsync: PaymentPost } = usePost('/payment');
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -97,33 +98,51 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-
-      {errorMsg && (
-        <p style={{ color: '#ef4444', fontSize: '13px', marginTop: '10px' }}>
-          {errorMsg}
+    <div className="max-w-xl mx-auto bg-white p-2 sm:p-4">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-black mb-1">Payment Method</h3>
+        <p className="text-gray-500 text-sm">
+          Complete your transaction securely
         </p>
-      )}
+      </div>
 
-      <button
-        type="submit"
-        disabled={!stripe || loading}
-        style={{
-          width: '100%',
-          padding: '12px',
-          marginTop: '16px',
-          background: loading ? '#a5b4fc' : '#6366f1',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '8px',
-          fontSize: '15px',
-          fontWeight: '600',
-          cursor: loading ? 'not-allowed' : 'pointer',
-        }}
-      >
-        {loading ? 'Processing...' : 'Pay Now'}
-      </button>
-    </form>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="p-4 border border-gray-100 rounded-xl bg-gray-50/30">
+          <PaymentElement />
+        </div>
+
+        {errorMsg && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-3 mt-4">
+            <p className="text-red-700 text-xs font-medium">{errorMsg}</p>
+          </div>
+        )}
+
+        <button
+          type="submit"
+          disabled={!stripe || loading}
+          className={`
+          w-full mt-6 py-3 rounded cursor-pointer text-white transition-all duration-200
+          ${
+            loading
+              ? 'bg-blue-300 cursor-not-allowed'
+              : 'bg-[#0156FF] hover:bg-blue-700 active:scale-[0.98] shadow-lg shadow-blue-200'
+          }
+        `}
+        >
+          {loading ? (
+            <div className="flex items-center justify-center gap-2">
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>Processing...</span>
+            </div>
+          ) : (
+            `Pay Now` 
+          )}
+        </button>
+
+        <p className="text-center text-gray-400 text-[11px] mt-4 uppercase tracking-wider font-medium">
+          🔒 SSL Secure & Encrypted Payment
+        </p>
+      </form>
+    </div>
   );
 }
