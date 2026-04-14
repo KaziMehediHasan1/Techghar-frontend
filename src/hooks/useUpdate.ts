@@ -32,20 +32,17 @@ const useUpdate = <T, V>(
     mutationFn: async ({ id, data }) => {
       const url = route.endsWith('/') ? `${route}${id}` : `${route}/${id}`;
 
-      console.log('update-url:-', url, 'id dekho - ', id);
-
       // axiosSecure.patch(url, body)
       const response = await axiosSecure.patch<ApiResponse<T>>(url, data);
       return response.data;
     },
     onSuccess: (responseData) => {
       if (queryKey) {
-        queryClient.invalidateQueries({ queryKey: [queryKey],exact: false, });
+        queryClient.invalidateQueries({ queryKey: [queryKey], exact: false, });
       }
       if (responseData?.message) {
         toast.success(responseData.message);
       }
-      console.log('Update success:', responseData);
     },
     onError: (error) => {
       const errorMessage =
@@ -55,8 +52,7 @@ const useUpdate = <T, V>(
 
       toast.error(
         typeof errorMessage === 'string' ? errorMessage : 'Update failed'
-      );
-      console.error('Update hook error:', error);
+      );;
     },
   });
 };

@@ -1,6 +1,6 @@
-import { IconBundler } from "@/assets/icons/IconBundler";
+import { IconBundler } from '@/assets/icons/IconBundler';
 // import { BreadcrumbBasic } from "@/components/BreadcrumbBasic";
-import Wrapper from "@/components/layout/Wrapper";
+import Wrapper from '@/components/layout/Wrapper';
 
 const Contact = () => {
   return (
@@ -88,7 +88,7 @@ const Contact = () => {
 
           {/* Info Side Card (Takes 1 column on desktop) */}
           <aside className="lg:col-span-1 order-1 lg:order-2">
-            <div className="bg-[#F5F7FF] p-6 sm:p-8 rounded-md space-y-8 h-full">
+            <div className="bg-sky p-6 sm:p-8 rounded-md space-y-8 h-full">
               <div className="flex gap-4">
                 <div className="shrink-0 text-brand-primary">
                   <IconBundler.Location size={28} />
@@ -103,7 +103,7 @@ const Contact = () => {
 
               <div className="flex gap-4">
                 <div className="shrink-0 text-brand-primary">
-                  <IconBundler.Phone size={25}/>
+                  <IconBundler.Phone size={25} />
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold">Phone:</h3>
@@ -113,7 +113,7 @@ const Contact = () => {
 
               <div className="flex gap-4">
                 <div className="shrink-0 text-brand-primary">
-                  <IconBundler.Clock size={26}/>
+                  <IconBundler.Clock size={26} />
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold">We are open:</h3>
@@ -136,7 +136,7 @@ const Contact = () => {
 
               <div className="flex gap-4">
                 <div className="shrink-0 text-brand-primary">
-                  <IconBundler.Mail size={26}/>
+                  <IconBundler.Mail size={26} />
                 </div>
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold">E-mail:</h3>

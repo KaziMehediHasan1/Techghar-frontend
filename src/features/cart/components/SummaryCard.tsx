@@ -1,24 +1,48 @@
 import { useAuthStore } from '@/features/auth/auth.store';
 import usePost from '@/hooks/usePost';
 import { useCartStore } from '@/store/useCartStore';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+interface PaymentIntentPayload {
+  amount: number;
+  currency: string;
+  productID: string[];
+}
+
+interface PaymentIntentResponse {
+  clientSecret: string;
+}
+
+interface OrderRequest {
+  userId: string | undefined;
+  productID: string[];
+  quantity: number;
+}
+
+interface OrderResponse {
+  _id: string;
+  userId: string;
+  productID: string[];
+  status: string;
+  // others data
+}
 const SummaryCard = () => {
   const navigate = useNavigate();
-  const [_, setSearchParams] = useSearchParams();
   const { cart, totalPrice, totalItems } = useCartStore();
   const { user } = useAuthStore();
   console.log('USer', user?._id);
-  const { mutateAsync: PaymentMutation } = usePost(
-    '/payment/create-payment-intent'
+  const { mutateAsync: PaymentIntentMutation } = usePost<
+    PaymentIntentResponse,
+    PaymentIntentPayload
+  >('/payment/create-payment-intent');
+  const { mutateAsync: OrderMutation } = usePost<OrderResponse, OrderRequest>(
+    '/order'
   );
-  const { mutateAsync: OrderMutation } = usePost('/order');
   const subtotalValue = totalPrice();
   const shippingValue = subtotalValue > 0 ? 21.0 : 0;
   const taxValue = subtotalValue > 0 ? 1.91 : 0;
   const orderTotalValue = subtotalValue + shippingValue + taxValue;
   const totalAmountInCents = Math.round((subtotalValue + 22.91) * 100);
-  console.log(cart, 'CHCHKK', totalItems());
 
   const handleCheckout = async () => {
     const payload = {
@@ -27,34 +51,33 @@ const SummaryCard = () => {
       productID: cart.map((item) => item._id),
     };
 
-    console.log(payload, 'ID');
-
     const orderData = {
       userId: user?._id,
       productID: cart?.map((item) => item._id),
       quantity: totalItems(),
+      totalPrice: orderTotalValue,
     };
 
-    const OrderRes = await OrderMutation(orderData);
-    const orderId = OrderRes?.data?._id;
+    try {
+      const OrderRes = await OrderMutation(orderData);
 
-    console.log(OrderRes?.data?._id, 'ORDER');
+      if (OrderRes?.success || OrderRes?.data?._id) {
+        const orderId = OrderRes?.data?._id;
 
-    if (OrderRes.success && OrderRes.statusCode == 201) {
-      const response = await PaymentMutation(payload);
+        const response = await PaymentIntentMutation(payload);
 
-      console.log(response.data?.clientSecret, 'Client Data');
-
-      if (response?.data?.clientSecret) {
-        // এখন ইউজারকে পেমেন্ট পেজে নিয়ে যান অথবা Stripe Modal ওপেন করুন
-        navigate('/payment', {
-          state: {
-            clientSecret: response?.data?.clientSecret,
-            orderId: orderId,
-          },
-        });
-        console.log('Client Secret Received:', response.data?.clientSecret);
+        if (response?.data?.clientSecret) {
+          navigate('/payment', {
+            state: {
+              clientSecret: response?.data?.clientSecret,
+              orderId: orderId,
+            },
+            replace: true,
+          });
+        }
       }
+    } catch (err) {
+      console.error('Checkout logic error:', err);
     }
   };
 
