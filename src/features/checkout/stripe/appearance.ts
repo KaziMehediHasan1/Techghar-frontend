@@ -1,68 +1,42 @@
-export const appearance = {
-  theme: 'stripe', // base: 'stripe' | 'flat' | 'night' | 'none'
+// @/features/checkout/stripe/appearance.js
+export const stripeAppearance = {
+  theme: 'night' as const, 
 
   variables: {
-    // ---- Brand colors (change these) ----
-    colorPrimary: '#6366f1',       // brand color
-    colorBackground: '#ffffff',
-    colorText: '#1a1a2e',
-    colorTextSecondary: '#6b7280',
-    colorDanger: '#ef4444',        // error messages
-
-    // ---- Typography ----
-    fontFamily: 'Inter, sans-serif', // match app font
-    fontSizeBase: '14px',
-    fontWeightNormal: '400',
-    fontWeightMedium: '500',
-
-    // ---- Spacing & shape ----
+    colorPrimary: '#0156FF',        // তোমার electric blue
+    colorBackground: '#111111',     // obsidian surface
+    colorText: '#ffffff',
+    colorTextSecondary: '#888888',
+    colorDanger: '#ff4444',
+    fontFamily: 'Inter, sans-serif',
+    borderRadius: '8px',
     spacingUnit: '4px',
-    borderRadius: '8px',           // match Tailwind rounded-lg
   },
 
   rules: {
-    // Input field styling
     '.Input': {
-      border: '1.5px solid #e2e8f0',
-      boxShadow: 'none',
-      padding: '10px 14px',
-      backgroundColor: '#fff',
-      transition: 'border .2s, box-shadow .2s',
+      backgroundColor: '#0a0a0a',
+      border: '1px solid #222222',
+      color: '#ffffff',
     },
     '.Input:focus': {
-      border: '1.5px solid #6366f1',
-      boxShadow: '0 0 0 3px rgba(99,102,241,0.12)',
-      outline: 'none',
+      border: '1px solid #0156FF',
+      boxShadow: '0 0 0 2px rgba(1, 86, 255, 0.15)',
     },
-    '.Input--invalid': {
-      border: '1.5px solid #ef4444',
-    },
-
-    // Label styling
     '.Label': {
-      fontWeight: '500',
-      fontSize: '13px',
-      color: '#4a4a6a',
-      marginBottom: '6px',
+      fontFamily: '"Fira Code", monospace',
+      fontSize: '10px',
+      letterSpacing: '1px',
       textTransform: 'uppercase',
-      letterSpacing: '0.04em',
+      color: '#444444',
     },
-
-    // Error text
-    '.Error': {
-      fontSize: '12px',
-      color: '#ef4444',
-    },
-
-    // Tab buttons (payment method selector)
     '.Tab': {
-      border: '1.5px solid #e2e8f0',
-      borderRadius: '8px',
-      boxShadow: 'none',
+      backgroundColor: '#111111',
+      border: '1px solid #1a1a1a',
     },
     '.Tab--selected': {
-      border: '1.5px solid #6366f1',
-      boxShadow: '0 0 0 3px rgba(99,102,241,0.12)',
+      borderColor: '#0156FF',
+      backgroundColor: '#0156FF15',
     },
   },
 };

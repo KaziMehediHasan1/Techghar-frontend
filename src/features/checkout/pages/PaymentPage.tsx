@@ -1,37 +1,32 @@
-// // PaymentPage.jsx
-// import { useState, useEffect } from "react";
-// import { Elements } from "@stripe/react-stripe-js";
-// import CheckoutForm from "@/features/checkout/components/CheckoutForm";
-// import { CONFIG } from "@/config/env";
-// import { appearance } from "@/features/checkout/stripe/appearance";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+import CheckoutForm from '../components/CheckoutForm';
+import { CONFIG } from '@/config/env';
+import { useLocation } from 'react-router-dom';
+import { stripeAppearance } from '../stripe/appearance';
+import Wrapper from '@/components/layout/Wrapper';
 
-// // stripe publishble key -
-// const stripePromise = CONFIG.payment_published_key;
+const stripePromise = loadStripe(CONFIG.payment_published_key);
 
-// // S1: Parent Component — do fetch clientSecret -
-// const PaymentPage = () => {
-//   const [clientSecret, setClientSecret] = useState("");
+const PaymentPage = () => {
+  const location = useLocation();
+  const clientSecret = location?.state?.clientSecret;
 
-//   useEffect(() => {
-//     // Backend Create Client secrete -
-//     fetch("http://localhost:4000/create-payment-intent", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ amount: 1000, currency: "usd" }), // $10
-//     })
-//       .then((res) => res.json())
-//       .then((data) => setClientSecret(data.clientSecret));
-//   }, []);
+  if (!clientSecret) {
+    return <div>Invalid Payment Session</div>;
+  }
 
-//   // clientSecret -
-//   if (!clientSecret) return <p>Loading payment form...</p>;
+  const options = {
+    clientSecret, // Eta Elements provider-e dorkar hoy
+    stripeAppearance,
+  };
+  return (
+    <Wrapper>
+      <Elements stripe={stripePromise} options={options}>
+        <CheckoutForm />
+      </Elements>
+    </Wrapper>
+  );
+};
 
-//   return (
-//     // Elements wrapper for strip context
-//     <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-//       <CheckoutForm />
-//     </Elements>
-//   );
-// };
-
-// export default PaymentPage;
+export default PaymentPage;

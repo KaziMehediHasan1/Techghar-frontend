@@ -6,13 +6,8 @@ import { useCartStore } from '@/store/useCartStore';
 import { NavLink } from 'react-router-dom';
 
 const Cart = () => {
-  const {
-    cart,
-    removeFromCart,
-    updateQuantity,
-    clearCart,
-  } = useCartStore();
-
+  const { cart, removeFromCart, updateQuantity, clearCart } = useCartStore();
+  console.log(cart, 'check cart');
   return (
     <div className="">
       <Wrapper>
@@ -53,7 +48,10 @@ const Cart = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 mt-8">
-              <NavLink to="/" className="px-6 py-2 border border-gray-400 rounded-full text-sm font-medium">
+              <NavLink
+                to="/"
+                className="px-6 py-2 border border-gray-400 rounded-full text-sm font-medium"
+              >
                 Continue Shopping
               </NavLink>
               <button

@@ -1,6 +1,6 @@
 // auth related types --
 export interface IUser {
-  id?: string;
+  _id?: string;
   name: string;
   userEmail: string;
   photo?: string;
