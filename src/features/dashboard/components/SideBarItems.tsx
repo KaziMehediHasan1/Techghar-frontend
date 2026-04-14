@@ -1,14 +1,29 @@
-import { NavLink } from "react-router-dom";
-import LogoImg from "../../../assets/images/logo.png";
-import { IconBundler } from "@/assets/icons/IconBundler";
-import { cn } from "@/lib/utils";
-import { NestedRoute } from "@/features/dashboard/components/NestedRoute";
+import { NavLink } from 'react-router-dom';
+import LogoImg from '../../../assets/images/logo.png';
+import { IconBundler } from '@/assets/icons/IconBundler';
+import { cn } from '@/lib/utils';
+import { NestedRoute } from '@/features/dashboard/components/NestedRoute';
+import { useAuthStore } from '@/features/auth/auth.store';
+import type { ReactElement } from 'react';
 interface SidebarProps {
   isSidebarOpen: boolean;
   setSidebarOpen: (value: boolean) => void;
 }
 
+interface RouteItem {
+  name: string;
+  path?: string;
+  icon: ReactElement;
+  children?: {
+    name: string;
+    path: string;
+    icon: ReactElement;
+  }[];
+}
+
 const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
+  const { user } = useAuthStore();
+  const routesToRender = user?.role === 'admin' ? adminRoute : userRoute;
   return (
     <section className="flex flex-col h-full">
       <div className="h-16 flex items-center px-5">
@@ -28,23 +43,23 @@ const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
 
       <nav
         className={cn(
-          "flex-1 flex flex-col px-3 py-2",
-          !isSidebarOpen && "items-center space-y-4",
+          'flex-1 flex flex-col px-3 py-2',
+          !isSidebarOpen && 'items-center space-y-4'
         )}
       >
-        {route.map((item) => {
+        {routesToRender?.map((item) => {
           if (item.path && !item.children) {
             return (
               <NavLink
                 key={item.name}
                 to={item.path}
-                end={item.path === "/dashboard"}
+                end={item.path === '/dashboard'}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center gap-3 p-2 rounded-lg transition-all group relative mb-1",
+                    'flex items-center gap-3 p-2 rounded-lg transition-all group relative mb-1',
                     isActive
-                      ? "bg-primary text-white shadow-md"
-                      : "text-gray-500 hover:bg-gray-100",
+                      ? 'bg-primary text-white shadow-md'
+                      : 'text-gray-500 hover:bg-gray-100'
                   )
                 }
               >
@@ -72,98 +87,121 @@ const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
 
 export default SideBarItems;
 
-const route = [
+const adminRoute: RouteItem[] = [
   {
-    name: "Dashboard",
-    path: "/dashboard",
+    name: 'Dashboard',
+    path: '/dashboard',
     icon: <IconBundler.LayoutDashboard size={25} />,
   },
 
   {
-    name: "User Management",
-    path: "users",
+    name: 'User Management',
+    path: 'users',
     icon: <IconBundler.Users size={25} />,
     children: [
       {
-        name: "Customer List",
-        path: "users/list",
+        name: 'Customer List',
+        path: 'users/list',
         icon: <IconBundler.List size={18} />,
       },
       {
-        name: "Admin/Staff",
-        path: "users/admin/Staff",
+        name: 'Admin/Staff',
+        path: 'users/admin/Staff',
         icon: <IconBundler.ShieldCheck size={18} />,
       },
       {
-        name: "Spam Alerts",
-        path: "users/spam-alerts",
+        name: 'Spam Alerts',
+        path: 'users/spam-alerts',
         icon: <IconBundler.ShieldAlert size={18} />,
       },
     ],
   },
 
   {
-    name: "E-Commerce",
+    name: 'E-Commerce',
     icon: <IconBundler.ShoppingBag size={25} />,
     children: [
       {
-        name: "Product List",
-        path: "commerce/product/list",
+        name: 'Product List',
+        path: 'commerce/product/list',
         icon: <IconBundler.List size={18} />,
       },
       {
-        name: "Add Product",
-        path: "commerce/product/create",
+        name: 'Add Product',
+        path: 'commerce/product/create',
         icon: <IconBundler.ShoppingBag size={18} />,
       },
       {
-        name: "Orders",
-        path: "commerce/product/orders",
+        name: 'Orders',
+        path: 'commerce/product/orders',
         icon: <IconBundler.ShoppingCart size={18} />,
       },
       {
-        name: "Payments",
-        path: "commerce/product/payment",
+        name: 'Payments',
+        path: 'commerce/product/payment',
         icon: <IconBundler.CreditCard size={18} />,
       },
       {
-        name: "Coupons",
-        path: "commerce/product/coupons",
+        name: 'Coupons',
+        path: 'commerce/product/coupons',
         icon: <IconBundler.TicketPercent size={18} />,
       },
     ],
   },
 
   {
-    name: "Content Manager",
+    name: 'Content Manager',
     icon: <IconBundler.FolderTree size={25} />,
     children: [
       {
-        name: "Blogs",
-        path: "content/blogs",
+        name: 'Blogs',
+        path: 'content/blogs',
         icon: <IconBundler.FileText size={18} />,
       },
       {
-        name: "Add Blog",
-        path: "content/blogs/create",
+        name: 'Add Blog',
+        path: 'content/blogs/create',
         icon: <IconBundler.FileText size={18} />,
       },
       {
-        name: "Reviews",
-        path: "content/reviews",
+        name: 'Reviews',
+        path: 'content/reviews',
         icon: <IconBundler.MessageSquareShare size={18} />,
       },
       {
-        name: "Contact",
-        path: "content/contact",
+        name: 'Contact',
+        path: 'content/contact',
         icon: <IconBundler.Mail size={18} />,
       },
     ],
   },
 
   {
-    name: "Settings",
-    path: "settings",
+    name: 'Settings',
+    path: 'settings',
     icon: <IconBundler.Settings size={25} />,
+  },
+];
+
+const userRoute: RouteItem[] = [
+  {
+    name: 'Dashboard',
+    path: '/user_dashboard',
+    icon: <IconBundler.LayoutDashboard size={25} />,
+  },
+  {
+    name: 'My Orders',
+    path: 'my_order',
+    icon: <IconBundler.ShoppingOrOrder size={25} />,
+  },
+  {
+    name: 'Addresses',
+    path: 'addresse',
+    icon: <IconBundler.Location size={25} />,
+  },
+  {
+    name: 'Profile',
+    path: 'profile',
+    icon: <IconBundler.Profile size={25} />,
   },
 ];

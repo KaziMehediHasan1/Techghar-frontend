@@ -35,6 +35,7 @@ import {
   Ticket,
   FileText,
   Users,
+  UserRound,
   ShieldCheck,
   ShoppingBag,
   CheckCheck,
@@ -112,4 +113,5 @@ export const IconBundler = {
   TrendingDown: (props: IconProps) => <TrendingDown {...props} />,
   TrendingUp: (props: IconProps) => <TrendingUp {...props} />,
   Dollar: (props: IconProps) => <DollarSignIcon {...props} />,
+  Profile: (props: IconProps) => <UserRound {...props} />,
 };

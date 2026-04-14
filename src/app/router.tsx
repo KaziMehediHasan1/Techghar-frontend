@@ -24,6 +24,11 @@ import AddBlog from '@/features/dashboard/blog/pages/AddBlog';
 import ProtectedRoute from '@/app/ProtectedRoute';
 import Unauthorized from '@/pages/Unauthorized';
 import BlogDetailPage from '@/pages/BlogDetailPage';
+import UserLayout from '@/components/layout/UserLayout';
+import User_Overview from '@/features/user_dashboard/pages/User_overview';
+import MyOrder from '@/features/user_dashboard/my_order/pages/MyOrder';
+import Addresses from '@/features/user_dashboard/addresses/pages/Addresses';
+import Profile from '@/features/user_dashboard/profile/pages/Profile';
 
 export const router = createBrowserRouter([
   {
@@ -131,6 +136,30 @@ export const router = createBrowserRouter([
       {
         path: 'settings',
         children: [{ path: 'settings', element: 'settings' }],
+      },
+    ],
+  },
+
+  {
+    path: '/user_dashboard',
+    element: (
+      <ProtectedRoute allowedRoles={['user', 'admin']}>
+        <UserLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { index: true, element: <User_Overview /> },
+      {
+        path: 'my_order',
+        element: <MyOrder />,
+      },
+      {
+        path: 'addresse',
+        element: <Addresses />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
       },
     ],
   },

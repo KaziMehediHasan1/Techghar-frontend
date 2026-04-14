@@ -3,7 +3,7 @@ import { ShieldAlert, ArrowLeft, Home, Lock } from 'lucide-react';
 
 const Unauthorized = () => {
   return (
-    <div className="min-h-screen bg-[#F9FAFB] flex items-center justify-center p-4 font-sans">
+    <div className="bg-[#F9FAFB] flex items-center justify-center p-4 font-sans">
       <div className="max-w-lg w-full bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12 text-center">
         {/* Animated Icon Section */}
         <div className="relative flex justify-center mb-8">
