@@ -57,6 +57,8 @@ export default function CheckoutForm() {
         return;
       }
 
+      console.log('PY INTENT', paymentIntent);
+
       if (paymentIntent && paymentIntent.status === 'succeeded') {
         const paymentData = {
           orderId: orderId,
@@ -69,11 +71,15 @@ export default function CheckoutForm() {
 
         const payRes = await PaymentPost(paymentData);
 
+        console.log('PYMENT RES CHECK--', payRes);
+
         if (payRes?.success || payRes?.data) {
           const orderRes = await OrderStatusUpdateMutation({
             id: orderId,
             data: { status: 'confirmed' },
           });
+
+          console.log('ORDER RES CHECK__', orderRes);
 
           if (orderRes?.success || orderRes?.data) {
             clearCart();
@@ -135,7 +141,7 @@ export default function CheckoutForm() {
               <span>Processing...</span>
             </div>
           ) : (
-            `Pay Now` 
+            `Pay Now`
           )}
         </button>
 

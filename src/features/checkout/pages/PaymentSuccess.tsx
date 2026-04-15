@@ -51,7 +51,7 @@ const PaymentSuccess = () => {
             {/* Action Buttons */}
             <div className="space-y-3 pt-2">
               <Link
-                to="/dashboard/orders"
+                to="/user_dashboard/my_order"
                 className="w-full flex items-center justify-center gap-2 bg-black text-white py-2.5 rounded hover:bg-gray-800 transition-all active:scale-95"
               >
                 View My Orders

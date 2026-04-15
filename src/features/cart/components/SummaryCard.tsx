@@ -60,10 +60,14 @@ const SummaryCard = () => {
     try {
       const OrderRes = await OrderMutation(orderData);
 
+      console.log('ORDER RES--', OrderRes);
+
       if (OrderRes?.success || OrderRes?.data?._id) {
         const orderId = OrderRes?.data?._id;
 
         const response = await PaymentIntentMutation(payload);
+
+        console.log('PYMENT MUTATION--', response);
 
         if (response?.data?.clientSecret) {
           navigate('/payment', {
@@ -79,7 +83,6 @@ const SummaryCard = () => {
       console.error('Checkout logic error:', err);
     }
   };
-
 
   return (
     <section className="bg-gray-50 p-6 rounded-sm h-fit top-5">
