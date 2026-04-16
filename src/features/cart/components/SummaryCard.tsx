@@ -54,7 +54,7 @@ const SummaryCard = () => {
       userId: user?._id,
       productID: cart?.map((item) => item._id),
       quantity: totalItems(),
-      totalPrice: orderTotalValue,
+      price: orderTotalValue,
     };
 
     try {

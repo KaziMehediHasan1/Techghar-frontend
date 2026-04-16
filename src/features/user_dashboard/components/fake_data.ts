@@ -28,3 +28,28 @@ export const orders = [
         items: 4,
     },
 ];
+
+
+export const metrics = [
+    {
+        label: 'Recent Orders',
+        value: '12',
+        delta: '+3 this week',
+        color: 'blue',
+        icon: '🛍️',
+    },
+    {
+        label: 'Total Spent',
+        value: '৳24,850',
+        delta: '৳3,200 this month',
+        color: 'emerald',
+        icon: '💳',
+    },
+    {
+        label: 'Wishlist',
+        value: '7',
+        delta: '2 on sale now',
+        color: 'orange',
+        icon: '❤️',
+    },
+];

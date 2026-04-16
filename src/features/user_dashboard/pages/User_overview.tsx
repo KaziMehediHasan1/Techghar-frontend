@@ -1,35 +1,64 @@
 import { motion } from 'framer-motion';
-import { statusStyles } from '../style';
-import { orders } from '../components/fake_data';
+import { Badge } from '../components/Badge';
+import Card from '../components/Card';
+import Header from '../components/Header';
+import useFetch from '@/hooks/useFetch';
+import { useAuthStore } from '@/features/auth/auth.store';
+import { useCartStore } from '@/store/useCartStore';
 
-const Badge = ({ status }: { status: string }) => (
-  <span
-    className={`px-3 py-1 rounded-full text-[11px] font-medium border flex items-center gap-1.5 w-fit ${statusStyles[status as keyof typeof statusStyles]}`}
-  >
-    <span className="w-1.5 h-1.5 rounded-full bg-current" />
-    {status}
-  </span>
-);
+interface IOrder {
+  _id: string;
+  createdAt: string;
+  totalPrice: number;
+  status: string;
+  quantity: number;
+}
+
+interface IOrderData {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: IOrder[];
+}
 
 const User_Overview = () => {
-  const metrics = [
+  const { totalItems } = useCartStore();
+  const { user: authUser } = useAuthStore();
+  const userId = authUser?._id;
+  const url = userId ? `/order/user/${userId}` : '';
+  const { data } = useFetch<IOrderData>(url);
+  const totalSpent =
+    data?.data?.reduce((acc, curr) => {
+      return acc + (Number(curr.totalPrice) || 0);
+    }, 0) || 0;
+  const displayTotal = totalSpent.toFixed(2); 
+
+  const lastWeekOrders =
+    data?.data?.filter((o) => {
+      const orderDate = new Date(o.createdAt);
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      return orderDate > weekAgo;
+    }).length || 0;
+
+  const dynamicMetrics = [
     {
       label: 'Recent Orders',
-      value: '12',
-      delta: '+3 this week',
+      value: data?.data?.length || '0',
+      delta: `+${lastWeekOrders} this week`,
       color: 'blue',
       icon: '🛍️',
     },
     {
       label: 'Total Spent',
-      value: '৳24,850',
-      delta: '৳3,200 this month',
+      value: `৳${displayTotal}`,
+      delta: `Average: ৳${(totalSpent / (data?.data?.length || 1)).toFixed(0)} / order`,
       color: 'emerald',
       icon: '💳',
     },
     {
       label: 'Wishlist',
-      value: '7',
+      value: `${totalItems()}`,
       delta: '2 on sale now',
       color: 'orange',
       icon: '❤️',
@@ -43,52 +72,12 @@ const User_Overview = () => {
       className="space-y-8 "
     >
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-            Good morning, Mehedi 👋
-          </h2>
-          <p className="text-gray-500 text-sm">
-            Here's what's happening with your account today.
-          </p>
-        </div>
-        <div className="text-sm font-medium text-gray-400 bg-gray-50 px-3 py-1 rounded-lg border">
-          Wed, Apr 15, 2026
-        </div>
-      </div>
+      <Header />
 
       {/* Metric Cards - Responsive Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {metrics.map((m, i) => (
-          <motion.div
-            key={i}
-            whileHover={{ y: -5 }}
-            className="relative bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all overflow-hidden group"
-          >
-            {/* Background Accent Decor */}
-            <div
-              className={`absolute -top-4 -right-4 w-20 h-20 bg-${m.color}-50 rounded-full group-hover:scale-150 transition-transform duration-500`}
-            />
-
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4">
-                <span className={`p-2 bg-${m.color}-50 rounded-xl text-lg`}>
-                  {m.icon}
-                </span>
-                <span className="text-sm font-medium text-gray-500">
-                  {m.label}
-                </span>
-              </div>
-              <div className="text-3xl font-bold text-gray-900 mb-2">
-                {m.value}
-              </div>
-              <span
-                className={`text-[11px] font-bold px-2 py-0.5 rounded-md bg-${m.color}-50 text-${m.color}-700`}
-              >
-                {m.delta}
-              </span>
-            </div>
-          </motion.div>
+        {dynamicMetrics.map((m, i) => (
+          <Card key={i} m={m} i={i} />
         ))}
       </div>
 
@@ -101,6 +90,7 @@ const User_Overview = () => {
           </button>
         </div>
 
+        {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -116,7 +106,7 @@ const User_Overview = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {orders?.map((o, i) => (
+              {data?.data?.map((o, i) => (
                 <motion.tr
                   key={i}
                   initial={{ opacity: 0 }}
@@ -125,14 +115,22 @@ const User_Overview = () => {
                   className="hover:bg-gray-50/80 transition-colors group"
                 >
                   <td className="px-6 py-4 text-sm font-mono text-gray-600">
-                    {o.id}
+                    #{o._id.slice(-6)}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{o.date}</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">
+                    {o.createdAt
+                      ? new Date(o.createdAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric',
+                        })
+                      : 'N/A'}
+                  </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {o.items} items
+                    {o.quantity} items
                   </td>
                   <td className="px-6 py-4 text-sm font-bold text-gray-900">
-                    {o.amount}
+                    ${o.totalPrice}
                   </td>
                   <td className="px-6 py-4">
                     <Badge status={o.status} />
