@@ -34,7 +34,7 @@ const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
             className="w-8 h-8 object-contain shrink-0"
           />
           {isSidebarOpen && (
-            <p className="text-xl font-bold truncate animate-in fade-in duration-300">
+            <p className="hidden sm:block text-xl font-bold truncate animate-in fade-in duration-300">
               TechGhar
             </p>
           )}
@@ -65,7 +65,7 @@ const SideBarItems = ({ isSidebarOpen }: SidebarProps) => {
               >
                 <span className="text-xl shrink-0">{item.icon}</span>
                 {isSidebarOpen && (
-                  <span className="font-medium text-sm">{item.name}</span>
+                  <span className="font-medium text-sm hidden sm:block">{item.name}</span>
                 )}
 
                 {/* Tooltip logic remains same... */}

@@ -1,104 +1,72 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Search,
   Package,
   Clock,
   CheckCircle2,
   XCircle,
   Truck,
-} from 'lucide-react'; // npm install lucide-react
+  FileText,
+} from 'lucide-react';
+import useFetch from '@/hooks/useFetch';
+import { useAuthStore } from '@/features/auth/auth.store';
+import type { IOrderData } from '../../types';
 
-const allOrders = [
-  {
-    id: '#ORD-7821',
-    date: 'Apr 10, 2026',
-    status: 'Delivered',
-    amount: '৳4,250',
-    items: 3,
-    product: 'Casual Shirt, Jeans, Belt',
-  },
-  {
-    id: '#ORD-7753',
-    date: 'Apr 3, 2026',
-    status: 'In Transit',
-    amount: '৳7,800',
-    items: 5,
-    product: 'Sneakers, Socks ×2, Cap, Bag',
-  },
-  {
-    id: '#ORD-7690',
-    date: 'Mar 27, 2026',
-    status: 'Processing',
-    amount: '৳2,100',
-    items: 1,
-    product: 'Wireless Earbuds',
-  },
-  {
-    id: '#ORD-7612',
-    date: 'Mar 15, 2026',
-    status: 'Delivered',
-    amount: '৳6,300',
-    items: 4,
-    product: 'Polo T-shirt ×2, Shorts, Sunglasses',
-  },
-  {
-    id: '#ORD-7540',
-    date: 'Feb 28, 2026',
-    status: 'Delivered',
-    amount: '৳1,950',
-    items: 2,
-    product: 'Wallet, Keychain',
-  },
-  {
-    id: '#ORD-7411',
-    date: 'Feb 12, 2026',
-    status: 'Cancelled',
-    amount: '৳3,500',
-    items: 3,
-    product: 'Jacket, Gloves, Scarf',
-  },
-  {
-    id: '#ORD-7290',
-    date: 'Jan 30, 2026',
-    status: 'Delivered',
-    amount: '৳5,200',
-    items: 6,
-    product: 'Kitchen Accessories Set',
-  },
-  {
-    id: '#ORD-7150',
-    date: 'Jan 14, 2026',
-    status: 'Delivered',
-    amount: '৳890',
-    items: 1,
-    product: 'Phone Stand',
-  },
+const FILTERS = [
+  'All',
+  'Delivered',
+  'Pending',
+  'Confirmed',
+  'Shipped',
+  'Cancelled',
 ];
 
-const FILTERS = ['All', 'Delivered', 'In Transit', 'Processing', 'Cancelled'];
+interface IStatusStyle {
+  label: string;
+  color: string;
+  bg: string;
+  icon: ReactNode;
+  border: string;
+}
 
-const statusConfig = {
-  Delivered: {
+type OrderStatus =
+  | 'delivered'
+  | 'pending'
+  | 'confirmed'
+  | 'shipped'
+  | 'cancelled';
+
+const statusConfig: Record<OrderStatus, IStatusStyle> = {
+  delivered: {
+    label: 'Delivered',
     color: 'text-green-600',
     bg: 'bg-green-50',
     icon: <CheckCircle2 size={14} />,
     border: 'border-green-100',
   },
-  'In Transit': {
-    color: 'text-amber-600',
-    bg: 'bg-amber-50',
-    icon: <Truck size={14} />,
-    border: 'border-amber-100',
-  },
-  Processing: {
+  pending: {
+    label: 'Pending',
     color: 'text-blue-600',
     bg: 'bg-blue-50',
     icon: <Clock size={14} />,
     border: 'border-blue-100',
   },
-  Cancelled: {
+  confirmed: {
+    label: 'Confirmed',
+    color: 'text-cyan-600',
+    bg: 'bg-cyan-50',
+    icon: <CheckCircle2 size={14} />,
+    border: 'border-cyan-100',
+  },
+  shipped: {
+    label: 'Shipped',
+    color: 'text-amber-600',
+    bg: 'bg-amber-50',
+    icon: <Truck size={14} />,
+    border: 'border-amber-100',
+  },
+  cancelled: {
+    label: 'Cancelled',
     color: 'text-red-600',
     bg: 'bg-red-50',
     icon: <XCircle size={14} />,
@@ -107,82 +75,52 @@ const statusConfig = {
 };
 
 const MyOrders = () => {
+  const { user } = useAuthStore();
   const [filter, setFilter] = useState('All');
-  const [search, setSearch] = useState('');
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
-  const visibleOrders = allOrders.filter((o) => {
-    const matchFilter = filter === 'All' || o.status === filter;
-    const matchSearch =
-      o.id.toLowerCase().includes(search.toLowerCase()) ||
-      o.product.toLowerCase().includes(search.toLowerCase());
-    return matchFilter && matchSearch;
+  const userId = user?._id;
+  const url = userId ? `/order/user/${userId}` : '';
+  const { data } = useFetch<IOrderData>(url);
+  const orders = data?.data || [];
+
+  const visibleOrders = orders.filter((o) => {
+    if (filter === 'All') return true;
+    return o.status === filter.toLowerCase();
   });
 
-  const getActionBtn = (status: string) => {
-    const baseClass =
-      'text-xs font-semibold px-4 py-1.5 rounded-lg transition-all border ';
-    if (status === 'Delivered')
-      return (
-        baseClass +
-        'bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-sm'
-      );
-    if (status === 'In Transit')
-      return (
-        baseClass + 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
-      );
-    return (
-      baseClass +
-      'bg-gray-50 text-gray-400 border-transparent cursor-not-allowed'
-    );
-  };
-
   return (
-    <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col gap-1">
         <h2 className="text-2xl font-bold text-gray-900">My Orders</h2>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <Package size={16} />
-          <span>{allOrders.length} total orders</span>
+          <span>{orders.length} total orders</span>
           <span className="text-gray-300">|</span>
           <span className="text-green-600 font-medium">
-            {allOrders.filter((o) => o.status === 'Delivered').length} completed
+            {orders.filter((o) => o.status === 'delivered').length} completed
           </span>
         </div>
       </div>
 
       {/* Toolbar */}
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-        <div className="relative w-full lg:w-96">
-          <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-            size={16}
-          />
-          <input
-            type="text"
-            placeholder="Search by ID or products..."
-            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-
         <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0 w-full lg:w-auto no-scrollbar">
-          {FILTERS.map((f) => (
+          {FILTERS.map((s) => (
             <button
-              key={f}
-              onClick={() => setFilter(f)}
+              key={s}
+              onClick={() => setFilter(s)}
               className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-semibold transition-all border ${
-                filter === f
+                filter === s
                   ? 'bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-200'
                   : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:text-blue-600'
               }`}
             >
-              {f}{' '}
-              {f !== 'All' && (
+              {s}
+              {s !== 'All' && (
                 <span className="ml-1 opacity-70">
-                  {allOrders.filter((o) => o.status === f).length}
+                  {orders.filter((o) => o.status === s.toLowerCase()).length}
                 </span>
               )}
             </button>
@@ -192,112 +130,107 @@ const MyOrders = () => {
 
       {/* Table Section */}
       <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="bg-gray-50/50 border-b border-gray-100">
-                {[
-                  'Order ID',
-                  'Date',
-                  'Products',
-                  'Amount',
-                  'Status',
-                  'Action',
-                ].map((h) => (
-                  <th
-                    key={h}
-                    className="px-6 py-4 text-[10px] uppercase font-bold text-gray-400 tracking-wider"
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-50">
-              <AnimatePresence>
-                {visibleOrders.length > 0 ? (
-                  visibleOrders.map((o) => (
-                    <React.Fragment key={o.id}>
+        <table className="w-full text-left border-collapse overflow-x-auto">
+          <tbody className="divide-y divide-gray-50">
+            <AnimatePresence mode="popLayout">
+              {visibleOrders.length > 0 ? (
+                visibleOrders.map((item) => {
+                  const statusKey = item.status as OrderStatus;
+                  const config = statusConfig[statusKey];
+
+                  return (
+                    <React.Fragment key={item._id}>
                       <motion.tr
                         layout
                         onClick={() =>
-                          setExpandedRow(expandedRow === o.id ? null : o.id)
+                          setExpandedRow(
+                            expandedRow === item._id ? null : item._id
+                          )
                         }
-                        className={`cursor-pointer transition-colors group ${expandedRow === o.id ? 'bg-blue-50/30' : 'hover:bg-gray-50'}`}
+                        className={`cursor-pointer transition-colors group ${expandedRow === item._id ? 'bg-blue-50/30' : 'hover:bg-gray-50'}`}
                       >
-                        <td className="px-6 py-4 font-mono text-sm font-bold text-blue-600">
-                          {o.id}
+                        <td className="px-6 py-4 font-mono text-xs font-bold text-blue-600">
+                          #{item._id.slice(-6).toUpperCase()}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500">
-                          {o.date}
+                          {new Date(item.createdAt).toLocaleDateString()}
                         </td>
-                        <td className="px-6 py-4 text-sm text-gray-700 max-w-[200px] truncate">
-                          {o.product}
+                        <td className="px-6 py-4 text-sm text-gray-700 truncate">
+                          {item.productID
+                            ?.map((p: { title: string }) => p.title)
+                            .join(', ')}
                         </td>
                         <td className="px-6 py-4 text-sm font-bold text-gray-900">
-                          {o.amount}
+                          ${item.totalPrice}
                         </td>
                         <td className="px-6 py-4">
                           <div
-                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border w-fit text-[11px] font-bold ${statusConfig[o.status as keyof typeof statusConfig].bg} ${statusConfig[o.status as keyof typeof statusConfig].color} ${statusConfig[o.status as keyof typeof statusConfig].border}`}
+                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border w-fit text-[11px] font-bold 
+                              ${config?.bg || 'bg-gray-50'} 
+                              ${config?.color || 'text-gray-500'} 
+                              ${config?.border || 'border-gray-100'}`}
                           >
-                            {
-                              statusConfig[
-                                o.status as keyof typeof statusConfig
-                              ].icon
-                            }
-                            {o.status}
+                            {config?.icon}
+                            {config?.label || item.status}
                           </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <button
-                            className={getActionBtn(o.status)}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {o.status === 'Delivered'
-                              ? 'Reorder'
-                              : o.status === 'In Transit'
-                                ? 'Track'
-                                : 'View'}
-                          </button>
                         </td>
                       </motion.tr>
 
-                      {/* Expanded Details */}
-                      {expandedRow === o.id && (
+                      {expandedRow === item._id && (
                         <motion.tr
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="bg-blue-50/20"
+                          className="bg-blue-50/10"
                         >
                           <td
-                            colSpan={6}
+                            colSpan={5}
                             className="px-6 py-6 border-b border-blue-50"
                           >
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                              <div className="space-y-1">
+                              <div className="space-y-2">
                                 <span className="text-[10px] uppercase font-bold text-gray-400">
                                   Items Ordered
                                 </span>
-                                <p className="text-sm text-gray-700 leading-relaxed">
-                                  {o.product}
-                                </p>
+                                <div className="space-y-2">
+                                  {item.productID?.map(
+                                    (p: {
+                                      _id: string;
+                                      title: string;
+                                      price: string;
+                                    }) => (
+                                      <div
+                                        key={p._id}
+                                        className="text-sm text-gray-700 flex justify-between bg-white p-2 rounded-lg border border-gray-100 shadow-sm"
+                                      >
+                                        <span>{p.title}</span>
+                                        <span className="font-bold text-gray-900">
+                                          ${p.price}
+                                        </span>
+                                      </div>
+                                    )
+                                  )}
+                                </div>
                               </div>
+
                               <div className="space-y-1">
                                 <span className="text-[10px] uppercase font-bold text-gray-400">
                                   Billing Summary
                                 </span>
                                 <p className="text-sm text-gray-700">
-                                  Subtotal: {o.amount}
+                                  Quantity: {item.quantity}
+                                </p>
+                                <p className="text-sm font-bold text-blue-600">
+                                  Total: ${item.totalPrice}
                                 </p>
                                 <p className="text-[11px] text-green-600 font-medium">
-                                  Payment: Paid via SSLCommerz
+                                  Payment Status: Paid
                                 </p>
                               </div>
+
                               <div className="flex flex-col justify-center">
-                                <button className="text-blue-600 text-sm font-bold hover:underline flex items-center gap-2">
-                                  Download Invoice (PDF)
+                                <button className="text-blue-600 text-sm font-bold hover:bg-blue-50 p-3 rounded-xl border border-blue-100 flex items-center justify-center gap-2 transition-all">
+                                  <FileText size={16} /> Download Invoice (PDF)
                                 </button>
                               </div>
                             </div>
@@ -305,25 +238,22 @@ const MyOrders = () => {
                         </motion.tr>
                       )}
                     </React.Fragment>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan={6}
-                      className="px-6 py-20 text-center text-gray-400 text-sm"
-                    >
-                      No orders matching your search or filter.
-                    </td>
-                  </tr>
-                )}
-              </AnimatePresence>
-            </tbody>
-          </table>
-        </div>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td
+                    colSpan={5}
+                    className="px-6 py-20 text-center text-gray-400 text-sm italic"
+                  >
+                    No {filter !== 'All' ? filter : ''} orders found.
+                  </td>
+                </tr>
+              )}
+            </AnimatePresence>
+          </tbody>
+        </table>
       </div>
-      <p className="text-center text-gray-400 text-[11px] font-medium">
-        Tip: Click on a row to see item details and download invoices.
-      </p>
     </div>
   );
 };

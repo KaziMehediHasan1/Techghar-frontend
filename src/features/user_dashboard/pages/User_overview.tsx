@@ -5,21 +5,7 @@ import Header from '../components/Header';
 import useFetch from '@/hooks/useFetch';
 import { useAuthStore } from '@/features/auth/auth.store';
 import { useCartStore } from '@/store/useCartStore';
-
-interface IOrder {
-  _id: string;
-  createdAt: string;
-  totalPrice: number;
-  status: string;
-  quantity: number;
-}
-
-interface IOrderData {
-  success: boolean;
-  statusCode: number;
-  message: string;
-  data: IOrder[];
-}
+import type { IOrderData } from '../types';
 
 const User_Overview = () => {
   const { totalItems } = useCartStore();
