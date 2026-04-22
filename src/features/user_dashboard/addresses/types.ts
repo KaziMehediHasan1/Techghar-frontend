@@ -17,13 +17,15 @@ export interface Address {
 
 export interface IAddress {
     fullName: string;
-    label: 'Home' | 'Office' | 'Others';
+    label: string;
     street: string;
     city: string;
     addressLine: string;
-    zipCode: string | number
-    state: string
-    phone: string
+    zipCode: string | number;
+    state: string;
+    phone: string;
+    isDefaultShipping?: boolean;
+    isDefaultBilling?: boolean;
 }
 
 export interface IProfileData {
@@ -35,9 +37,9 @@ export interface IProfileData {
     reviews: string[];
     createdAt: string;
     updatedAt: string;
-    isDefaultShipping: boolean;
-    isDefaultBilling: boolean;
     __v: number;
+    isDefaultShipping?: boolean;
+    isDefaultBilling?: boolean;
 }
 
 export interface IApiResponse<T> {

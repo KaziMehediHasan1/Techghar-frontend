@@ -19,7 +19,6 @@ const useDelete = <T extends BaseItem>(
   return useMutation({
     mutationFn: async (id: string | number) => {
       const url = route.endsWith('/') ? `${route}${id}` : `${route}/${id}`;
-      console.log('delete-url:-', url, 'id dekho - ', id);
       const response = await axiosSecure.delete(url);
       return response.data;
     },
@@ -29,10 +28,10 @@ const useDelete = <T extends BaseItem>(
 
       const previousData = queryClient.getQueryData<T[]>([queryKey]);
 
-      if (previousData) {
+      // Sudhu jodi data array hoy tobei filter korbe
+      if (previousData && Array.isArray(previousData)) {
         queryClient.setQueryData<T[]>([queryKey], (oldData) => {
-          if (!oldData) return [];
-          return oldData.filter((item) => item[idField] !== id);
+          return oldData ? oldData.filter((item) => item[idField] !== id) : [];
         });
       }
 

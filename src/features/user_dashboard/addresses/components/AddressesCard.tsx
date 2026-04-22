@@ -10,11 +10,10 @@ const AddressCard = ({
 }: {
   addr: IProfileData;
   onEdit: (a: IProfileData) => void;
-  onRemove: (id: number | string) => void;
+  onRemove: (_id: string) => void;
 }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const identifier = addr._id;
-  console.log('identifier', identifier);
 
   return (
     <motion.div
@@ -81,20 +80,16 @@ const AddressCard = ({
             className="flex items-center justify-between bg-red-50 p-2 rounded border border-red-100"
           >
             <span className="text-xs font-bold text-red-600 ml-2">Remove?</span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 ">
               <button
-                onClick={() =>
-                  identifier &&
-                  typeof identifier === 'number' &&
-                  onRemove(identifier)
-                }
-                className="bg-red-600 text-white text-xs px-3 py-1.5 rounded-md font-bold hover:bg-red-700"
+                onClick={() => identifier && onRemove(identifier)}
+                className="bg-red-600 cursor-pointer text-white text-xs px-3 py-1.5 rounded-md font-bold hover:bg-red-700"
               >
                 Delete
               </button>
               <button
                 onClick={() => setShowConfirm(false)}
-                className="text-gray-500 text-xs px-3 py-1.5 font-bold hover:bg-white rounded-md transition-all"
+                className="text-gray-500 cursor-pointer text-xs px-3 py-1.5 font-bold hover:bg-white rounded-md transition-all"
               >
                 Cancel
               </button>
@@ -104,13 +99,13 @@ const AddressCard = ({
           <div className="flex items-center gap-3">
             <button
               onClick={() => onEdit(addr)}
-              className="text-xs font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100 transition-all flex items-center gap-2"
+              className="text-xs cursor-pointer font-bold text-blue-600 bg-blue-50 px-4 py-2 rounded-lg hover:bg-blue-100 transition-all flex items-center gap-2"
             >
               <Edit2 size={12} /> Edit
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="ml-auto p-2 text-gray-300 hover:text-red-500 transition-all"
+              className="ml-auto p-2 cursor-pointer text-gray-300 hover:text-red-500 transition-all"
             >
               <Trash2 size={16} />
             </button>

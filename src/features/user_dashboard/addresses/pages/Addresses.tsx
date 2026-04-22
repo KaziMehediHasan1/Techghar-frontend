@@ -1,34 +1,48 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  MapPin,
-  Plus,
-  Edit2,
-  Trash2,
-  Home,
-  Briefcase,
-  Phone,
-} from 'lucide-react';
+import { MapPin, Plus } from 'lucide-react';
 import usePost from '@/hooks/usePost';
 import { useAuthStore } from '@/features/auth/auth.store';
 import type { Address, IProfileResponse } from '../types';
 import AddressCard from '../components/AddressesCard';
 import useFetch from '@/hooks/useFetch';
+import useDelete from '@/hooks/useDelete';
+// import useUpdate from '@/hooks/useUpdate';
 
 const Addresses = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingAddr, setEditingAddr] = useState<Address | null>(null);
-  const { mutateAsync: updateProfile, isPending } = usePost('/profile');
   const { user } = useAuthStore();
-  const { data } = useFetch<IProfileResponse>(`/profile/${user?._id}`);
+  const PROFILE_KEY = 'user-profile';
+  const { mutateAsync: createProfile, isPending } = usePost(
+    '/profile',
+    PROFILE_KEY
+  );
+  const { data, refetch } = useFetch<IProfileResponse>(
+    `/profile/${user?._id}`,
+    PROFILE_KEY,
+    {}, // Params
+    { enabled: !!user?._id }
+  );
+  const { mutateAsync: removeAddress } = useDelete(
+    '/profile',
+    PROFILE_KEY,
+    '_id'
+  );
+
+  console.log('data', data?.data);
+
+  // const { mutateAsync: updateProfile } = useUpdate(
+  //   '/profile',
+  //   PROFILE_KEY,
+  //   '_id'
+  // );
   const ProfileData = data?.data;
-  console.log('Profile data', data);
 
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
-    // 1. Address object toiri korun (Zod Schema onujayi)
     const addressData = {
       fullName: formData.get('fullName') as string,
       label: formData.get('label') as string,
@@ -42,13 +56,10 @@ const Addresses = () => {
       isDefaultBilling: formData.get('isDefaultBilling') === 'on',
     };
 
-    // 2. SHOTHIK PAYLOAD: kono extra 'body' key thakbe na
-    // Backend zodProfileValidation shorasori ei fields gulo khujche
     const payload = {
       userID: user?._id || '',
       address: {
         ...addressData,
-        // Ensure boolean values explicitly
         isDefaultShipping: !!addressData.isDefaultShipping,
         isDefaultBilling: !!addressData.isDefaultBilling,
       },
@@ -58,32 +69,23 @@ const Addresses = () => {
     };
 
     try {
-      const response = await updateProfile(payload);
+      const response = await createProfile(payload);
 
       if (response.success) {
-        // UI update logic...
-        if (editingAddr) {
-          setAddresses((prev) =>
-            prev.map((a) =>
-              a._id === editingAddr._id || a.id === editingAddr.id
-                ? { ...a, ...addressData }
-                : a
-            )
-          );
-        } else {
-          const newAddr = response?.data?.address
-            ? response.data.address
-            : {
-                ...addressData,
-                id: Date.now(),
-              };
-          setAddresses((prev) => [...prev, newAddr]);
-        }
+        refetch();
         setIsFormOpen(false);
         setEditingAddr(null);
       }
     } catch (error) {
       console.error('Final Validation Error:', error);
+    }
+  };
+
+  const handleRemove = async (_id: string) => {
+    try {
+      await removeAddress(_id);
+    } catch (error) {
+      console.error('Error during deletion:', error);
     }
   };
 
@@ -293,18 +295,20 @@ const Addresses = () => {
 
       {/* Address Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <AddressCard
-          key={ProfileData?._id}
-          addr={ProfileData}
-          onEdit={(a) => {
-            setEditingAddr(a);
-            setIsFormOpen(true);
-          }}
-          // onRemove={}
-        />
+        {ProfileData && (
+          <AddressCard
+            key={ProfileData._id}
+            addr={ProfileData}
+            onEdit={(a) => {
+              setEditingAddr(a as unknown as Address);
+              setIsFormOpen(true);
+            }}
+            onRemove={(_id) => handleRemove(_id)}
+          />
+        )}
       </div>
 
-      {data?.length === 0 && !isFormOpen && (
+      {data?.data == null && !isFormOpen && (
         <div className="py-20 text-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
           <MapPin size={48} className="mx-auto text-gray-300 mb-4" />
           <p className="text-gray-500 font-medium">No addresses saved yet.</p>

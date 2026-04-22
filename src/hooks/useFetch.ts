@@ -7,13 +7,14 @@ import {
 
 const useFetch = <T>(
   route: string,
+  queryKey?: string,
   params: Record<string, string | number | boolean> = {},
   options?: Partial<UseQueryOptions<T>>
 ) => {
   const axiosSecure = http.useAxiosSecure();
 
   return useQuery<T>({
-    queryKey: [route.split('?')[0], route],
+    queryKey: [queryKey],
     queryFn: async () => {
       const res = await axiosSecure.get<T>(route, { params });
       return res.data;

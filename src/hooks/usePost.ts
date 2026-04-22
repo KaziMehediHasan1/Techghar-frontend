@@ -1,5 +1,5 @@
 import http from '@/services/http';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
@@ -10,8 +10,9 @@ export type ApiResponse<T> = {
   statusCode: number;
 };
 
-const usePost = <T, V>(route: string) => {
+const usePost = <T, V>(route: string, queryKey?: string) => {
   const axiosSecure = http.useAxiosSecure();
+  const queryClient = useQueryClient();
 
   return useMutation<ApiResponse<T>, AxiosError<ApiResponse<unknown>>, V>({
     mutationFn: async (obj: V) => {
@@ -20,6 +21,7 @@ const usePost = <T, V>(route: string) => {
     },
     onSuccess: (responseData) => {
       if (responseData?.success) {
+        queryClient.invalidateQueries({ queryKey: [queryKey] });
         toast.success(responseData.message || 'Operation successful!');
       }
     },
