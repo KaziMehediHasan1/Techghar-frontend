@@ -7,10 +7,11 @@ import {
   Calendar,
   Eye,
   EyeOff,
-  CheckCircle,
   ShieldCheck,
   AlertTriangle,
 } from 'lucide-react';
+import CustomInput from '../components/CustomInput';
+import SaveButton from '../components/SaveButton';
 
 const AVATAR_COLORS = [
   'bg-blue-600',
@@ -20,7 +21,7 @@ const AVATAR_COLORS = [
   'bg-lime-700',
 ];
 
-const Profile=()=> {
+const Profile = () => {
   const [info, setInfo] = useState({
     firstName: 'Mehedi',
     lastName: 'Hasan',
@@ -48,7 +49,7 @@ const Profile=()=> {
 
   const handleSave = async (type: 'info' | 'password') => {
     setStatus('loading');
-    // এপিআই সিমুলেশন
+    console.log(type, 'see type');
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setStatus('saved');
     setTimeout(() => setStatus('idle'), 2500);
@@ -64,7 +65,7 @@ const Profile=()=> {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-20">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex items-center gap-5">
@@ -282,64 +283,6 @@ const Profile=()=> {
       </div>
     </div>
   );
-}
-
-// --- Reusable Components ---
-
-function CustomInput({
-  label,
-  value,
-  onChange,
-  type = 'text',
-  icon,
-  placeholder,
-}: any) {
-  return (
-    <div className="space-y-1">
-      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1">
-        {label}
-      </label>
-      <div className="relative">
-        {icon && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-            {icon}
-          </div>
-        )}
-        <input
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className={`w-full ${icon ? 'pl-11' : 'pl-4'} pr-4 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-blue-500/10 focus:border-blue-500 outline-none transition-all text-gray-700`}
-        />
-      </div>
-    </div>
-  );
-}
-
-function SaveButton({ status, onClick, label = 'Save Changes' }: any) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={status === 'loading'}
-      className={`min-w-[140px] px-6 py-2.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all active:scale-95 ${
-        status === 'saved'
-          ? 'bg-emerald-600 text-white'
-          : 'bg-blue-600 text-white hover:bg-blue-700'
-      } disabled:opacity-70 shadow-lg shadow-blue-100 disabled:shadow-none`}
-    >
-      {status === 'loading' ? (
-        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-      ) : status === 'saved' ? (
-        <>
-          {' '}
-          <CheckCircle size={16} /> Saved!{' '}
-        </>
-      ) : (
-        label
-      )}
-    </button>
-  );
-}
+};
 
 export default Profile;

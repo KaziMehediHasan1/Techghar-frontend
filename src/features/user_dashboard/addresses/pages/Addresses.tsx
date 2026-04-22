@@ -7,7 +7,7 @@ import type { Address, IProfileResponse } from '../types';
 import AddressCard from '../components/AddressesCard';
 import useFetch from '@/hooks/useFetch';
 import useDelete from '@/hooks/useDelete';
-// import useUpdate from '@/hooks/useUpdate';
+
 
 const Addresses = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -30,7 +30,6 @@ const Addresses = () => {
     '_id'
   );
 
-  console.log('data', data?.data);
 
   // const { mutateAsync: updateProfile } = useUpdate(
   //   '/profile',
