@@ -1,17 +1,10 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import {
-  User,
-  Mail,
-  Phone,
-  Calendar,
-  Eye,
-  EyeOff,
-  ShieldCheck,
-  AlertTriangle,
-} from 'lucide-react';
+import { useState, useEffect, type ChangeEvent } from 'react';
+import { User, Mail, Phone, Calendar, Pencil, Camera } from 'lucide-react';
 import CustomInput from '../components/CustomInput';
 import SaveButton from '../components/SaveButton';
+import SidebarInfo from '../components/SidebarInfo';
+import SecuritySection from '../components/SecuritySection';
+import { useUploadThing } from '@/utils/uploadthing';
 
 const AVATAR_COLORS = [
   'bg-blue-600',
@@ -22,13 +15,14 @@ const AVATAR_COLORS = [
 ];
 
 const Profile = () => {
+  const { startUpload } = useUploadThing('imageUploader');
   const [info, setInfo] = useState({
-    firstName: 'Mehedi',
-    lastName: 'Hasan',
-    email: 'mehedi@example.com',
-    phone: '+880 1711 000000',
-    dob: '1999-01-01',
-    gender: 'Male',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    dob: '',
+    gender: '',
   });
 
   const [passwords, setPasswords] = useState({
@@ -36,23 +30,58 @@ const Profile = () => {
     newPass: '',
     confirm: '',
   });
+
   const [avatarIndex, setAvatarIndex] = useState(0);
-  const [status, setStatus] = useState<'idle' | 'loading' | 'saved'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'saved' | 'error'>(
+    'idle'
+  );
   const [showPass, setShowPass] = useState({
     current: false,
     new: false,
     confirm: false,
   });
 
-  const initials =
-    `${info.firstName[0] || ''}${info.lastName[0] || ''}`.toUpperCase();
+  const [isUploading, setIsUploading] = useState(false);
+
+  // ২. API থেকে ডেটা ফেচ করা (Mount হওয়ার সময়)
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // আপনার অরিজিনাল এপিআই এন্ডপয়েন্ট এখানে বসান
+        const response = await axios.get('/api/user/profile');
+        setInfo(response.data);
+      } catch (error) {
+        console.error('Error fetching user data', error);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   const handleSave = async (type: 'info' | 'password') => {
     setStatus('loading');
-    console.log(type, 'see type');
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setStatus('saved');
-    setTimeout(() => setStatus('idle'), 2500);
+    try {
+      if (type === 'info') {
+        await axios.put('/api/user/update-profile', info);
+      } else {
+        // পাসওয়ার্ড ভ্যালিডেশন
+        if (passwords.newPass !== passwords.confirm) {
+          alert('Passwords do not match!');
+          setStatus('idle');
+          return;
+        }
+        await axios.put('/api/user/change-password', {
+          currentPassword: passwords.current,
+          newPassword: passwords.newPass,
+        });
+      }
+
+      setStatus('saved');
+      setTimeout(() => setStatus('idle'), 2500);
+    } catch (error) {
+      console.error('Save failed', error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 2500);
+    }
   };
 
   const getStrength = (pass: string) => {
@@ -64,21 +93,93 @@ const Profile = () => {
     return { width: '100%', color: 'bg-emerald-500', label: 'Strong' };
   };
 
+  const [preview, setPreview] = useState<string>('');
+
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]; // Shudhu prothom file-ti nibe
+    if (!file) return;
+
+    // 1. Local Preview toiri (Instant feedback)
+    const localUrl = URL.createObjectURL(file);
+    setPreview(localUrl); // State-e shudhu ei ekta URL thakbe
+    setIsUploading(true);
+
+    try {
+      const uploaded = await startUpload([file]); // API array expect korle [file] pathabe
+
+      if (uploaded && uploaded.length > 0) {
+        const serverUrl = uploaded[0].ufsUrl;
+
+        // 2. Server URL diye preview update kora
+        setPreview(serverUrl);
+        console.log(serverUrl, 'CJECK UP');
+
+        // 3. Purano Blob URL clear kora memory bachaner jonno
+        URL.revokeObjectURL(localUrl);
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+      setPreview(''); // Fail korle preview muche fela
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+
   return (
     <div className="space-y-4">
-      {/* Header */}
+      {/* Header - একই থাকবে */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex items-center gap-5">
-          <div
-            className={`w-20 h-20 rounded-full ${AVATAR_COLORS[avatarIndex]} flex items-center justify-center text-2xl font-bold text-white shadow-inner ring-4 ring-white`}
-          >
-            {initials}
+          <div className="relative group w-24 h-24">
+            {/* ইমেজ প্রিভিউ অথবা ডিফল্ট অবতার */}
+            <div
+              className={`w-full h-full rounded-full overflow-hidden border-4 border-white shadow-md flex items-center justify-center text-white text-2xl font-bold ${
+                !preview ? AVATAR_COLORS[avatarIndex] : 'bg-gray-100'
+              }`}
+            >
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <p>init</p>
+              )}
+            </div>
+
+            {/* কাস্টম আপলোড বাটন (Overlay) */}
+            <label
+              htmlFor="avatar-upload"
+              className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+            >
+              <Camera className="text-white" size={24} />
+            </label>
+
+            {/* ছোট এডিট আইকন (নিচের দিকে) */}
+            <label
+              htmlFor="avatar-upload"
+              className="absolute bottom-0 right-0 bg-blue-600 p-1.5 rounded-full border-2 border-white text-white cursor-pointer hover:bg-blue-700 transition-colors shadow-sm"
+            >
+              <Pencil size={12} />
+            </label>
+
+            {/* আসল ইনপুট ফিল্ডটি লুকিয়ে রাখা হয়েছে */}
+            <input
+              id="avatar-upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageChange}
+            />
           </div>
+
           <div>
             <h2 className="text-xl font-bold text-gray-900 leading-tight">
-              {info.firstName} {info.lastName}
+              {info.firstName} {info.lastName} name
             </h2>
-            <p className="text-sm text-gray-500">{info.email}</p>
+            <p className="text-sm text-gray-500">{info.email}email</p>
             <div className="flex gap-2 mt-3">
               {AVATAR_COLORS.map((color, idx) => (
                 <button
@@ -91,16 +192,15 @@ const Profile = () => {
           </div>
         </div>
         <div className="flex items-center gap-2 px-4 py-1.5 bg-green-50 text-green-700 rounded-full text-xs font-bold self-start md:self-center">
-          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />{' '}
           ACTIVE ACCOUNT
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Forms */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Personal Info */}
-          <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          {/* Personal Info Form */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
             <div className="p-5 border-b border-gray-50 flex items-center gap-3">
               <User className="text-blue-600" size={18} />
               <h3 className="font-bold text-gray-900">Personal Information</h3>
@@ -140,6 +240,7 @@ const Profile = () => {
                 />
               </div>
 
+              {/* Gender Selection */}
               <div className="pt-2">
                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2 block">
                   Gender
@@ -148,7 +249,10 @@ const Profile = () => {
                   {['Male', 'Female', 'Other'].map((g) => (
                     <button
                       key={g}
-                      onClick={() => setInfo({ ...info, gender: g })}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setInfo({ ...info, gender: g });
+                      }}
                       className={`flex-1 py-2 text-sm font-semibold rounded-xl border transition-all ${info.gender === g ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-gray-50 border-gray-100 text-gray-500 hover:bg-gray-100'}`}
                     >
                       {g}
@@ -164,122 +268,20 @@ const Profile = () => {
                 />
               </div>
             </div>
-          </section>
-
-          {/* Security */}
-          <section className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="p-5 border-b border-gray-50 flex items-center gap-3">
-              <ShieldCheck className="text-emerald-600" size={18} />
-              <h3 className="font-bold text-gray-900">Security & Password</h3>
-            </div>
-            <div className="p-6 space-y-5">
-              <div className="relative">
-                <CustomInput
-                  label="Current Password"
-                  type={showPass.current ? 'text' : 'password'}
-                  value={passwords.current}
-                  onChange={(v) => setPasswords({ ...passwords, current: v })}
-                />
-                <button
-                  onClick={() =>
-                    setShowPass({ ...showPass, current: !showPass.current })
-                  }
-                  className="absolute right-4 top-9 text-gray-400 hover:text-gray-600"
-                >
-                  {showPass.current ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="relative">
-                  <CustomInput
-                    label="New Password"
-                    type={showPass.new ? 'text' : 'password'}
-                    value={passwords.newPass}
-                    onChange={(v) => setPasswords({ ...passwords, newPass: v })}
-                  />
-                  <button
-                    onClick={() =>
-                      setShowPass({ ...showPass, new: !showPass.new })
-                    }
-                    className="absolute right-4 top-9 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPass.new ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                  {/* Strength Bar */}
-                  {passwords.newPass && (
-                    <div className="mt-2 px-1">
-                      <div className="h-1 w-full bg-gray-100 rounded-full overflow-hidden">
-                        <motion.div
-                          animate={{
-                            width: getStrength(passwords.newPass).width,
-                          }}
-                          className={`h-full ${getStrength(passwords.newPass).color}`}
-                        />
-                      </div>
-                      <span className="text-[10px] font-bold text-gray-400 mt-1 uppercase">
-                        {getStrength(passwords.newPass).label}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <div className="relative">
-                  <CustomInput
-                    label="Confirm Password"
-                    type={showPass.confirm ? 'text' : 'password'}
-                    value={passwords.confirm}
-                    onChange={(v) => setPasswords({ ...passwords, confirm: v })}
-                  />
-                  <button
-                    onClick={() =>
-                      setShowPass({ ...showPass, confirm: !showPass.confirm })
-                    }
-                    className="absolute right-4 top-9 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPass.confirm ? (
-                      <EyeOff size={16} />
-                    ) : (
-                      <Eye size={16} />
-                    )}
-                  </button>
-                </div>
-              </div>
-              <SaveButton
-                status={status}
-                onClick={() => handleSave('password')}
-                label="Update Password"
-              />
-            </div>
-          </section>
-        </div>
-
-        {/* Sidebar Info */}
-        <div className="space-y-6">
-          <div className="bg-blue-600 rounded-2xl p-6 text-white shadow-lg shadow-blue-100">
-            <h4 className="font-bold text-lg mb-2">Pro Tip</h4>
-            <p className="text-blue-100 text-sm leading-relaxed">
-              Enable Two-Factor Authentication (2FA) for enhanced account
-              security.
-            </p>
-            <button className="mt-4 w-full py-2 bg-white/10 hover:bg-white/20 rounded-xl text-xs font-bold transition-colors border border-white/20">
-              Configure 2FA
-            </button>
           </div>
 
-          <div className="bg-red-50 border border-red-100 rounded-2xl p-6">
-            <div className="flex items-center gap-2 text-red-600 mb-3">
-              <AlertTriangle size={18} />
-              <h4 className="font-bold">Danger Zone</h4>
-            </div>
-            <p className="text-red-400 text-xs mb-4 leading-relaxed">
-              Once you delete your account, there is no going back. Please be
-              certain.
-            </p>
-            <button className="w-full py-2.5 bg-white border border-red-200 text-red-600 rounded-xl text-sm font-bold hover:bg-red-600 hover:text-white transition-all">
-              Delete Account
-            </button>
-          </div>
+          {/* Security Section */}
+          <SecuritySection
+            getStrength={getStrength}
+            handleSave={() => handleSave('password')}
+            passwords={passwords}
+            setPasswords={setPasswords}
+            setShowPass={setShowPass}
+            showPass={showPass}
+            status={'success'}
+          />
         </div>
+        <SidebarInfo />
       </div>
     </div>
   );
