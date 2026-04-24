@@ -53,6 +53,11 @@ const Profile = () => {
     '/profile_update'
   );
 
+  const { mutateAsync: passUpdate } = useUpdate(
+    '/user/update/password',
+    '/profile_update'
+  );
+
   // const {} = useUpdate('');
 
   const handleSave = async (type: 'info' | 'password') => {
@@ -63,7 +68,6 @@ const Profile = () => {
           id: user?._id as string,
           data: info,
         });
-        console.log(res.data, 'DATTTTTTTTTT');
         if (res.success) {
           updateUser(res.data as IUser);
           toast('Info is updating successfully');
@@ -74,10 +78,13 @@ const Profile = () => {
           setStatus('idle');
           return;
         }
-        await axios.put('/api/user/change-password', {
-          currentPassword: passwords.current,
-          newPassword: passwords.newPass,
+
+        const res = await passUpdate({
+          id: user?._id as string,
+          data: passwords,
         });
+        updateUser(res.data as IUser);
+        toast('Password Update Successfull');
       }
 
       setStatus('saved');
@@ -103,7 +110,7 @@ const Profile = () => {
     if (!file) return;
 
     const localUrl = URL.createObjectURL(file);
-    setPreview(localUrl); 
+    setPreview(localUrl);
     setIsUploading(true);
 
     try {
@@ -122,7 +129,7 @@ const Profile = () => {
       }
     } catch (error) {
       console.error('Upload failed:', error);
-      setPreview(''); 
+      setPreview('');
     } finally {
       setIsUploading(false);
     }
@@ -133,10 +140,19 @@ const Profile = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex items-center gap-5">
           <div className="relative group w-24 h-24">
+            {/* 1. Animated Loading Ring (Light Effect) */}
+            {/* {isUploading && (
+              <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
+            )} */}
+
+            {isUploading && (
+              <div className="absolute -inset-1 rounded-full bg-blue-400 blur opacity-75 animate-pulse"></div>
+            )}
+
             <div
-              className={`w-full h-full rounded-full overflow-hidden border-4 border-white shadow-md flex items-center justify-center text-white text-2xl font-bold ${
-                !preview ? AVATAR_COLORS[avatarIndex] : 'bg-gray-100'
-              }`}
+              className={`relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-md flex items-center justify-center text-white text-2xl font-bold ${
+                isUploading ? 'opacity-80' : '' 
+              } ${!preview ? AVATAR_COLORS[avatarIndex] : 'bg-gray-100'}`}
             >
               {preview || user?.photo ? (
                 <img
@@ -149,7 +165,6 @@ const Profile = () => {
               )}
             </div>
 
-            {/* (Overlay) */}
             <label
               htmlFor="avatar-upload"
               className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
@@ -157,7 +172,6 @@ const Profile = () => {
               <Camera className="text-white" size={24} />
             </label>
 
-            {/* edit icon */}
             <label
               htmlFor="avatar-upload"
               className="absolute bottom-0 right-0 bg-blue-600 p-1.5 rounded-full border-2 border-white text-white cursor-pointer hover:bg-blue-700 transition-colors shadow-sm"
@@ -165,7 +179,6 @@ const Profile = () => {
               <Pencil size={12} />
             </label>
 
-            {/*input image*/}
             <input
               id="avatar-upload"
               type="file"
@@ -179,7 +192,9 @@ const Profile = () => {
             <h2 className="text-xl font-bold text-gray-900 leading-tight">
               {user?.firstName} {user?.lastName}
             </h2>
-            <p className="text-sm text-gray-500">{user?.email || user?.userEmail}</p>
+            <p className="text-sm text-gray-500">
+              {user?.email || user?.userEmail}
+            </p>
             <div className="flex gap-2 mt-3">
               {AVATAR_COLORS.map((color, idx) => (
                 <button
