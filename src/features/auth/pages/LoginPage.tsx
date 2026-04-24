@@ -16,12 +16,13 @@ const LoginPage = () => {
     const password = formData.get('password') as string;
     try {
       const response = await loginApi({ email, password });
-      console.log(response,"response login---------")
+      console.log(response, 'response login---------');
       const { accessToken, result } = response.data.data;
       console.log(accessToken, result, 'login response data');
       const {
         email: userEmail,
-        name,
+        firstName,
+        lastName,
         photo,
         role,
         uid,
@@ -31,7 +32,8 @@ const LoginPage = () => {
       } = result;
       const userData = {
         userEmail,
-        name,
+        firstName,
+        lastName,
         photo,
         role,
         uid,

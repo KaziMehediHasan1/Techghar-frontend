@@ -1,10 +1,14 @@
-import { useState, useEffect, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { User, Mail, Phone, Calendar, Pencil, Camera } from 'lucide-react';
 import CustomInput from '../components/CustomInput';
 import SaveButton from '../components/SaveButton';
 import SidebarInfo from '../components/SidebarInfo';
 import SecuritySection from '../components/SecuritySection';
 import { useUploadThing } from '@/utils/uploadthing';
+import useUpdate from '@/hooks/useUpdate';
+import { toast } from 'react-toastify';
+import { useAuthStore } from '@/features/auth/auth.store';
+import type { IUser } from '@/features/auth/auth.types';
 
 const AVATAR_COLORS = [
   'bg-blue-600',
@@ -15,7 +19,10 @@ const AVATAR_COLORS = [
 ];
 
 const Profile = () => {
+  const { user, updateUser } = useAuthStore();
   const { startUpload } = useUploadThing('imageUploader');
+  const [isUploading, setIsUploading] = useState(false);
+  const [preview, setPreview] = useState<string>('');
   const [info, setInfo] = useState({
     firstName: '',
     lastName: '',
@@ -41,31 +48,29 @@ const Profile = () => {
     confirm: false,
   });
 
-  const [isUploading, setIsUploading] = useState(false);
+  const { mutateAsync: updateProfileInfo } = useUpdate(
+    '/user/update/profile',
+    '/profile_update'
+  );
 
-  // ২. API থেকে ডেটা ফেচ করা (Mount হওয়ার সময়)
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        // আপনার অরিজিনাল এপিআই এন্ডপয়েন্ট এখানে বসান
-        const response = await axios.get('/api/user/profile');
-        setInfo(response.data);
-      } catch (error) {
-        console.error('Error fetching user data', error);
-      }
-    };
-    fetchUserData();
-  }, []);
+  // const {} = useUpdate('');
 
   const handleSave = async (type: 'info' | 'password') => {
     setStatus('loading');
     try {
       if (type === 'info') {
-        await axios.put('/api/user/update-profile', info);
+        const res = await updateProfileInfo({
+          id: user?._id as string,
+          data: info,
+        });
+        console.log(res.data, 'DATTTTTTTTTT');
+        if (res.success) {
+          updateUser(res.data as IUser);
+          toast('Info is updating successfully');
+        }
       } else {
-        // পাসওয়ার্ড ভ্যালিডেশন
         if (passwords.newPass !== passwords.confirm) {
-          alert('Passwords do not match!');
+          toast('Passwords do not match!');
           setStatus('idle');
           return;
         }
@@ -93,63 +98,58 @@ const Profile = () => {
     return { width: '100%', color: 'bg-emerald-500', label: 'Strong' };
   };
 
-  const [preview, setPreview] = useState<string>('');
-
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]; // Shudhu prothom file-ti nibe
     if (!file) return;
 
-    // 1. Local Preview toiri (Instant feedback)
     const localUrl = URL.createObjectURL(file);
-    setPreview(localUrl); // State-e shudhu ei ekta URL thakbe
+    setPreview(localUrl); 
     setIsUploading(true);
 
     try {
-      const uploaded = await startUpload([file]); // API array expect korle [file] pathabe
-
+      const uploaded = await startUpload([file]);
       if (uploaded && uploaded.length > 0) {
         const serverUrl = uploaded[0].ufsUrl;
-
-        // 2. Server URL diye preview update kora
+        const res = await updateProfileInfo({
+          id: user?._id as string,
+          data: { photo: serverUrl },
+        });
+        if (res.success) {
+          toast('Image is updating successfully');
+        }
         setPreview(serverUrl);
-        console.log(serverUrl, 'CJECK UP');
-
-        // 3. Purano Blob URL clear kora memory bachaner jonno
         URL.revokeObjectURL(localUrl);
       }
     } catch (error) {
       console.error('Upload failed:', error);
-      setPreview(''); // Fail korle preview muche fela
+      setPreview(''); 
     } finally {
       setIsUploading(false);
     }
   };
 
-
   return (
     <div className="space-y-4">
-      {/* Header - একই থাকবে */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex items-center gap-5">
           <div className="relative group w-24 h-24">
-            {/* ইমেজ প্রিভিউ অথবা ডিফল্ট অবতার */}
             <div
               className={`w-full h-full rounded-full overflow-hidden border-4 border-white shadow-md flex items-center justify-center text-white text-2xl font-bold ${
                 !preview ? AVATAR_COLORS[avatarIndex] : 'bg-gray-100'
               }`}
             >
-              {preview ? (
+              {preview || user?.photo ? (
                 <img
-                  src={preview}
+                  src={preview || user?.photo}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <p>init</p>
+                <p>P</p>
               )}
             </div>
 
-            {/* কাস্টম আপলোড বাটন (Overlay) */}
+            {/* (Overlay) */}
             <label
               htmlFor="avatar-upload"
               className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
@@ -157,7 +157,7 @@ const Profile = () => {
               <Camera className="text-white" size={24} />
             </label>
 
-            {/* ছোট এডিট আইকন (নিচের দিকে) */}
+            {/* edit icon */}
             <label
               htmlFor="avatar-upload"
               className="absolute bottom-0 right-0 bg-blue-600 p-1.5 rounded-full border-2 border-white text-white cursor-pointer hover:bg-blue-700 transition-colors shadow-sm"
@@ -165,7 +165,7 @@ const Profile = () => {
               <Pencil size={12} />
             </label>
 
-            {/* আসল ইনপুট ফিল্ডটি লুকিয়ে রাখা হয়েছে */}
+            {/*input image*/}
             <input
               id="avatar-upload"
               type="file"
@@ -177,9 +177,9 @@ const Profile = () => {
 
           <div>
             <h2 className="text-xl font-bold text-gray-900 leading-tight">
-              {info.firstName} {info.lastName} name
+              {user?.firstName} {user?.lastName}
             </h2>
-            <p className="text-sm text-gray-500">{info.email}email</p>
+            <p className="text-sm text-gray-500">{user?.email || user?.userEmail}</p>
             <div className="flex gap-2 mt-3">
               {AVATAR_COLORS.map((color, idx) => (
                 <button
@@ -246,14 +246,14 @@ const Profile = () => {
                   Gender
                 </label>
                 <div className="flex gap-2">
-                  {['Male', 'Female', 'Other'].map((g) => (
+                  {['male', 'female', 'other'].map((g) => (
                     <button
                       key={g}
                       onClick={(e) => {
                         e.preventDefault();
                         setInfo({ ...info, gender: g });
                       }}
-                      className={`flex-1 py-2 text-sm font-semibold rounded-xl border transition-all ${info.gender === g ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-gray-50 border-gray-100 text-gray-500 hover:bg-gray-100'}`}
+                      className={`flex-1 capitalize py-2 text-sm font-semibold rounded-xl border transition-all ${info.gender === g ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-gray-50 border-gray-100 text-gray-500 hover:bg-gray-100'}`}
                     >
                       {g}
                     </button>

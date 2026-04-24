@@ -5,7 +5,7 @@ export const loginApi = (payload: { email: string; password: string }) => {
 };
 
 export const signupApi = (payload: {
-  name: string;
+  firstName: string;
   email: string;
   password: string;
 }) => {

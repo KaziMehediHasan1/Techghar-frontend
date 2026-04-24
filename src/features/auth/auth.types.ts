@@ -1,11 +1,15 @@
-// auth related types --
 export interface IUser {
   _id?: string;
-  name: string;
-  userEmail: string;
+  firstName: string;
+  lastName?: string;
+  email?: string;
+  userEmail?: string;
   photo?: string;
   role: 'admin' | 'user';
   uid: string;
+  gender?: 'male' | 'female';
+  dob?: string;
+  phone?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -16,5 +20,6 @@ export interface IAuthState {
   isAuthenticated: boolean;
   setAuth: (user: IUser, token: string) => void;
   setToken: (token: string) => void;
+  updateUser: (data: Partial<IUser>) => void;
   logout: () => void;
 }

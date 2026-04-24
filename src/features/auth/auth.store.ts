@@ -11,6 +11,15 @@ export const useAuthStore = create<IAuthState>()(
       setAuth: (user, token) =>
         set({ user, accessToken: token, isAuthenticated: true }),
       setToken: (token) => set({ accessToken: token }),
+      updateUser: (data) =>
+        set((state) => {
+          console.log("Updating Zustand with:", data);
+
+          return {
+            ...state,
+            user: state.user ? { ...state.user, ...data } : null,
+          };
+        }),
       logout: () =>
         set({ user: null, accessToken: null, isAuthenticated: false }),
     }),
