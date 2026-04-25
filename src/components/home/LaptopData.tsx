@@ -10,17 +10,23 @@ const LaptopData = () => {
   const [searchParams] = useSearchParams();
   const seriesQuery = searchParams.get('series') || '';
 
-  // 1. Shob MSI Laptop fetch kora jate amra unique series-gulo Navbar-e dekhate pari
-  // Ekhane limit bariye deya bhalo jate shob unique series khuje pay
+const fetchUrl = `/product?brand=MSI&category=Laptop&limit=4${
+    seriesQuery ? `&series=${encodeURIComponent(seriesQuery)}` : ''
+  }`;
+
+  const { data: filteredData, isLoading: isProductLoading } =
+    useFreeFetch<IProductAPIResponse>(fetchUrl);
+
+  const msiLaptops = filteredData?.data?.result || [];
+
   const { data: allMsiData, isLoading: isNavLoading } =
     useFreeFetch<IProductAPIResponse>(
       '/product?brand=MSI&category=Laptop&limit=100'
     );
 
-  // 2. Database theke asha data theke Unique Series gulo ber kora
   const dynamicSeriesLinks = useMemo(() => {
     const products = allMsiData?.data?.result || [];
-    // Unique series ber korar logic (Set use kore)
+
     const uniqueSeries = Array.from(
       new Set(products.map((p) => p.series).filter(Boolean))
     );
@@ -31,20 +37,11 @@ const LaptopData = () => {
     }));
   }, [allMsiData]);
 
-  // 3. Filtered Data Fetch: URL-e series thakle shudhu shei series-er data fetch hobe
-  const fetchUrl = `/product?brand=MSI&category=Laptop&limit=4${
-    seriesQuery ? `&series=${encodeURIComponent(seriesQuery)}` : ''
-  }`;
-
-  const { data: filteredData, isLoading: isProductLoading } =
-    useFreeFetch<IProductAPIResponse>(fetchUrl);
-  const msiLaptops = filteredData?.data?.result || [];
-
+  
   if (isNavLoading || isProductLoading) return <CategoryWiseSkeleton />;
 
   return (
     <div className="space-y-4 py-4">
-      {/* Dynamic Navbar: Ekhon database theke series gulo ashbe */}
       <ProductNavbar categoryLink={dynamicSeriesLinks} />
 
       {/* Product Cards Grid */}

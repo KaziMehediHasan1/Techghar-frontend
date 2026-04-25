@@ -12,7 +12,7 @@ import type {
 import { BreadcrumbBasic } from '@/components/BreadcrumbBasic';
 import ProductDetailSkeletonLoader from '@/components/ProductDetailSkeletonLoader';
 import { useCartStore } from '@/store/useCartStore';
-
+import { toast } from 'react-toastify';
 
 const ProductDetails = () => {
   const { addToCart } = useCartStore();
@@ -52,6 +52,9 @@ const ProductDetails = () => {
       quantity: quantity,
       stock: product.stock,
     });
+
+    toast.success('Added to cart!');
+    console.log('CHECK ii', quantity);
   };
   return (
     <div className="bg-white min-h-screen font-sans antialiased text-[#242424]">

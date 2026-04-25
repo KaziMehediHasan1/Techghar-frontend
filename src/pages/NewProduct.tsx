@@ -2,7 +2,6 @@ import VerticalCard from '@/components/cards/VerticalCard';
 import VerticalCardSkeleton from '@/components/cards/VerticalCardSkeleton';
 import Heading from '@/components/Heading';
 import useFreeFetch from '@/hooks/useFreeFetch';
-
 import type {
   INewProduct,
   TNewProductApiResponse,

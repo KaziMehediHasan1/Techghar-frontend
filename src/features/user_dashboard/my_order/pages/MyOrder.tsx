@@ -84,7 +84,7 @@ const MyOrders = () => {
   const { data } = useFetch<IOrderData>(url);
   const orders = data?.data || [];
 
-  const visibleOrders = orders.filter((o) => {
+  const visibleOrders = orders?.filter((o) => {
     if (filter === 'All') return true;
     return o.status === filter.toLowerCase();
   });
@@ -133,11 +133,10 @@ const MyOrders = () => {
         <table className="w-full text-left border-collapse overflow-x-auto">
           <tbody className="divide-y divide-gray-50">
             <AnimatePresence mode="popLayout">
-              {visibleOrders.length > 0 ? (
+              {visibleOrders?.length > 0 ? (
                 visibleOrders.map((item) => {
                   const statusKey = item.status as OrderStatus;
                   const config = statusConfig[statusKey];
-
                   return (
                     <React.Fragment key={item._id}>
                       <motion.tr

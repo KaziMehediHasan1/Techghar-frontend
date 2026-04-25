@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Wrapper from '@/components/layout/Wrapper';
-import useFreeFetch from '@/hooks/useFreeFetch';
+// import useFreeFetch from '@/hooks/useFreeFetch';
 
 interface IReviewData {
   id: number;
@@ -75,8 +75,7 @@ const ReviewData: IReviewData[] = [
 ];
 
 const ReviewCard = () => {
-  const { data } = useFreeFetch('/review');
-  console.log('Review---', data);
+  // const { data } = useFreeFetch('/review');
   return (
     <Wrapper>
       <section className="w-full py-5">

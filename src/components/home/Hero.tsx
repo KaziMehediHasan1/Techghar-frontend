@@ -1,4 +1,3 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -11,7 +10,6 @@ const Hero = () => {
     <>
       <Swiper
         modules={[Autoplay]}
-        // navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
         breakpoints={{

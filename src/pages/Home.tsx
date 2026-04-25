@@ -14,7 +14,6 @@ function Home() {
   return (
     <div>
       <Wrapper>
-        {/* SLIDER */}
         <Hero />
         <NewProduct />
         <PromotionalCard />

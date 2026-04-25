@@ -20,13 +20,8 @@ const Logos = [
 const BrandLogos = () => {
   return (
     <div className="w-full py-8 px-4">
-      {/* Grid layout: 
-          - 2 columns on mobile 
-          - 3 or 4 on tablet 
-          - All logos in one row on large desktop 
-      */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6 md:gap-8 items-center justify-items-center">
-        {Logos.map((logo, index) => (
+        {Logos?.map((logo, index) => (
           <div
             key={index}
             className="flex items-center justify-center w-full group"

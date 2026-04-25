@@ -8,13 +8,15 @@ const Accessories = () => {
     '/product?category=Accessory&limit=4'
   );
 
+  const result = data?.data?.result || [];
+
   return (
     <div>
       {isLoading ? (
         <CategoryWiseSkeleton />
       ) : (
         <CategoryWiseCard
-          data={data?.data?.result || []}
+          data={result}
           categoryTitle="Accessories"
           linkName="See All Accessories"
         />

@@ -16,12 +16,12 @@ export const useCartStore = create<ICartState>()(
                     set({
                         cart: cart.map((item) =>
                             item._id === newItem._id
-                                ? { ...item, quantity: item.quantity + 1 }
+                                ? { ...item, quantity: item.quantity + newItem.quantity }
                                 : item
                         ),
                     });
                 } else {
-                    set({ cart: [...cart, { ...newItem, quantity: 1 }] });
+                    set({ cart: [...cart, { ...newItem }] });
                 }
             },
 
