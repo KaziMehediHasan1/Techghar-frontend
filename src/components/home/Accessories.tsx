@@ -3,8 +3,6 @@ import CategoryWiseCard from '../cards/CategoryWiseCard';
 import CategoryWiseSkeleton from './CategoryCardSkeleton';
 import type { IProductAPIResponse } from '@/types/homepage.type';
 
-
-
 const Accessories = () => {
   const { data, isLoading } = useFreeFetch<IProductAPIResponse>(
     '/product?category=Accessory&limit=4'
@@ -15,7 +13,6 @@ const Accessories = () => {
       {isLoading ? (
         <CategoryWiseSkeleton />
       ) : (
-        // Pass data.data.result based on your console log
         <CategoryWiseCard
           data={data?.data?.result || []}
           categoryTitle="Accessories"

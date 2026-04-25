@@ -10,7 +10,6 @@ interface VerticalCardProps {
 }
 
 const VerticalCard = ({ data, isLoading }: VerticalCardProps) => {
-  console.log(data, 'vertical card');
   return (
     <>
       {isLoading ? (

@@ -9,12 +9,13 @@ import type {
 } from '@/types/newProductTypes';
 
 const NewProduct = () => {
-  // fetching data from backend with query params for search and pagination
   const queryUrl = `/product/new`;
+  
   const { data, isLoading } =
     useFreeFetch<TNewProductApiResponse<INewProduct>>(queryUrl);
+
   const result = data?.data || [];
-  console.log('Check New data -');
+
   return (
     <section className="mt-3 space-y-3">
       <Heading

@@ -21,7 +21,6 @@ const Navbar = () => {
   return (
     <div className="border-b border-dim-primary shadow-sm shadow-muted w-full">
       <Wrapper>
-        {/****** DESKTOP DEVICE ONLY ******/}
         <section className="hidden xl:flex items-center justify-between py-3">
           {/* LOGO */}
           <NavLink to="/" className="flex items-center gap-x-2">
@@ -32,7 +31,6 @@ const Navbar = () => {
               decoding="async"
               className="h-auto object-contain hover:scale-105 transition-transform select-none"
             />
-            {/* <p className="text-2xl font-semibold font-dashboard">TechGhar</p> */}
           </NavLink>
 
           {/* ALL NAVBAR FOR MOBILE AND DESKTOP */}
@@ -190,7 +188,7 @@ const ProfileDropDownBar = ({
 }: {
   profileDropdown: boolean;
   setProfileDropdown: (value: boolean) => void;
-  user: { name: string; email?: string; photo?: string } | null;
+  user: { firstName: string; email?: string; photo?: string } | null;
   logout: () => void;
 }) => {
   const navigate = useNavigate();
@@ -213,13 +211,13 @@ const ProfileDropDownBar = ({
         <div className="absolute right-0 top-10 w-48 bg-white rounded-lg shadow-xl border border-gray-100 z-999 py-2 animate-in fade-in zoom-in duration-200">
           <div className="px-4 py-2 border-b border-gray-100">
             <p className="text-sm font-semibold text-gray-800 truncate">
-              {user?.name}
+              {user?.firstName}
             </p>
             <p className="text-xs text-gray-500 truncate">{user?.email}</p>
           </div>
 
           <NavLink
-            to="/profile"
+            to="/user_dashboard/profile"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
             onClick={() => setProfileDropdown(false)}
           >
@@ -227,7 +225,7 @@ const ProfileDropDownBar = ({
           </NavLink>
 
           <NavLink
-            to="/orders"
+            to="/user_dashboard/my_order"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
             onClick={() => setProfileDropdown(false)}
           >

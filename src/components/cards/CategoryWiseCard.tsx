@@ -3,7 +3,6 @@ import PcCase from '@/assets/images/pc-case.png';
 import { NavLink } from 'react-router-dom';
 import CategoryCard from '@/components/cards/CategoryCard';
 import { Star } from 'lucide-react';
-
 interface IProductData {
   _id: string;
   averageRating: number;
@@ -26,22 +25,16 @@ const CategoryWiseCard = ({
 }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {/* Static Category Card - Ensure this also handles height if possible */}
       <div className="flex h-full">
         <CategoryCard image={PcCase} link="" linkName={linkName} title={categoryTitle} />
       </div>
-
-      {/* Dynamic Product Cards */}
       {data?.map((product) => (
         <NavLink
           key={product._id}
           to={`/product/${product._id}`}
-          className="flex h-full" // 1. Stretch NavLink to grid height
+          className="flex h-full" 
         >
           <div className="w-full bg-white rounded-md border border-gray-200 p-4 hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
-            {' '}
-            {/* 2. Column layout with full height */}
-            {/* STOCK INDICATOR */}
             {product.stock ? (
               <div className="flex items-center gap-1 text-green-600 text-xs sm:text-sm mb-2">
                 <IconBundler.Check className="w-4 h-4 p-0.5 bg-green-500 rounded-full text-white" />
