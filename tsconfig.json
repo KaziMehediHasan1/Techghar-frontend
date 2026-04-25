@@ -7,7 +7,7 @@
     "node_modules"
   ],
   "compilerOptions": {
-    // "ignoreDeprecations": "6.0",
+    "ignoreDeprecations": "6.0",
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -26,7 +26,6 @@
       ".",
       "./.react-router/types"
     ],
-    // "baseUrl": ".",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "paths": {
