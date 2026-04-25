@@ -50,8 +50,8 @@ const MobileMenu = ({ openMenu, setOpenMenu, links }: MobileMenuProps) => {
           {links.map((link) => (
             <NavLink
               className={({ isActive }) => (isActive ? activeLinkStyle : linkStyle )}
-              key={link.path}
-              to={link.path}
+              key={link?.path}
+              to={`/catalog/${link.path}`}
             >
               {link.label}
             </NavLink>

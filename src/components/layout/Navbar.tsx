@@ -35,9 +35,9 @@ const Navbar = () => {
 
           {/* ALL NAVBAR FOR MOBILE AND DESKTOP */}
           <section className="flex items-center gap-x-7">
-            {Links.map((link: TNavLink) => (
+            {Links?.map((link: TNavLink) => (
               <NavLink
-                to={`/catalog/${link.path}`}
+                to={`/catalog/${link?.path}`}
                 className={({ isActive }) =>
                   isActive
                     ? 'text-sm sm:text-[1rem] font-semibold hover:text-brand-primary text-brand-primary'
