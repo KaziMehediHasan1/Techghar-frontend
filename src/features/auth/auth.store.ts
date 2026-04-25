@@ -20,6 +20,8 @@ export const useAuthStore = create<IAuthState>()(
             user: state.user ? { ...state.user, ...data } : null,
           };
         }),
+      deleteUser: () =>
+        set({ user: null, accessToken: null, isAuthenticated: false }),
       logout: () =>
         set({ user: null, accessToken: null, isAuthenticated: false }),
     }),

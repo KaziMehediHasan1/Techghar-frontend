@@ -9,6 +9,7 @@ import useUpdate from '@/hooks/useUpdate';
 import { toast } from 'react-toastify';
 import { useAuthStore } from '@/features/auth/auth.store';
 import type { IUser } from '@/features/auth/auth.types';
+import useDelete from '@/hooks/useDelete';
 
 const AVATAR_COLORS = [
   'bg-blue-600',
@@ -19,7 +20,7 @@ const AVATAR_COLORS = [
 ];
 
 const Profile = () => {
-  const { user, updateUser } = useAuthStore();
+  const { user, updateUser, deleteUser } = useAuthStore();
   const { startUpload } = useUploadThing('imageUploader');
   const [isUploading, setIsUploading] = useState(false);
   const [preview, setPreview] = useState<string>('');
@@ -58,7 +59,15 @@ const Profile = () => {
     '/profile_update'
   );
 
-  // const {} = useUpdate('');
+  const { mutateAsync: deleteProfile } = useDelete(
+    '/user/me',
+    '/profile_update'
+  );
+
+  const handleDeleteProfile = async () => {
+    await deleteProfile(user?._id as string);
+    deleteUser();
+  };
 
   const handleSave = async (type: 'info' | 'password') => {
     setStatus('loading');
@@ -140,18 +149,13 @@ const Profile = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex items-center gap-5">
           <div className="relative group w-24 h-24">
-            {/* 1. Animated Loading Ring (Light Effect) */}
-            {/* {isUploading && (
-              <div className="absolute inset-0 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
-            )} */}
-
             {isUploading && (
               <div className="absolute -inset-1 rounded-full bg-blue-400 blur opacity-75 animate-pulse"></div>
             )}
 
             <div
               className={`relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-md flex items-center justify-center text-white text-2xl font-bold ${
-                isUploading ? 'opacity-80' : '' 
+                isUploading ? 'opacity-80' : ''
               } ${!preview ? AVATAR_COLORS[avatarIndex] : 'bg-gray-100'}`}
             >
               {preview || user?.photo ? (
@@ -296,7 +300,7 @@ const Profile = () => {
             status={'success'}
           />
         </div>
-        <SidebarInfo />
+        <SidebarInfo handleDeleteProfile={handleDeleteProfile} />
       </div>
     </div>
   );

@@ -21,5 +21,6 @@ export interface IAuthState {
   setAuth: (user: IUser, token: string) => void;
   setToken: (token: string) => void;
   updateUser: (data: Partial<IUser>) => void;
+  deleteUser: () => void;
   logout: () => void;
 }

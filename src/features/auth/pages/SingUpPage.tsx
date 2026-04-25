@@ -1,8 +1,8 @@
-
 import HelpersCard from '@/components/cards/HelpersCard';
 import Wrapper from '@/components/layout/Wrapper';
 import { signupApi } from '@/features/auth/auth.api';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const SingUpPage = () => {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -11,12 +11,11 @@ const SingUpPage = () => {
     const firstName = formData.get('name') as string;
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    console.log(name, email, password, 'check korchi data');
     try {
-      const response = await signupApi({ firstName, email, password });
-      console.log(response, 'signup response');
-    } catch (error) {
-      console.error('Error signing up:', error);
+      await signupApi({ firstName, email, password });
+      toast('Register successfull');
+    } catch {
+      toast('Register failed');
     }
   };
 

@@ -1,7 +1,10 @@
 import { AlertTriangle } from 'lucide-react';
 
-
-const SidebarInfo = () => {
+const SidebarInfo = ({
+  handleDeleteProfile,
+}: {
+  handleDeleteProfile: () => void;
+}) => {
   return (
     <div className="space-y-6">
       <div className="bg-blue-600 rounded-2xl p-6 text-white shadow-lg shadow-blue-100">
@@ -23,7 +26,10 @@ const SidebarInfo = () => {
           Once you delete your account, there is no going back. Please be
           certain.
         </p>
-        <button className="w-full py-2.5 bg-white border border-red-200 text-red-600 rounded-xl text-sm font-bold hover:bg-red-600 hover:text-white transition-all">
+        <button
+          onClick={handleDeleteProfile}
+          className="w-full py-2.5 bg-white border border-red-200 text-red-600 rounded-xl text-sm font-bold hover:bg-red-600 hover:text-white transition-all"
+        >
           Delete Account
         </button>
       </div>
