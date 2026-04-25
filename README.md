@@ -8,22 +8,25 @@ Techghar is a modern, production-ready full-stack React application designed to 
 - **Framework**: React
 - **State Management**: Zustand
 - **Routing**: React Router
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS, Tailwind Merge, Tailwind Animate
 - **Build Tool**: Vite
 - **Type Checking**: TypeScript
+- **Icons**: React Icons, Lucide React
+- **UI Libraries**: Radix UI, @radix-ui/react-slot, @react-icons/all-files, @stripe/react-stripe-js, @stripe/stripe-js, @tanstack/react-table, @uploadthing/react, recharts, swiper, motion
+- **State Management**: React Hook Form, Zustand
+- **API Client**: Axios
+- **Internationalization**: i18next, react-i18next
+- **Notifications**: React Hot Toast, React Toastify
+- **Testing**: Vite, Vitest, @testing-library/react, @testing-library/jest-dom, @testing-library/user-event, @types/jest, @testing-library/react-hooks, @testing-library/react-refresh
+- **Linting**: ESLint, Prettier, @eslint/js, @eslint/plugin-prettier, @eslint/plugin-react-hooks, @eslint/plugin-react-refresh, @typescript-eslint
+- **Font**: @fontsource/play, @fontsource/poppins
+- **Dev Tools**: @tanstack/react-query-devtools, @react-router/dev, @vitejs/plugin-react, @vitejs/plugin-react-swc, vite-tsconfig-paths, tw-animate-css
 
-### Backend
-- **Framework**: Express.js
-- **Database**: MongoDB
-- **Authentication**: JWT
-- **Validation**: Zod
-- **Caching**: Redis
-- **Testing**: Jest, Supertest
 
 ### DevOps
 - **Containerization**: Docker
 - **CI/CD**: GitHub Actions
-- **Deployment**: 
+- **Deployment**: Kubernetes, AWS ECS, Google Cloud Run, Azure Container Apps, Digital Ocean App Platform, Fly.io, Railway
 
 ## System Architecture
 Techghar follows a modular and scalable architecture, adhering to the **Clean Architecture** principles. The application is structured into distinct layers to ensure separation of concerns and maintainability.
