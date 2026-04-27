@@ -27,6 +27,8 @@ const ChatBot = () => {
     }
   }, [messages]);
 
+  console.log('INPUT', input);
+
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-9999 flex flex-col items-end">
       {/* Chat Window */}
@@ -62,7 +64,7 @@ const ChatBot = () => {
               ref={scrollRef}
               className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 scrollbar-thin"
             >
-              {messages?.map((m) => (
+              {messages?.map((m: any) => (
                 <div
                   key={m.id}
                   className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -129,12 +131,12 @@ const ChatBot = () => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-blue-600 text-white p-3.5 sm:p-4 rounded-full shadow-2xl flex items-center justify-center transition-colors border-2 border-white/20"
+        className="bg-blue-600 text-white p-3.5 sm:p-4 rounded-full shadow-2xl flex items-center justify-center transition-colors border-2 border-white/20 cursor-pointer"
       >
         {isOpen ? (
-          <X size={24} className="sm:w-6 sm:h-6" />
+          <X size={24} className="sm:w-5 sm:h-5" />
         ) : (
-          <MessageCircle size={24} className="sm:w-6 sm:h-6" />
+          <MessageCircle size={24} className="sm:w-5 sm:h-5" />
         )}
       </motion.button>
     </div>
