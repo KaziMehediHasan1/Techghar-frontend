@@ -1,6 +1,7 @@
 import AdBar from "@/components/layout/AdBar";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import ChatBot from "@/features/chat/components/pages/ChatBot";
 import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
@@ -12,6 +13,7 @@ const MainLayout = () => {
       </header>
       <main className="flex-1 w-full">
         <Outlet />
+        <ChatBot/>
       </main>
       <Footer />
     </div>

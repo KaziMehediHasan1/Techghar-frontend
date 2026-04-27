@@ -1,12 +1,12 @@
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "vitest/config";
-import tsconfigPaths from "vite-tsconfig-paths";
-import path from "path";
+import react from '@vitejs/plugin-react-swc';
+import tailwindcss from '@tailwindcss/vite';
+import { defineConfig } from 'vitest/config';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import path from 'path';
 
 export default defineConfig({
   server: {
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     port: 5173,
     watch: {
       usePolling: true,
@@ -18,12 +18,19 @@ export default defineConfig({
   plugins: [tailwindcss(), react(), tsconfigPaths()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
+      'ai/react': path.resolve(
+        __dirname,
+        './node_modules/ai/react/dist/index.mjs'
+      ),
     },
+  },
+  optimizeDeps: {
+    include: ['ai', 'ai/react'],
   },
   test: {
     globals: true,
-    environment: "jsdom",
-    setupFiles: "./src/setupTests.ts",
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
   },
 });
