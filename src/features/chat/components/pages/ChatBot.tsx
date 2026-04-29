@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
 import { useAuthStore } from '@/features/auth/auth.store';
 import { CONFIG } from '@/config/env';
-
+import ReactMarkdown from 'react-markdown';
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -17,21 +17,17 @@ const ChatBot = () => {
       api: `${CONFIG.apiUrl}/chatbot/chat/${threadId}`,
       streamProtocol: 'text',
       onResponse: () => {
-        // Auto-scroll to bottom when new response arrives
         if (scrollRef.current) {
           scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
       },
     });
 
-  // Auto-scroll logic
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
-
-  console.log('INPUT', input, isLoading, messages, 'chekc korbo');
 
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-9999 flex flex-col items-end">
@@ -78,18 +74,30 @@ const ChatBot = () => {
                     className={`flex gap-2 max-w-[85%] ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                   >
                     <div
-                      className={`p-2 rounded-full h-7 w-7 flex items-center justify-center shrink-0 text-white shadow-sm ${m.role === 'user' ? 'bg-blue-600' : 'bg-gray-400'}`}
+                      className={`p-0.5 rounded-full h-8 w-8 flex items-center justify-center shrink-0 overflow-hidden shadow-sm ${
+                        m.role === 'user'
+                          ? 'bg-blue-600'
+                          : 'bg-gray-100 border border-gray-200'
+                      }`}
                     >
                       {m.role === 'user' ? (
-                        <User size={14} />
+                        user?.photo ? (
+                          <img
+                            src={user?.photo}
+                            alt="User"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <User size={16} className="text-white" />
+                        )
                       ) : (
-                        <Bot size={14} />
+                        <Bot size={18} className="text-blue-600" />
                       )}
                     </div>
                     <div
                       className={`p-3 rounded-2xl text-sm shadow-sm whitespace-pre-wrap ${m.role === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none'}`}
                     >
-                      {m.content}
+                      <ReactMarkdown>{m?.content}</ReactMarkdown>
                     </div>
                   </div>
                 </div>
