@@ -2,22 +2,26 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useChat } from 'ai/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
+import { useAuthStore } from '@/features/auth/auth.store';
+import { CONFIG } from '@/config/env';
 
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuthStore();
+  const threadId = user ? `user-${user._id}` : 'guest';
 
   // Vercel AI SDK Hook
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
-      api: 'http://localhost:5000/api/chat',
-      initialMessages: [
-        {
-          id: 'initial',
-          role: 'assistant',
-          content: 'Hi! I am Neo AI. Kivabe sahaijo korte pari?',
-        },
-      ],
+      api: `${CONFIG.apiUrl}/chatbot/chat/${threadId}`,
+      streamProtocol: 'text',
+      onResponse: () => {
+        // Auto-scroll to bottom when new response arrives
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+      },
     });
 
   // Auto-scroll logic
@@ -27,7 +31,7 @@ const ChatBot = () => {
     }
   }, [messages]);
 
-  console.log('INPUT', input);
+  console.log('INPUT', input, isLoading, messages, 'chekc korbo');
 
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-9999 flex flex-col items-end">
@@ -64,6 +68,7 @@ const ChatBot = () => {
               ref={scrollRef}
               className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 scrollbar-thin"
             >
+              {console.log('Current Messages in UI:', messages)}
               {messages?.map((m: any) => (
                 <div
                   key={m.id}

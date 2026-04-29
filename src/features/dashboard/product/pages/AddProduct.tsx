@@ -257,7 +257,7 @@ const AddProduct = () => {
                 <label className="text-sm font-medium">
                   Product Categories
                 </label>
-                <Select onValueChange={(val) => setValue('category', val)}>
+                <Select onValueChange={(val:any) => setValue('category', val)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose a categories" />
                   </SelectTrigger>
