@@ -21,7 +21,7 @@ import TermsAndCondition from '@/pages/TermsAndCondition';
 import { createBrowserRouter } from 'react-router-dom';
 import BlogsPage from '../features/dashboard/blog/pages/BlogDashboardPage';
 import AddBlog from '@/features/dashboard/blog/pages/AddBlog';
-import ProtectedRoute from '@/app/ProtectedRoute';
+import ProtectedRoute from '@/app/protectedRoute';
 import Unauthorized from '@/pages/Unauthorized';
 import BlogDetailPage from '@/pages/BlogDetailPage';
 import UserLayout from '@/components/layout/UserLayout';
