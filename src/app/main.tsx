@@ -5,7 +5,8 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import '@/assets/styles/global.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { Providers } from "@/components/layout/providers";
+import { Providers } from '@/app/Providers';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
