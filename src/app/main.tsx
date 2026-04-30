@@ -5,7 +5,8 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import '@/assets/styles/global.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { Providers } from '@/app/Providers';
+import { Providers } from './providers';
+
 
 
 createRoot(document.getElementById('root')!).render(
