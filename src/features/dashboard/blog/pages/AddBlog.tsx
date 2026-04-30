@@ -201,7 +201,9 @@ const AddBlog = () => {
                   <label className="text-sm font-medium text-slate-700">
                     Category
                   </label>
-                  <Select onValueChange={(val) => setValue('category', val)}>
+                  <Select
+                    onValueChange={(val: any) => setValue('category', val)}
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>

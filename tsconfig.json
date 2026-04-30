@@ -7,9 +7,7 @@
     "node_modules"
   ],
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
     "isolatedModules": true,
-    "baseUrl": ".",
     "lib": [
       "DOM",
       "DOM.Iterable",
@@ -22,7 +20,7 @@
       "@testing-library/jest-dom"
     ],
     "target": "ES2022",
-    "module": "ES2022",
+    "module": "esnext",
     "jsx": "react-jsx",
     "rootDirs": [
       ".",
