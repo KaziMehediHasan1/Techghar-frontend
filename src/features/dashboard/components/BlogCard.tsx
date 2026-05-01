@@ -1,13 +1,13 @@
 import { IconBundler } from "@/assets/icons/IconBundler";
 import Cards from "@/features/dashboard/components/Cards";
 
-const BlogCard = () => {
+const BlogCard = ({ count }: { count: number }) => {
   return (
     <div>
       <Cards
         pathForView=""
         icon={<IconBundler.EditPen className="w-6 h-6 text-brand-primary" />}
-        count={"13,087"}
+        count={count.toString()}
         name="Total Blogs"
         lastWeekData={"2.5%"}
         Trending={
