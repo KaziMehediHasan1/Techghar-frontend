@@ -63,9 +63,10 @@ export interface IOrderResponse {
       status: string;
       cancelledAt: string | null;
       productName: string;
+      customerName: string;
+      customerEmail: string;
       productImages: string[];
       productPrice: number | string;
-      customerEmail: string;
       createdAt: string;
       updatedAt: string;
     }[];

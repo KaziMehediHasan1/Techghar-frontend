@@ -29,8 +29,14 @@ const Overview = () => {
 
   // order data
   const { data: orderData } = useFetch<IOrderResponse>('/order', '/order');
+  const sevendaysAgo = new Date();
+  sevendaysAgo.setDate(sevendaysAgo.getDate() - 7);
 
-  console.log(orderData, 'ORDER data');
+  const recentOrders = orderData?.data.result.filter((order) => {
+    const orderDate = new Date(order.createdAt);
+    return orderDate >= sevendaysAgo;
+  }) ?? [];
+  
 
   return (
     <div className="w-full">
@@ -56,7 +62,7 @@ const Overview = () => {
         </div>
 
         <div className="col-span-12 lg:col-span-6">
-          <RecentOrderTable />
+          <RecentOrderTable orders={recentOrders} />
         </div>
 
         <div className="col-span-12 lg:col-span-6">
