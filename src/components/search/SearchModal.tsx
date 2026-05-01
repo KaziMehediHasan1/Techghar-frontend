@@ -1,7 +1,7 @@
 import { IconBundler } from '@/assets/icons/IconBundler';
 import useDebounce from '@/hooks/useDebounce';
 import useFreeFetch from '@/hooks/useFreeFetch';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 interface SearchModalProps {
@@ -41,29 +41,29 @@ interface IApiResponse {
 }
 
 const SearchModal = ({ open, onClose }: SearchModalProps) => {
-  const [searchData, setSearchData] = useState('');
+  const [searchData, setSearchData] = useState<string>('');
+  const modalRef = useRef<HTMLDivElement>(null); // Ref create korun
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
 
     const handleClickOutside = (e: MouseEvent) => {
-      const modal = document.querySelector('.animate-in');
-      if (modal && !modal.contains(e.target as Node)) {
+      // modalRef check korbe click ta modaler vitore naki baire
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
         onClose();
       }
     };
 
     if (open) {
       document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    if (open) {
       document.addEventListener('keydown', handleEsc);
       document.body.style.overflow = 'hidden';
     }
 
     return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEsc);
       document.body.style.overflow = 'auto';
     };
