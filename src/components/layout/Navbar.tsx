@@ -132,15 +132,15 @@ const Navbar = () => {
             {search && (
               <SearchModal open={search} onClose={() => setSearch(false)} />
             )}
-            <div className="relative">
+            <NavLink to="/cart" className="relative">
               <IconBundler.Cart
                 className="transform-[rotateY(180deg)]"
                 size={20}
               />
-              <p className="absolute -top-3 left-2.5 bg-brand-primary text-white py-0.5 px-1.5 text-xs rounded-full">
-                4
+              <p className="absolute -top-3 left-2.5 bg-brand-primary text-white py-0.5 px-1.5 text-[10px] rounded-full">
+                {totalItems()}
               </p>
-            </div>
+            </NavLink>
             <div className="relative">
               {user ? (
                 <div className="flex items-center">
