@@ -2,14 +2,14 @@ import { IconBundler } from '@/assets/icons/IconBundler';
 import Cards from '@/features/dashboard/components/Cards';
 import { cn } from '@/lib/utils';
 
-const OrderCard = () => {
+const OrderCard = ({ count }: { count: number }) => {
   const tread = false;
   return (
     <div>
       <Cards
         pathForView="/"
         icon={<IconBundler.Saving className="w-6 h-6 text-brand-primary" />}
-        count={'10,025'}
+        count={count.toString()}
         name="Total Orders"
         lastWeekData={'2.1%'}
         Trending={

@@ -32,7 +32,6 @@ export interface IUserResponse {
   };
 }
 
-
 export interface IBlogResponse {
   data: {
     result: {
@@ -49,5 +48,32 @@ export interface IBlogResponse {
     limit: number;
     total: number;
     totalPage: number;
+  };
+}
+
+export interface IOrderResponse {
+  data: {
+    result: {
+      _id: string;
+      transactionId: string;
+      amount: number | string;
+      isPaid: boolean;
+      paymentMethod: string;
+      quantity: number;
+      status: string;
+      cancelledAt: string | null;
+      productName: string;
+      productImages: string[];
+      productPrice: number | string;
+      customerEmail: string;
+      createdAt: string;
+      updatedAt: string;
+    }[];
+    meta: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPage: number;
+    };
   };
 }
